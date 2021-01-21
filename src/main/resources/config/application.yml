@@ -26,3 +26,22 @@ spring:
     show-sql: true
 #spring.datasource.schema=classpath:sqlScripts/mysql/schema-mysql.sql
 #spring.datasource.data=classpath:sqlScripts/mysql/data-mysql.sql
+#
+# Custom properties
+#
+_app:
+  #
+  # Swagger
+  #
+  swagger:
+    authorizationHeader: Authorization
+    contactEmail: https://github.com/NowakArtur97
+    contactName: Artur Nowak
+    contactUrl: https://github.com/NowakArtur97
+    description: REST API of the social network
+    license: MIT
+    licenseUrl: https://github.com/NowakArtur97/MyMoments/blob/master/LICENSE
+    pathSelectors: /api/**
+    termsOfServiceUrl: https://github.com/NowakArtur97/MyMoments/blob/master/LICENSE
+    title: MyMoments
+    version: 1.0
