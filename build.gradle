@@ -16,6 +16,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local/' }
 }
 
 dependencies {
@@ -23,14 +24,20 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
 	runtimeOnly 'dev.miku:r2dbc-mysql'
 	runtimeOnly 'mysql:mysql-connector-java'
+
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
-	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
-	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+	compile group: 'io.springfox', name: 'springfox-spring-webflux', version: '3.0.0'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.security:spring-security-test'
