@@ -29,19 +29,19 @@ spring:
 #
 # Custom properties
 #
-_app:
+my-moments:
   #
   # Swagger
   #
   swagger:
-    authorizationHeader: Authorization
-    contactEmail: https://github.com/NowakArtur97
-    contactName: Artur Nowak
-    contactUrl: https://github.com/NowakArtur97
+    authorization-header: Authorization
+    contact-email: https://github.com/NowakArtur97
+    contact-name: Artur Nowak
+    contact-url: https://github.com/NowakArtur97
     description: REST API of the social network
     license: MIT
-    licenseUrl: https://github.com/NowakArtur97/MyMoments/blob/master/LICENSE
-    pathSelectors: /api/**
-    termsOfServiceUrl: https://github.com/NowakArtur97/MyMoments/blob/master/LICENSE
+    license-url: https://github.com/NowakArtur97/MyMoments/blob/master/LICENSE
+    path-selectors: /api/**
+    terms-of-serviceUrl: https://github.com/NowakArtur97/MyMoments/blob/master/LICENSE
     title: MyMoments
     version: 1.0
