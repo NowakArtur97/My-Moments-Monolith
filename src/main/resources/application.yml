@@ -1,0 +1,3 @@
+spring.datasource.url=jdbc:mysql://myapp-mysql:3306/my-moments?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Warsaw
+spring.datasource.username=my-moments-user
+spring.datasource.password=my-moments-password123
