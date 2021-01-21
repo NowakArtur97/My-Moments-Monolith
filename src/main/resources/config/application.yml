@@ -33,7 +33,7 @@ my-moments:
   #
   # Swagger
   #
-  swagger:
+  open-api:
     authorization-header: Authorization
     contact-email: https://github.com/NowakArtur97
     contact-name: Artur Nowak

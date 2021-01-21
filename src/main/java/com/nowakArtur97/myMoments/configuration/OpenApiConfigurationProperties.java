@@ -5,11 +5,11 @@ import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
-@ConfigurationProperties(prefix = "my-moments.swagger")
+@ConfigurationProperties(prefix = "my-moments.open-api")
 @ConstructorBinding
 @AllArgsConstructor
 @Getter
-final class SwaggerConfigurationProperties {
+final class OpenApiConfigurationProperties {
 
     private final String version;
 

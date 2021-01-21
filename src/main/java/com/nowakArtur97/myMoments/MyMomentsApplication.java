@@ -2,12 +2,13 @@ package com.nowakArtur97.myMoments;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class MyMomentsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MyMomentsApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MyMomentsApplication.class, args);
+    }
 
 }
