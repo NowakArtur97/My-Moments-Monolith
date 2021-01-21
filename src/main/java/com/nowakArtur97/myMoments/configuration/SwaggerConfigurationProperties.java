@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.myMoments.configuration;
+package com.nowakArtur97.myMoments.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

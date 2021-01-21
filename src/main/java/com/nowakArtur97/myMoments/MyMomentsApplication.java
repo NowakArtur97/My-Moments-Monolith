@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.myMoments;
+package com.nowakArtur97.myMoments;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

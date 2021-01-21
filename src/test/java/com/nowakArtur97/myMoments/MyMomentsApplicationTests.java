@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.myMoments;
+package com.nowakArtur97.myMoments;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
