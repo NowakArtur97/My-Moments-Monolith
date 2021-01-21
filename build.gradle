@@ -34,9 +34,6 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 
-	compile group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
-	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
-	compile group: 'io.springfox', name: 'springfox-spring-webflux', version: '3.0.0'
 	compile group: 'org.springdoc', name: 'springdoc-openapi-webflux-ui', version: '1.5.2'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
