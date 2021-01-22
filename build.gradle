@@ -29,7 +29,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 
 	runtimeOnly 'mysql:mysql-connector-java'
-	compile group: 'org.flywaydb', name: 'flyway-core', version: '7.5.0'
+	implementation 'org.flywaydb:flyway-core'
 
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'

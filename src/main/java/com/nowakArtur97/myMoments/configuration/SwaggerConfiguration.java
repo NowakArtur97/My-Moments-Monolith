@@ -11,13 +11,15 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
+@EnableSwagger2
 @EnableConfigurationProperties(value = SwaggerConfigurationProperties.class)
 class SwaggerConfiguration {
 
     @Bean
-    Docket docket(SwaggerConfigurationProperties swaggerConfigurationProperties) {
+    Docket getDocket(SwaggerConfigurationProperties swaggerConfigurationProperties) {
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
@@ -30,9 +32,6 @@ class SwaggerConfiguration {
 
     private ApiInfo getApiDetails(SwaggerConfigurationProperties swaggerConfigurationProperties) {
 
-        Contact contact = new Contact(swaggerConfigurationProperties.getContactName(),
-                swaggerConfigurationProperties.getContactUrl(), swaggerConfigurationProperties.getContactEmail());
-
         return new ApiInfoBuilder()
                 .version(swaggerConfigurationProperties.getVersion())
                 .title(swaggerConfigurationProperties.getTitle())
@@ -40,7 +39,13 @@ class SwaggerConfiguration {
                 .termsOfServiceUrl(swaggerConfigurationProperties.getTermsOfServiceUrl())
                 .license(swaggerConfigurationProperties.getLicense())
                 .licenseUrl(swaggerConfigurationProperties.getLicenseUrl())
-                .contact(contact)
+                .contact(getContact(swaggerConfigurationProperties))
                 .build();
+    }
+
+    private Contact getContact(SwaggerConfigurationProperties swaggerConfigurationProperties) {
+
+        return new Contact(swaggerConfigurationProperties.getContactName(),
+                swaggerConfigurationProperties.getContactUrl(), swaggerConfigurationProperties.getContactEmail());
     }
 }
