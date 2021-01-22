@@ -1,7 +1,7 @@
 CREATE TABLE `user_profile` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `about` VARCHAR(250) DEFAULT '',
-    `gender` TINYINT DEFAULT NULL,
+    `gender` TINYINT,
     `interests` VARCHAR(250) DEFAULT '',
     `languages` VARCHAR(250) DEFAULT '',
     `location` VARCHAR(50) DEFAULT '',
