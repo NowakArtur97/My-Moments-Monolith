@@ -30,7 +30,7 @@ dependencies {
 
 	runtimeOnly 'dev.miku:r2dbc-mysql'
 	runtimeOnly 'mysql:mysql-connector-java'
-	implementation 'org.flywaydb:flyway-core'
+	compile group: 'org.flywaydb', name: 'flyway-core', version: '7.5.0'
 
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
