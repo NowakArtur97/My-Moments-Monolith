@@ -1,0 +1,14 @@
+CREATE TABLE `user_profile` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `about` VARCHAR(250) DEFAULT '',
+    `gender` TINYINT DEFAULT NULL,
+    `interests` VARCHAR(250) DEFAULT '',
+    `languages` VARCHAR(250) DEFAULT '',
+    `location` VARCHAR(50) DEFAULT '',
+    `image` MEDIUMBLOB,
+    
+    PRIMARY KEY (`id`),
+    CONSTRAINT `FK_USER_USER_PROFILE` FOREIGN KEY (`id`)
+        REFERENCES `user` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+)  ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8MB4;
