@@ -34,3 +34,24 @@ spring:
     validate-on-migrate: true
     table: my_moments_schema_version
     locations: classpath:db/migration
+#
+# Spring Boot Actuator
+#
+management:
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  security:
+    enabled: false

@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 class SwaggerConfiguration {
 
     @Bean
-    Docket getDocket(SwaggerConfigurationProperties swaggerConfigurationProperties) {
+    Docket docket(SwaggerConfigurationProperties swaggerConfigurationProperties) {
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
