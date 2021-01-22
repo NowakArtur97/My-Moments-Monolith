@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @ConstructorBinding
 @AllArgsConstructor
 @Getter
-final class OpenApiConfigurationProperties {
+final class SwaggerConfigurationProperties {
 
     private final String version;
 
