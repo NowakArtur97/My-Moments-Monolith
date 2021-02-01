@@ -14,8 +14,6 @@ import javax.persistence.*;
 class UserProfile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, unique = true)
     @Setter(value = AccessLevel.PRIVATE)
     private Long id;
 
@@ -38,4 +36,8 @@ class UserProfile {
     @Type(type = "org.hibernate.type.BinaryType")
     @Lob
     private byte[] image;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private User user;
 }

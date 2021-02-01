@@ -33,7 +33,7 @@ spring:
     schemas: my_moments_schemas
     validate-on-migrate: true
     table: my_moments_schema_version
-    locations: classpath:db/migration
+    locations: classpath:db/mysql/migration
 #
 # Spring Boot Actuator
 #
