@@ -17,7 +17,7 @@ import java.util.Objects;
 @Builder
 @PasswordsMatch(message = "{user.password.notMatch:Passwords don't match.}")
 @ValidPasswords
-public class UserDTO {
+class UserDTO {
 
     @UniqueUserName(message = "{user.name.unique:Username: '${validatedValue}' is already taken.}")
     @NotBlank(message = "{user.name.notBlank:Username cannot be empty.}")
