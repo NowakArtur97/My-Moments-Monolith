@@ -9,9 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Builder
 class UserProfileDTO {
 

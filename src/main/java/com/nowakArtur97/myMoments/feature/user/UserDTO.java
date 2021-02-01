@@ -11,10 +11,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Builder
+@PasswordsMatch(message = "{user.password.notMatch}")
 public class UserDTO {
 
     @NotBlank(message = "{user.name.notBlank}")

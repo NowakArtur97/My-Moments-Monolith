@@ -12,9 +12,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "user_profile", schema = "my_moments")
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Builder
 class UserProfileEntity extends AbstractEntity {
 

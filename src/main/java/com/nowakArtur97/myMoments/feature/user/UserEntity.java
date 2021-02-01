@@ -13,9 +13,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "user", schema = "my_moments")
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Builder
 class UserEntity extends AbstractEntity {
 
