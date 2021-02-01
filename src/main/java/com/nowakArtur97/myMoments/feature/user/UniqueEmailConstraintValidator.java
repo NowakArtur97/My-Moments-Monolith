@@ -3,13 +3,13 @@ package com.nowakArtur97.myMoments.feature.user;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UniqueUserNameConstraintValidator implements ConstraintValidator<UniqueEmail, String> {
+public class UniqueEmailConstraintValidator implements ConstraintValidator<UniqueEmail, String> {
 
     private final UserService userService;
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
 
-        return userService.findByUsername(email).isEmpty();
+        return userService.findByEmail(email).isEmpty();
     }
 }
