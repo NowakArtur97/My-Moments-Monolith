@@ -15,22 +15,22 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@PasswordsMatch(message = "{user.password.notMatch}")
+@PasswordsMatch(message = "{user.password.notMatch:Passwords don't match.}")
 @ValidPasswords
 public class UserDTO {
 
-    @NotBlank(message = "{user.name.notBlank}")
-    @Size(min = 5, max = 40, message = "{user.name.size}")
+    @NotBlank(message = "{user.name.notBlank:Username cannot be empty.}")
+    @Size(min = 5, max = 40, message = "{user.name.size:Username must be between {min} and {max} characters.}")
     private String username;
 
-    @Email(message = "{user.email.wrongFormat}")
-    @NotBlank(message = "{user.email.notBlank}")
+    @Email(message = "{user.email.wrongFormat:Email must be a valid email address.}")
+    @NotBlank(message = "{user.email.notBlank:Email cannot be empty.}")
     private String email;
 
-    @NotBlank(message = "{user.password.notBlank}")
+    @NotBlank(message = "{user.password.notBlank:Password cannot be empty.}")
     private String password;
 
-    @NotBlank(message = "{user.matchingPassword.notBlank}")
+    @NotBlank(message = "{user.matchingPassword.notBlank:Matching password cannot be empty.}")
     private String matchingPassword;
 
     @Valid
