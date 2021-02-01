@@ -16,6 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @PasswordsMatch(message = "{user.password.notMatch}")
+@ValidPasswords
 public class UserDTO {
 
     @NotBlank(message = "{user.name.notBlank}")
