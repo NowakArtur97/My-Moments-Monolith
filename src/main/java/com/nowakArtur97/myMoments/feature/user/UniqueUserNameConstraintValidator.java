@@ -1,9 +1,12 @@
 package com.nowakArtur97.myMoments.feature.user;
 
+import lombok.RequiredArgsConstructor;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UniqueUserNameConstraintValidator implements ConstraintValidator<UniqueEmail, String> {
+@RequiredArgsConstructor
+class UniqueUserNameConstraintValidator implements ConstraintValidator<UniqueEmail, String> {
 
     private final UserService userService;
 
