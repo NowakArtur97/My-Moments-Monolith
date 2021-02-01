@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "user_profile", schema = "my_moments")
@@ -41,22 +40,4 @@ class UserProfileEntity extends AbstractEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     private UserEntity user;
-
-    @Override
-    public boolean equals(Object o) {
-
-        if (this == o) return true;
-        if (!(o instanceof UserProfileEntity)) return false;
-
-        UserProfileEntity that = (UserProfileEntity) o;
-
-        return Objects.equals(getId(), that.getId()) &&
-                getGender() == that.getGender() &&
-                Objects.equals(getUser(), that.getUser());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getGender(), getUser());
-    }
 }

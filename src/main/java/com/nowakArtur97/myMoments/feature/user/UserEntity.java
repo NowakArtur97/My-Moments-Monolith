@@ -10,7 +10,6 @@ import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -44,25 +43,6 @@ class UserEntity extends AbstractEntity {
     @JoinTable(name = "user_role", schema = "my_moments",
             joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private final Set<RoleEntity> roles = new HashSet<>();
-
-    @Override
-    public boolean equals(Object o) {
-
-        if (this == o) return true;
-        if (!(o instanceof UserEntity)) return false;
-
-        UserEntity user = (UserEntity) o;
-
-        return Objects.equals(getId(), user.getId()) &&
-                Objects.equals(getUsername(), user.getUsername()) &&
-                Objects.equals(getEmail(), user.getEmail()) &&
-                Objects.equals(getPassword(), user.getPassword());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getUsername(), getEmail(), getPassword());
-    }
 
     void addRole(RoleEntity role) {
 
