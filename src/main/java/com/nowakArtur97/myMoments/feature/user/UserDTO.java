@@ -19,10 +19,12 @@ import java.util.Objects;
 @ValidPasswords
 public class UserDTO {
 
+    @UniqueUserName(message = "{user.name.unique:Username: '${validatedValue}' is already taken.}")
     @NotBlank(message = "{user.name.notBlank:Username cannot be empty.}")
     @Size(min = 5, max = 40, message = "{user.name.size:Username must be between {min} and {max} characters.}")
     private String username;
 
+    @UniqueEmail(message = "{user.email.unique:Email: '${validatedValue}' is already taken.}")
     @Email(message = "{user.email.wrongFormat:Email must be a valid email address.}")
     @NotBlank(message = "{user.email.notBlank:Email cannot be empty.}")
     private String email;
