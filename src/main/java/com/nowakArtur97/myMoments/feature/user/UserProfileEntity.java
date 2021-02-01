@@ -1,7 +1,10 @@
 package com.nowakArtur97.myMoments.feature.user;
 
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -13,7 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Builder
-class UserProfile extends AbstractEntity {
+class UserProfileEntity extends AbstractEntity {
 
     @Column
     private String about;
@@ -37,15 +40,15 @@ class UserProfile extends AbstractEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    private User user;
+    private UserEntity user;
 
     @Override
     public boolean equals(Object o) {
 
         if (this == o) return true;
-        if (!(o instanceof UserProfile)) return false;
+        if (!(o instanceof UserProfileEntity)) return false;
 
-        UserProfile that = (UserProfile) o;
+        UserProfileEntity that = (UserProfileEntity) o;
 
         return Objects.equals(getId(), that.getId()) &&
                 getGender() == that.getGender() &&
