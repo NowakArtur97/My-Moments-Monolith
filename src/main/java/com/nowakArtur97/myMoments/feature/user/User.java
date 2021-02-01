@@ -1,5 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user;
 
+import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,13 +12,11 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Builder
-class User {
+class User extends AbstractEntity {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
-    @Setter(value = AccessLevel.PRIVATE)
-    private Long id;
+    public Long id;
 
     @Column(nullable = false, unique = true)
     private String username;
