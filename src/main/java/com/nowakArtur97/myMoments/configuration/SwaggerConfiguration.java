@@ -1,5 +1,6 @@
 package com.nowakArtur97.myMoments.configuration;
 
+import com.nowakArtur97.myMoments.feature.user.UserRegistrationTag;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -27,7 +29,10 @@ class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.ant(swaggerConfigurationProperties.getPathSelectors()))
                 .build()
-                .apiInfo(getApiDetails(swaggerConfigurationProperties));
+                .apiInfo(getApiDetails(swaggerConfigurationProperties))
+                .tags(
+                        new Tag(UserRegistrationTag.RESOURCE, UserRegistrationTag.DESCRIPTION)
+                );
     }
 
     private ApiInfo getApiDetails(SwaggerConfigurationProperties swaggerConfigurationProperties) {
