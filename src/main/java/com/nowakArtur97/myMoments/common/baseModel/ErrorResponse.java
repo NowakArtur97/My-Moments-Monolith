@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@ApiModel(description = "Details about the Error")
 @Getter
 @Setter
+@ApiModel(description = "Details about the Error")
 public class ErrorResponse {
 
     @ApiModelProperty(notes = "Error time")
