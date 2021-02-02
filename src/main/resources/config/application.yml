@@ -13,6 +13,7 @@ spring:
 # Custom properties
 #
 my-moments:
+  default-user-role: user
   #
   # Swagger
   #

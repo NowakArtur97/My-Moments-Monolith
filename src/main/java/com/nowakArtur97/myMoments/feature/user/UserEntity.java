@@ -31,6 +31,7 @@ class UserEntity extends AbstractEntity {
     private String email;
 
     @Column(nullable = false)
+    @Setter
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
