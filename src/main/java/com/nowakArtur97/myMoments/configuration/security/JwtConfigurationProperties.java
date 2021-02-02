@@ -18,4 +18,8 @@ public final class JwtConfigurationProperties {
     private final String[] ignoredAntMatchers;
 
     private final String[] authenticatedAntMatchers;
+
+    public final int authorizationHeaderLength;
+
+    public final String authorizationHeader;
 }

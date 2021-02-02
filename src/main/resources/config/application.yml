@@ -38,3 +38,5 @@ my-moments:
     authenticatedAntMatchers: /api/v1/**
     ignoredEndpoints: /registration,/authentication,/v2/api-docs,/configuration/ui,/swagger-resources,/configuration/security,/swagger-ui.html,/webjars
     ignoredAntMatchers: /api/v1/registration/**,/api/v1/authentication/**,/v2/api-docs,/configuration/ui,/swagger-resources/**,/configuration/security,/swagger-ui.html,/webjars/**
+    authorizationHeader: Authorization
+    authorizationHeaderLength: 7
