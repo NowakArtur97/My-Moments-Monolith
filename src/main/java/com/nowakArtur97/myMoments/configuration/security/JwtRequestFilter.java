@@ -65,6 +65,22 @@ class JwtRequestFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+
+        String path = request.getRequestURI().substring(request.getContextPath().length());
+
+        for (String endpoint : jwtConfigurationProperties.getIgnoredEndpoints()) {
+
+            if (path.contains(endpoint)) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private boolean isBearerTypeAuthorization(String authorizationHeader) {
 
         return authorizationHeader != null && authorizationHeader.startsWith("Bearer ");
