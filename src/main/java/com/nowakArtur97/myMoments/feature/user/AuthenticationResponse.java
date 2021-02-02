@@ -7,8 +7,8 @@ import lombok.AllArgsConstructor;
 class AuthenticationResponse {
 
     @ApiModelProperty(notes = "Generated token")
-    private String token;
+    private final String token;
 
     @ApiModelProperty(notes = "Expiration time in milliseconds")
-    private long expirationTimeInMilliseconds;
+    private final long expirationTimeInMilliseconds;
 }
