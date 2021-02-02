@@ -20,4 +20,9 @@ class UserService {
 
         return userRepository.findByEmail(email);
     }
+
+    Optional<UserEntity> findByUsernameOrEmail(String username, String email) {
+
+        return userRepository.findByUsernameOrEmail(username, email);
+    }
 }
