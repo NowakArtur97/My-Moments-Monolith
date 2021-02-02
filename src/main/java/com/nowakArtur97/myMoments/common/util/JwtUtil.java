@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.common.util;
 
-import com.nowakArtur97.myMoments.configuration.JwtConfigurationProperties;
+import com.nowakArtur97.myMoments.configuration.security.JwtConfigurationProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
