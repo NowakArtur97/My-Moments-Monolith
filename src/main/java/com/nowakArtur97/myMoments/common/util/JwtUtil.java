@@ -1,9 +1,11 @@
 package com.nowakArtur97.myMoments.common.util;
 
+import com.nowakArtur97.myMoments.configuration.JwtConfigurationProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +15,11 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
+@EnableConfigurationProperties(value = JwtConfigurationProperties.class)
 public class JwtUtil {
 
-    @Value("${my-moments.jwt.validity:36000000}")
-    private long jwtTokenValidity;
-
-    @Value("${my-moments.jwt.secretKey:secret}")
-    private String secretKey;
+    private final JwtConfigurationProperties jwtConfigurationProperties;
 
     public String generateToken(UserDetails userDetails) {
 
@@ -52,7 +52,7 @@ public class JwtUtil {
 
     private Claims extractAllClaims(String token) {
 
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(jwtConfigurationProperties.getSecretKey()).parseClaimsJws(token).getBody();
     }
 
     private String createToken(String subject, Map<String, Object> claims) {
@@ -60,8 +60,8 @@ public class JwtUtil {
                 .setSubject(subject)
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtConfigurationProperties.getJwtTokenValidity()))
+                .signWith(SignatureAlgorithm.HS256, jwtConfigurationProperties.getSecretKey())
                 .compact();
     }
 

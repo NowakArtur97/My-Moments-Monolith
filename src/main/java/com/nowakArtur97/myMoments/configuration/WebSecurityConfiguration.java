@@ -2,7 +2,7 @@ package com.nowakArtur97.myMoments.configuration;
 
 import com.nowakArtur97.myMoments.feature.user.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,15 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableConfigurationProperties(value = JwtConfigurationProperties.class)
 class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailsService customUserDetailsService;
 
-    @Value("${my-moments.jwt.ignoredAntMatchers}")
-    private String[] ignoredAntMatchers;
-
-    @Value("${my-moments.jwt.authenticatedAntMatchers}")
-    private String[] authenticatedAntMatchers;
+    private final JwtConfigurationProperties jwtConfigurationProperties;
 
     @Bean
     PasswordEncoder getBCryptPasswordEncoder() {
@@ -62,9 +59,9 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(ignoredAntMatchers)
+                .antMatchers(jwtConfigurationProperties.getIgnoredAntMatchers())
                 .permitAll()
-                .antMatchers(authenticatedAntMatchers)
+                .antMatchers(jwtConfigurationProperties.getAuthenticatedAntMatchers())
                 .authenticated()
                 .and()
                 .sessionManagement()
