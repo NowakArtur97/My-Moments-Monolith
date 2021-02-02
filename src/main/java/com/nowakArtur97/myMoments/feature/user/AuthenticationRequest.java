@@ -11,7 +11,7 @@ import lombok.Getter;
 class AuthenticationRequest {
 
     @ApiModelProperty(notes = "The user's name")
-    private final String userName;
+    private final String username;
 
     @ApiModelProperty(notes = "The user's password", required = true)
     private final String password;

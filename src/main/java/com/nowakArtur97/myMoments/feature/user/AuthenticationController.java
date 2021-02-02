@@ -38,8 +38,8 @@ class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody @ApiParam(value = "User credentials", name = "user",
             required = true) AuthenticationRequest authenticationRequest) {
 
-        String userNameOrEmail = authenticationRequest.getUserName() != null
-                ? authenticationRequest.getUserName()
+        String userNameOrEmail = authenticationRequest.getUsername() != null
+                ? authenticationRequest.getUsername()
                 : authenticationRequest.getEmail();
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(userNameOrEmail);

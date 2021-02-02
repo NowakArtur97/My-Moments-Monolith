@@ -8,12 +8,12 @@ server:
 #
 spring:
   profiles:
-    active: dev
+    active: ${SPRING_ACTIVE_PROFILE:dev}
 #
 # Custom properties
 #
 my-moments:
-  default-user-role: user
+  default-user-role: ROLE_USER
   #
   # Swagger
   #
