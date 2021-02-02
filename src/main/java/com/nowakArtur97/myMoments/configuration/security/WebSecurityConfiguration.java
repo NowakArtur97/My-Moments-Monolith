@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.configuration;
+package com.nowakArtur97.myMoments.configuration.security;
 
 import com.nowakArtur97.myMoments.feature.user.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package com.nowakArtur97.myMoments.feature.user;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
-import com.nowakArtur97.myMoments.configuration.JwtConfigurationProperties;
+import com.nowakArtur97.myMoments.configuration.security.JwtConfigurationProperties;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -38,7 +38,7 @@ class UserRegistrationController {
             @ApiResponse(code = 200, message = "Successfully created a new account", response = String.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
     ResponseEntity<AuthenticationResponse> registerUser(@ApiParam(value = "User data", name = "user", required = true)
-                                                               @RequestBody @Valid UserDTO userDTO) throws RoleNotFoundException {
+                                                        @RequestBody @Valid UserDTO userDTO) throws RoleNotFoundException {
 
         UserEntity newUser = userService.register(userDTO);
 

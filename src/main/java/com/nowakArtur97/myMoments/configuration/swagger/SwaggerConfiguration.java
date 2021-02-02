@@ -1,5 +1,6 @@
-package com.nowakArtur97.myMoments.configuration;
+package com.nowakArtur97.myMoments.configuration.swagger;
 
+import com.nowakArtur97.myMoments.feature.user.AuthenticationTag;
 import com.nowakArtur97.myMoments.feature.user.UserRegistrationTag;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -8,12 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.Tag;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.List;
 
 @Configuration
 @EnableSwagger2
@@ -31,8 +33,11 @@ class SwaggerConfiguration {
                 .build()
                 .apiInfo(getApiDetails(swaggerConfigurationProperties))
                 .tags(
-                        new Tag(UserRegistrationTag.RESOURCE, UserRegistrationTag.DESCRIPTION)
-                );
+                        new Tag(UserRegistrationTag.RESOURCE, UserRegistrationTag.DESCRIPTION),
+                        new Tag(AuthenticationTag.RESOURCE, AuthenticationTag.DESCRIPTION)
+                )
+                .securityContexts(List.of(getSecurityContext(swaggerConfigurationProperties)))
+                .securitySchemes(List.of(getApiKey(swaggerConfigurationProperties)));
     }
 
     private ApiInfo getApiDetails(SwaggerConfigurationProperties swaggerConfigurationProperties) {
@@ -52,5 +57,31 @@ class SwaggerConfiguration {
 
         return new Contact(swaggerConfigurationProperties.getContactName(),
                 swaggerConfigurationProperties.getContactUrl(), swaggerConfigurationProperties.getContactEmail());
+    }
+
+    private ApiKey getApiKey(SwaggerConfigurationProperties swaggerConfigurationProperties) {
+
+        return new ApiKey("JWT", swaggerConfigurationProperties.getAuthorizationHeader(), "header");
+    }
+
+    private SecurityContext getSecurityContext(SwaggerConfigurationProperties swaggerConfigurationProperties) {
+
+        return SecurityContext.builder()
+                .securityReferences(getDefaultAuth())
+                .forPaths(PathSelectors.ant(swaggerConfigurationProperties.getPathSelectors()))
+                .build();
+    }
+
+    private List<SecurityReference> getDefaultAuth() {
+
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+
+        authorizationScopes[0] = authorizationScope;
+
+        return List.of(
+                new SecurityReference("JWT", authorizationScopes));
     }
 }
