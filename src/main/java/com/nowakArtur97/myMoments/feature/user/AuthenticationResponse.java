@@ -1,8 +1,10 @@
 package com.nowakArtur97.myMoments.feature.user;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 
+@ApiModel(description = "API key")
 @AllArgsConstructor
 class AuthenticationResponse {
 
