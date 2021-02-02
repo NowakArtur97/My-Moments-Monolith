@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String value) throws UsernameNotFoundException {
 
-        UserEntity userEntity = userService.findByUsernameOrEmail(value, value)
+        UserEntity userEntity = userRepository.findByUsernameOrEmail(value, value)
                 .orElseThrow(() -> new UsernameNotFoundException("User with name/email: '" + value + "' not found."));
 
         return new User(userEntity.getUsername(), userEntity.getPassword(), getAuthorities(userEntity.getRoles()));
