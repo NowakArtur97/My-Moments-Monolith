@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new User(userEntity.getUsername(), userEntity.getPassword(), getAuthorities(userEntity.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(Set<RoleEntity> roles) {
+    public Collection<? extends GrantedAuthority> getAuthorities(Set<RoleEntity> roles) {
 
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
