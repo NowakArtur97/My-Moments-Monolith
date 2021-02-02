@@ -28,3 +28,11 @@ my-moments:
     terms-of-serviceUrl: https://github.com/NowakArtur97/MyMoments/blob/master/LICENSE
     title: MyMoments
     version: 1.0
+  #
+  # JWT
+  #
+  jwt:
+    secretKey: secret
+    validity: 36000000
+    ignoredEndpoints: /registration,/authentication,/v2/api-docs,/configuration/ui,/swagger-resources,/configuration/security,/swagger-ui.html,/webjars
+    ignoredAntMatchers: /api/v1/registration/**,/api/v1/authentication/**,/v2/api-docs,/configuration/ui,/swagger-resources/**,/configuration/security,/swagger-ui.html,/webjars/**
