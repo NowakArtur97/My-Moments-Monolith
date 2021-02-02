@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -28,6 +29,8 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final JwtConfigurationProperties jwtConfigurationProperties;
 
     private final JwtRequestFilter jwtRequestFilter;
+
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Bean
     PasswordEncoder getBCryptPasswordEncoder() {
@@ -71,6 +74,7 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(exceptionHandlerFilter, CorsFilter.class);
     }
 
     @Override
