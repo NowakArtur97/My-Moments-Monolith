@@ -1,10 +1,7 @@
 package com.nowakArtur97.myMoments.feature.user;
 
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 

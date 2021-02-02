@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
 
 @RestController
@@ -29,7 +30,7 @@ class UserRegistrationController {
     private final JwtConfigurationProperties jwtConfigurationProperties;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody @Valid UserDTO userDTO) throws RoleNotFoundException {
 
         UserEntity newUser = userService.register(userDTO);
 

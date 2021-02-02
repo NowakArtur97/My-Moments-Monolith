@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.RoleNotFoundException;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -39,14 +39,14 @@ class UserService {
         return userRepository.findByUsernameOrEmail(username, email);
     }
 
-    public UserEntity register(UserDTO userDTO) {
+    public UserEntity register(UserDTO userDTO) throws RoleNotFoundException {
 
         UserEntity newUser = modelMapper.map(userDTO, UserEntity.class);
 
         newUser.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
 
         RoleEntity role = roleService.findByName(defaultUserRole)
-                .orElseThrow(() -> RoleNotFoundException("Role with name: '" + defaultUserRole + "' not found."));
+                .orElseThrow(() -> new RoleNotFoundException("Role with name: '" + defaultUserRole + "' not found."));
 
         newUser.addRole(role);
 
