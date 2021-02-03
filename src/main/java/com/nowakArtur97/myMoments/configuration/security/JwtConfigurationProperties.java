@@ -23,7 +23,9 @@ public final class JwtConfigurationProperties {
 
     private final List<String> authenticatedAntMatchers;
 
-    public final int authorizationHeaderLength;
+    private final String authorizationHeader;
 
-    public final String authorizationHeader;
+    private final String authorizationType;
+
+    private final int authorizationHeaderLength;
 }

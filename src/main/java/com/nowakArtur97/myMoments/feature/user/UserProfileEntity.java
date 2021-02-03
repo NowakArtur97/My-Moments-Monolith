@@ -39,5 +39,6 @@ class UserProfileEntity extends AbstractEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
+    @JoinColumn(name = "id")
     private UserEntity user;
 }

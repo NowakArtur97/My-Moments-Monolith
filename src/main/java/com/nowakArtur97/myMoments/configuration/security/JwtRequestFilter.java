@@ -33,14 +33,14 @@ class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String authorizationHeader = request.getHeader(jwtConfigurationProperties.authorizationHeader);
+        String authorizationHeader = request.getHeader(jwtConfigurationProperties.getAuthorizationHeader());
 
         String username;
         String jwt;
 
         if (isBearerTypeAuthorization(authorizationHeader)) {
 
-            jwt = authorizationHeader.substring(jwtConfigurationProperties.authorizationHeaderLength);
+            jwt = authorizationHeader.substring(jwtConfigurationProperties.getAuthorizationHeaderLength());
             username = jwtUtil.extractUserName(jwt);
 
         } else {
@@ -70,19 +70,11 @@ class JwtRequestFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI().substring(request.getContextPath().length());
 
-        for (String endpoint : jwtConfigurationProperties.getIgnoredEndpoints()) {
-
-            if (path.contains(endpoint)) {
-
-                return true;
-            }
-        }
-
-        return false;
+        return jwtConfigurationProperties.getIgnoredEndpoints().stream().anyMatch(path::contains);
     }
 
     private boolean isBearerTypeAuthorization(String authorizationHeader) {
 
-        return authorizationHeader != null && authorizationHeader.startsWith("Bearer ");
+        return authorizationHeader != null && authorizationHeader.startsWith(jwtConfigurationProperties.getAuthorizationType());
     }
 }

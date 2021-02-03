@@ -55,4 +55,5 @@ my-moments:
       - /swagger-ui.html
       - /webjars/**
     authorizationHeader: Authorization
+    authorizationType: Bearer
     authorizationHeaderLength: 7
