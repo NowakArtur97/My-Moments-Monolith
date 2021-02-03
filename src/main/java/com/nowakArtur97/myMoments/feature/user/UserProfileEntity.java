@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_profile", schema = "my_moments")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

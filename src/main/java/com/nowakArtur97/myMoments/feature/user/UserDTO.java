@@ -19,26 +19,27 @@ import java.util.Objects;
 @PasswordsMatch(message = "{user.password.notMatch}")
 @ValidPasswords
 @ApiModel(description = "Model responsible for User validation during registration")
+public
 class UserDTO {
 
     @UniqueUserName(message = "{user.name.unique}")
     @NotBlank(message = "{user.name.notBlank}")
     @Size(min = 5, max = 40, message = "{user.name.size}")
-    @ApiModelProperty(notes = "The user's name")
+    @ApiModelProperty(notes = "The user's name", required = true)
     private String username;
 
     @UniqueEmail(message = "{user.email.unique}")
     @Email(message = "{user.email.wrongFormat}")
     @NotBlank(message = "{user.email.notBlank}")
-    @ApiModelProperty(notes = "The user's email")
+    @ApiModelProperty(notes = "The user's email", required = true)
     private String email;
 
     @NotBlank(message = "{user.password.notBlank}")
-    @ApiModelProperty(notes = "The user's password")
+    @ApiModelProperty(notes = "The user's password", required = true)
     private String password;
 
     @NotBlank(message = "{user.matchingPassword.notBlank}")
-    @ApiModelProperty(notes = "The user's password for confirmation")
+    @ApiModelProperty(notes = "The user's password for confirmation", required = true)
     private String matchingPassword;
 
     @Valid

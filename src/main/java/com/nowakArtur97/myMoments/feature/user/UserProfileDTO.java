@@ -1,10 +1,10 @@
 package com.nowakArtur97.myMoments.feature.user;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -13,13 +13,13 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder
 @ToString
+@ApiModel(description = "Model responsible for User Profile validation during registration")
 class UserProfileDTO {
 
     @Size(message = "{userProfile.about.size}", max = 250)
     @ApiModelProperty(notes = "The user's information")
     private String about;
 
-    @NotNull(message = "{userProfile.gender.notNull}")
     @ApiModelProperty(notes = "The user's gender")
     private Gender gender;
 
