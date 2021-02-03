@@ -1,9 +1,6 @@
 package com.nowakArtur97.myMoments.common.entity;
 
-import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,9 +13,9 @@ import java.util.UUID;
 public abstract class AbstractEntity {
 
     @Id
-    @Getter
-    @Setter(value = AccessLevel.PRIVATE)
-    protected Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, unique = true)
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private final String uuid = UUID.randomUUID().toString();
