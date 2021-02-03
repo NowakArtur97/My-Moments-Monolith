@@ -35,8 +35,8 @@ my-moments:
   jwt:
     secretKey: secret
     validity: 36000000
-    authenticatedAntMatchers: /api/v1/**
-    ignoredEndpoints:
+    authenticated-ant-matchers: /api/v1/**
+    ignored-endpoints:
       - /registration
       - /authentication
       - /v2/api-docs
@@ -45,7 +45,7 @@ my-moments:
       - /configuration/security
       - /swagger-ui.html
       - /webjars
-    ignoredAntMatchers:
+    ignored-ant-matchers:
       - /api/v1/registration/**
       - /api/v1/authentication/**
       - /v2/api-docs
@@ -54,6 +54,6 @@ my-moments:
       - /configuration/security
       - /swagger-ui.html
       - /webjars/**
-    authorizationHeader: Authorization
-    authorizationType: Bearer
-    authorizationHeaderLength: 7
+    authorization-header: Authorization
+    authorization-type: Bearer
+    authorization-header-length: 7

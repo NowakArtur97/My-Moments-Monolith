@@ -15,7 +15,7 @@ public final class JwtConfigurationProperties {
 
     private final String secretKey;
 
-    private final long jwtTokenValidity;
+    private final long validity;
 
     private final List<String> ignoredEndpoints;
 
