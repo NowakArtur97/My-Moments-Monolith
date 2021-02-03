@@ -1,10 +1,7 @@
 package com.nowakArtur97.myMoments.feature.user;
 
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 class UserProfileEntity extends AbstractEntity {
 
     @Column
@@ -35,10 +33,12 @@ class UserProfileEntity extends AbstractEntity {
     @Column(name = "image")
     @Type(type = "org.hibernate.type.BinaryType")
     @Lob
+    @ToString.Exclude
     private byte[] image;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")
+    @ToString.Exclude
     private UserEntity user;
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,18 +11,17 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
-@Setter
 @ApiModel(description = "Details about the Error")
 public class ErrorResponse {
 
-    @ApiModelProperty(notes = "Error time")
+    @ApiModelProperty(notes = "Error's time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
-    private LocalDateTime timestamp;
+    private final LocalDateTime timestamp;
 
-    @ApiModelProperty(notes = "Error status")
-    private int status;
+    @ApiModelProperty(notes = "Error's status")
+    private final int status;
 
-    @ApiModelProperty(notes = "Details of the cause of the error")
+    @ApiModelProperty(notes = "Details about the cause of the error")
     private final List<String> errors;
 
     public ErrorResponse(LocalDateTime timestamp, int status) {

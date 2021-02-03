@@ -12,14 +12,12 @@ import java.util.Set;
 @Entity
 @Table(name = "user", schema = "my_moments")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 class UserEntity extends AbstractEntity {
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, unique = true)
-    public Long id;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -28,7 +26,6 @@ class UserEntity extends AbstractEntity {
     private String email;
 
     @Column(nullable = false)
-    @Setter
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
