@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 class UserService {
 
-    @Value("${my-moments.default-user-role:user}")
+    @Value("${my-moments.default-user-role:ROLE_USER}")
     private String defaultUserRole;
 
     private final UserRepository userRepository;
@@ -32,11 +32,6 @@ class UserService {
     Optional<UserEntity> findByEmail(String email) {
 
         return userRepository.findByEmail(email);
-    }
-
-    Optional<UserEntity> findByUsernameOrEmail(String username, String email) {
-
-        return userRepository.findByUsernameOrEmail(username, email);
     }
 
     public UserEntity register(UserDTO userDTO) throws RoleNotFoundException {

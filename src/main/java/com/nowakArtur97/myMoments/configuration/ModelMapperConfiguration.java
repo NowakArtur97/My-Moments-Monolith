@@ -18,7 +18,7 @@ class ModelMapperConfiguration {
 
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        modelMapper.addConverter(UserConverter.userDTOConverter, UserDTO.class, UserEntity.class);
+        modelMapper.createTypeMap(UserDTO.class, UserEntity.class).setPostConverter(UserConverter.userDTOConverter);
 
         return modelMapper;
     }

@@ -6,17 +6,30 @@ public class UserConverter {
 
     public static Converter<UserDTO, UserEntity> userDTOConverter = context -> {
 
-        UserEntity userEntity = new UserEntity();
+        UserEntity userEntity = context.getDestination();
         UserDTO userDTO = context.getSource();
-
-        userEntity.setUsername(userDTO.getUsername());
-        userEntity.setEmail(userDTO.getEmail());
 
         if (userDTO.getProfile() == null) {
             UserProfileEntity userProfile = new UserProfileEntity();
-            userProfile.setGender(Gender.UNSPECIFIED);
 
             userEntity.setProfile(userProfile);
+            userProfile.setUser(userEntity);
+        }
+
+        if (userEntity.getProfile().getGender() == null) {
+            userEntity.getProfile().setGender(Gender.UNSPECIFIED);
+        }
+        if (userEntity.getProfile().getAbout() == null) {
+            userEntity.getProfile().setAbout("");
+        }
+        if (userEntity.getProfile().getInterests() == null) {
+            userEntity.getProfile().setInterests("");
+        }
+        if (userEntity.getProfile().getLanguages() == null) {
+            userEntity.getProfile().setLanguages("");
+        }
+        if (userEntity.getProfile().getLocation() == null) {
+            userEntity.getProfile().setLocation("");
         }
 
         return userEntity;
