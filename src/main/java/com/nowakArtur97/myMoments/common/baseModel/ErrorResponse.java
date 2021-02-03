@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,15 +23,10 @@ public class ErrorResponse {
     @ApiModelProperty(notes = "Details about the cause of the error")
     private final List<String> errors;
 
-    public ErrorResponse(LocalDateTime timestamp, int status) {
+    public ErrorResponse(LocalDateTime timestamp, int status, List<String> errors) {
         this.timestamp = timestamp;
         this.status = status;
-        this.errors = new ArrayList<>();
-    }
-
-    public void addError(String error) {
-
-        errors.add(error);
+        this.errors = errors;
     }
 
     @Override

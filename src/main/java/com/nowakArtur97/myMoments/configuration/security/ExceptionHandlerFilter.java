@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -48,9 +49,7 @@ class ExceptionHandlerFilter extends OncePerRequestFilter {
         response.setStatus(status.value());
         response.setContentType("application/json");
 
-        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), status.value());
-
-        errorResponse.addError(exception.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), status.value(), List.of(exception.getMessage()));
 
         try {
 
