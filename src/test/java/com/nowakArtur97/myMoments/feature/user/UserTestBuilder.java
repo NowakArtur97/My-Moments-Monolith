@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user;
 
-import com.nowakArtur97.myMoments.testUtil.builder.ObjectType;
+import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -8,7 +8,15 @@ import java.util.Set;
 
 class UserTestBuilder {
 
-    public static UserEntity DEFAULT_USER_ENTITY = new UserEntity("username", "user@email.com",
+    static UserDTO DEFAULT_USER_DTO_WITHOUT_PROFILE = new UserDTO("username", "user@email.com",
+            "SecretPassword123!@", "SecretPassword123!@",
+           new UserProfileDTO());
+
+    static UserDTO DEFAULT_USER_DTO_WITH_PROFILE = new UserDTO("username", "user@email.com",
+            "SecretPassword123!@", "SecretPassword123!@",
+            UserProfileTestBuilder.DEFAULT_USER_PROFILE_DTO);
+
+    static UserEntity DEFAULT_USER_ENTITY = new UserEntity("username", "user@email.com",
             "SecretPassword123!@", new UserProfileEntity(),
             new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY)));
 
@@ -26,42 +34,49 @@ class UserTestBuilder {
 
     private Set<RoleEntity> roles = new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY));
 
-    public UserTestBuilder withUsername(String username) {
+    UserTestBuilder withUsername(String username) {
 
         this.username = username;
 
         return this;
     }
 
-    public UserTestBuilder withPassword(String password) {
+    UserTestBuilder withPassword(String password) {
 
         this.password = password;
 
         return this;
     }
 
-    public UserTestBuilder withMatchingPassword(String matchingPassword) {
+    UserTestBuilder withMatchingPassword(String matchingPassword) {
 
         this.matchingPassword = matchingPassword;
 
         return this;
     }
 
-    public UserTestBuilder withEmail(String email) {
+    UserTestBuilder withEmail(String email) {
 
         this.email = email;
 
         return this;
     }
 
-    public UserTestBuilder withRoles(Set<RoleEntity> roles) {
+    UserTestBuilder withRoles(Set<RoleEntity> roles) {
 
         this.roles = roles;
 
         return this;
     }
 
-    public User build(ObjectType type) {
+    UserTestBuilder withProfile(UserProfile profile) {
+
+        this.profile = profile;
+
+        return this;
+    }
+
+    User build(ObjectType type) {
 
         User user;
 

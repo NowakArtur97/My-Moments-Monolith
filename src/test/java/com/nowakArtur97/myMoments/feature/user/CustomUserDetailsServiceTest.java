@@ -1,7 +1,10 @@
 package com.nowakArtur97.myMoments.feature.user;
 
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -21,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(NameWithSpacesGenerator.class)
 @Tag("CustomUserDetailsService_Tests")
-public class CustomUserDetailsServiceTest {
+class CustomUserDetailsServiceTest {
 
     private CustomUserDetailsService customUserDetailsService;
 
@@ -29,7 +32,7 @@ public class CustomUserDetailsServiceTest {
     private UserRepository userRepository;
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
 
         customUserDetailsService = new CustomUserDetailsService(userRepository);
     }
@@ -41,7 +44,7 @@ public class CustomUserDetailsServiceTest {
 
         UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY;
         User userDetailsExpected = new User(userEntityExpected.getUsername(), userEntityExpected.getPassword(),
-                List.of(new SimpleGrantedAuthority("USER")));
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
 
         when(userRepository.findByUsernameOrEmail(userName, userName)).thenReturn(Optional.of(userEntityExpected));
 
@@ -68,7 +71,7 @@ public class CustomUserDetailsServiceTest {
 
         UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY;
         User userDetailsExpected = new User(userEntityExpected.getUsername(), userEntityExpected.getPassword(),
-                List.of(new SimpleGrantedAuthority("USER")));
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
 
         when(userRepository.findByUsernameOrEmail(email, email)).thenReturn(Optional.of(userEntityExpected));
 
@@ -106,7 +109,7 @@ public class CustomUserDetailsServiceTest {
     @Test
     void when_get_user_authorities_should_return_list_of_authorities() {
 
-        Set<RoleEntity> authoritiesExpected = Set.of(new RoleEntity("USER"));
+        Set<RoleEntity> authoritiesExpected = Set.of(new RoleEntity("ROLE_USER"));
         UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY;
 
         List<GrantedAuthority> authoritiesActual = customUserDetailsService.getAuthorities(userEntityExpected.getRoles());
@@ -115,7 +118,7 @@ public class CustomUserDetailsServiceTest {
                 () -> assertEquals(authoritiesExpected.size(), authoritiesActual.size(),
                         () -> "should return: " + authoritiesExpected.size() + " authorities, but was: "
                                 + authoritiesActual.size()),
-                () -> assertEquals(authoritiesActual.get(0).getAuthority(), "USER",
+                () -> assertEquals(authoritiesActual.get(0).getAuthority(), "ROLE_USER",
                         () -> "should return user authority, but was: " + authoritiesActual.get(0).getAuthority()),
                 () -> verifyNoInteractions(userRepository));
     }

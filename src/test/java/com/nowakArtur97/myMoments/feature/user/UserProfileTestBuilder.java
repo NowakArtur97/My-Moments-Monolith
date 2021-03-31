@@ -1,9 +1,12 @@
 package com.nowakArtur97.myMoments.feature.user;
 
-import com.nowakArtur97.myMoments.testUtil.builder.ObjectType;
+import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 import org.springframework.mock.web.MockMultipartFile;
 
 class UserProfileTestBuilder {
+
+    public static UserProfileDTO DEFAULT_USER_PROFILE_DTO = new UserProfileDTO("about", Gender.UNSPECIFIED,
+            "interests", "languages", "location", new MockMultipartFile("data", "filename.txt", "text/plain", "image".getBytes()));
 
     private static int ID = 1;
 
@@ -19,67 +22,68 @@ class UserProfileTestBuilder {
 
     private byte[] image = "image".getBytes();
 
-    private MockMultipartFile imageFile = new MockMultipartFile("data", "filename.txt", "text/plain", image);
+    private MockMultipartFile imageFile = new MockMultipartFile("data", "filename.txt",
+            "text/plain", image);
 
     private UserEntity user;
 
-    public UserProfileTestBuilder withAbout(String about) {
+    UserProfileTestBuilder withAbout(String about) {
 
         this.about = about;
 
         return this;
     }
 
-    public UserProfileTestBuilder withGender(Gender gender) {
+    UserProfileTestBuilder withGender(Gender gender) {
 
         this.gender = gender;
 
         return this;
     }
 
-    public UserProfileTestBuilder withInterests(String interests) {
+    UserProfileTestBuilder withInterests(String interests) {
 
         this.interests = interests;
 
         return this;
     }
 
-    public UserProfileTestBuilder withLanguages(String languages) {
+    UserProfileTestBuilder withLanguages(String languages) {
 
         this.languages = languages;
 
         return this;
     }
 
-    public UserProfileTestBuilder withLocation(String location) {
+    UserProfileTestBuilder withLocation(String location) {
 
         this.location = location;
 
         return this;
     }
 
-    public UserProfileTestBuilder withImage(byte[] image) {
+    UserProfileTestBuilder withImage(byte[] image) {
 
         this.image = image;
 
         return this;
     }
 
-    public UserProfileTestBuilder withImageFile(MockMultipartFile imageFile) {
+    UserProfileTestBuilder withImageFile(MockMultipartFile imageFile) {
 
         this.imageFile = imageFile;
 
         return this;
     }
 
-    public UserProfileTestBuilder withUserEntity(UserEntity user) {
+    UserProfileTestBuilder withUserEntity(UserEntity user) {
 
         this.user = user;
 
         return this;
     }
 
-    public UserProfile build(ObjectType type) {
+    UserProfile build(ObjectType type) {
 
         UserProfile userProfile;
 

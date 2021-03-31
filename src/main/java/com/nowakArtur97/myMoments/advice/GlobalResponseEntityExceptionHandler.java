@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
-class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,

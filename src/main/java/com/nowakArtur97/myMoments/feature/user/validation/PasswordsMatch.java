@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

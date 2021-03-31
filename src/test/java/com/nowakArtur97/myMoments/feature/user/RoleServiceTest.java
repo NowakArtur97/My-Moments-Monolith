@@ -25,7 +25,7 @@ class RoleServiceTest {
     private RoleRepository roleRepository;
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
 
         roleService = new RoleService(roleRepository);
     }
@@ -33,7 +33,7 @@ class RoleServiceTest {
     @Test
     void when_find_role_by_name_should_return_role() {
 
-        String roleName = "USER";
+        String roleName = "ROLE_USER";
 
         RoleEntity roleEntityExpected = RoleTestBuilder.DEFAULT_ROLE_ENTITY;
 
@@ -51,7 +51,7 @@ class RoleServiceTest {
     @Test
     void when_find_not_existing_role_by_name_should_return_empty_optional() {
 
-        String roleName = "ROLE";
+        String roleName = "ROLEee_USER";
 
         when(roleRepository.findByName(roleName)).thenReturn(Optional.empty());
 

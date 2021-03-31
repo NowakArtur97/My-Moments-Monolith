@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,12 +11,12 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
-@Constraint(validatedBy = UniqueUserNameConstraintValidator.class)
+@Constraint(validatedBy = UniqueEmailConstraintValidator.class)
 @Target({FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-public @interface UniqueUserName {
+public @interface UniqueEmail {
 
-    String message() default "User name is already taken.";
+    String message() default "Email is already taken.";
 
     Class<?>[] groups() default {};
 
