@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(NameWithSpacesGenerator.class)
 @Tag("RoleService_Tests")
-public class RoleServiceTest {
+class RoleServiceTest {
 
     private RoleService roleService;
 

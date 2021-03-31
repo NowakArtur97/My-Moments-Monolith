@@ -17,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @ToString
-public class UserEntity extends AbstractEntity {
+public class UserEntity extends AbstractEntity implements User {
 
     @Column(nullable = false, unique = true)
     private String username;

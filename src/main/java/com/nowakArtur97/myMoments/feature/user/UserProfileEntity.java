@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @ToString
-class UserProfileEntity extends AbstractEntity {
+class UserProfileEntity extends AbstractEntity implements UserProfile {
 
     @Column
     private String about;

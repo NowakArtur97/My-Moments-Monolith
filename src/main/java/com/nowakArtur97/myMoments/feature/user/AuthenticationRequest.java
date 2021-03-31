@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @ApiModel(description = "User data required for Authentication")
-class AuthenticationRequest {
+class AuthenticationRequest implements User {
 
     @ApiModelProperty(notes = "The user's name")
     private final String username;

@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user;
 
-public class RoleTestBuilder {
+class RoleTestBuilder {
 
     public static RoleEntity DEFAULT_ROLE_ENTITY = new RoleEntity("ROLE");
 
