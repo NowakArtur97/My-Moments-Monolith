@@ -7,13 +7,6 @@ class UserProfileTestBuilder {
 
     private static int ID = 1;
 
-//     UserProfileDTO DEFAULT_USER_PROFILE_DTO = new UserProfileDTO("about", Gender.MALE, "interests",
-//            "languages", "location", 
-//            new MockMultipartFile("data", "filename.txt", "text/plain", "image".getBytes()));
-//
-//     UserProfileDTO DEFAULT_USER_PROFILE_ENTITY = new UserProfileEntity("about", Gender.MALE, "interests",
-//            "languages", "location","image".getBytes(), new UserEntity(""));
-
     private String about = "about";
 
     private Gender gender = Gender.MALE;

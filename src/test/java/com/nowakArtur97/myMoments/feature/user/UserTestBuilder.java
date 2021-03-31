@@ -8,9 +8,13 @@ import java.util.Set;
 
 class UserTestBuilder {
 
+    public static UserEntity DEFAULT_USER_ENTITY = new UserEntity("username", "user@email.com",
+            "SecretPassword123!@", new UserProfileEntity(),
+            new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY)));
+
     private static int ID = 1;
 
-    private String userName = "user123";
+    private String username = "user123";
 
     private String password = "SecretPassword123!@";
 
@@ -22,9 +26,9 @@ class UserTestBuilder {
 
     private Set<RoleEntity> roles = new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY));
 
-    public UserTestBuilder withUserName(String userName) {
+    public UserTestBuilder withUsername(String username) {
 
-        this.userName = userName;
+        this.username = username;
 
         return this;
     }
@@ -65,19 +69,19 @@ class UserTestBuilder {
 
             case DTO:
 
-                user = new UserDTO(userName, email, password, matchingPassword, (UserProfileDTO) profile);
+                user = new UserDTO(username, email, password, matchingPassword, (UserProfileDTO) profile);
 
                 break;
 
             case ENTITY:
 
-                user = new UserEntity(userName, email, password, (UserProfileEntity) profile);
+                user = new UserEntity(username, email, password, (UserProfileEntity) profile, roles);
 
                 break;
 
             case REQUEST:
 
-                user = new AuthenticationRequest(userName, password, email);
+                user = new AuthenticationRequest(username, password, email);
 
                 break;
 
@@ -92,7 +96,7 @@ class UserTestBuilder {
 
     private void resetProperties() {
 
-        userName = "user123" + ID;
+        username = "user123" + ID;
 
         password = "SecretPassword123!@" + ID;
 
