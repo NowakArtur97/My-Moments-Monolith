@@ -1,5 +1,6 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.shared;
 
+import com.nowakArtur97.myMoments.feature.user.registration.UserDTO;
 import org.modelmapper.Converter;
 
 public class UserConverter {

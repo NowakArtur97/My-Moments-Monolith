@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.authentication;
 
 public final class AuthenticationTag {
 

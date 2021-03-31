@@ -1,7 +1,11 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.registration;
 
 import com.nowakArtur97.myMoments.advice.GlobalResponseEntityExceptionHandler;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
+import com.nowakArtur97.myMoments.feature.user.shared.CustomUserDetailsService;
+import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
+import com.nowakArtur97.myMoments.testUtil.builder.UserProfileTestBuilder;
+import com.nowakArtur97.myMoments.testUtil.builder.UserTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;
 import com.nowakArtur97.myMoments.testUtil.mapper.ObjectTestMapper;

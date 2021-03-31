@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.shared;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @ApiModel(description = "API key")
-class AuthenticationResponse {
+public class AuthenticationResponse {
 
     @ApiModelProperty(notes = "Generated token")
     private final String token;

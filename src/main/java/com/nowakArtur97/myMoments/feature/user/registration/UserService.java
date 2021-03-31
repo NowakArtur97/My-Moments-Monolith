@@ -1,5 +1,8 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.registration;
 
+import com.nowakArtur97.myMoments.feature.user.shared.RoleEntity;
+import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
+import com.nowakArtur97.myMoments.feature.user.shared.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;

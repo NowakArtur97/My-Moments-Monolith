@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.shared;
 
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
 import lombok.*;
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Builder
 @ToString
-class RoleEntity extends AbstractEntity {
+public class RoleEntity extends AbstractEntity {
 
     @Column(nullable = false, unique = true)
     private String name;

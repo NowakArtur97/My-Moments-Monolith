@@ -1,5 +1,6 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.registration;
 
+import com.nowakArtur97.myMoments.feature.user.shared.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

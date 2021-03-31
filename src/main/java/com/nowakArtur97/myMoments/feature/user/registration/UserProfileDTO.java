@@ -1,5 +1,7 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.registration;
 
+import com.nowakArtur97.myMoments.feature.user.shared.Gender;
+import com.nowakArtur97.myMoments.feature.user.shared.UserProfile;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

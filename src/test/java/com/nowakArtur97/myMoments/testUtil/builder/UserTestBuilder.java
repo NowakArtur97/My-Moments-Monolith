@@ -1,22 +1,30 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.testUtil.builder;
 
+import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationRequest;
+import com.nowakArtur97.myMoments.feature.user.registration.UserDTO;
+import com.nowakArtur97.myMoments.feature.user.registration.UserProfileDTO;
+import com.nowakArtur97.myMoments.feature.user.shared.*;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-class UserTestBuilder {
+public class UserTestBuilder {
 
-    static UserDTO DEFAULT_USER_DTO_WITHOUT_PROFILE = new UserDTO("username", "user@email.com",
+    public static UserDTO DEFAULT_USER_DTO_WITHOUT_PROFILE = new UserDTO("username", "user@email.com",
             "SecretPassword123!@", "SecretPassword123!@",
-           new UserProfileDTO());
+            new UserProfileDTO());
 
-    static UserDTO DEFAULT_USER_DTO_WITH_PROFILE = new UserDTO("username", "user@email.com",
+    public static UserDTO DEFAULT_USER_DTO_WITH_PROFILE = new UserDTO("username", "user@email.com",
             "SecretPassword123!@", "SecretPassword123!@",
             UserProfileTestBuilder.DEFAULT_USER_PROFILE_DTO);
 
-    static UserEntity DEFAULT_USER_ENTITY = new UserEntity("username", "user@email.com",
+    public static UserEntity DEFAULT_USER_ENTITY_WITH_PROFILE = new UserEntity("username", "user@email.com",
+            "SecretPassword123!@", UserProfileTestBuilder.DEFAULT_USER_PROFILE_ENTITY_WITH_USER,
+            new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY)));
+
+    public static UserEntity DEFAULT_USER_ENTITY_WITHOUT_PROFILE = new UserEntity("username", "user@email.com",
             "SecretPassword123!@", new UserProfileEntity(),
             new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY)));
 
@@ -34,49 +42,49 @@ class UserTestBuilder {
 
     private Set<RoleEntity> roles = new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY));
 
-    UserTestBuilder withUsername(String username) {
+    public  UserTestBuilder withUsername(String username) {
 
         this.username = username;
 
         return this;
     }
 
-    UserTestBuilder withPassword(String password) {
+    public UserTestBuilder withPassword(String password) {
 
         this.password = password;
 
         return this;
     }
 
-    UserTestBuilder withMatchingPassword(String matchingPassword) {
+    public UserTestBuilder withMatchingPassword(String matchingPassword) {
 
         this.matchingPassword = matchingPassword;
 
         return this;
     }
 
-    UserTestBuilder withEmail(String email) {
+    public UserTestBuilder withEmail(String email) {
 
         this.email = email;
 
         return this;
     }
 
-    UserTestBuilder withRoles(Set<RoleEntity> roles) {
+    public UserTestBuilder withRoles(Set<RoleEntity> roles) {
 
         this.roles = roles;
 
         return this;
     }
 
-    UserTestBuilder withProfile(UserProfile profile) {
+    public  UserTestBuilder withProfile(UserProfile profile) {
 
         this.profile = profile;
 
         return this;
     }
 
-    User build(ObjectType type) {
+    public User build(ObjectType type) {
 
         User user;
 

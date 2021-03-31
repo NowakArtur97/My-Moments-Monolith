@@ -1,5 +1,6 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.shared;
 
+import com.nowakArtur97.myMoments.testUtil.builder.UserTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -42,7 +43,7 @@ class CustomUserDetailsServiceTest {
 
         String userName = "username";
 
-        UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY;
+        UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY_WITHOUT_PROFILE;
         User userDetailsExpected = new User(userEntityExpected.getUsername(), userEntityExpected.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
 
@@ -69,7 +70,7 @@ class CustomUserDetailsServiceTest {
 
         String email = "user@email.com";
 
-        UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY;
+        UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY_WITHOUT_PROFILE;
         User userDetailsExpected = new User(userEntityExpected.getUsername(), userEntityExpected.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
 
@@ -110,7 +111,7 @@ class CustomUserDetailsServiceTest {
     void when_get_user_authorities_should_return_list_of_authorities() {
 
         Set<RoleEntity> authoritiesExpected = Set.of(new RoleEntity("ROLE_USER"));
-        UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY;
+        UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY_WITHOUT_PROFILE;
 
         List<GrantedAuthority> authoritiesActual = customUserDetailsService.getAuthorities(userEntityExpected.getRoles());
 

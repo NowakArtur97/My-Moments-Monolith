@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.shared;
 
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
 import lombok.Builder;
@@ -40,12 +40,12 @@ public class UserEntity extends AbstractEntity implements User {
             joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private final Set<RoleEntity> roles;
 
-    void addRole(RoleEntity role) {
+    public void addRole(RoleEntity role) {
 
         this.getRoles().add(role);
     }
 
-    void removeRole(RoleEntity role) {
+    public void removeRole(RoleEntity role) {
 
         this.getRoles().remove(role);
     }

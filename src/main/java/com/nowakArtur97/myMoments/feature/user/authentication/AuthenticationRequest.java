@@ -1,5 +1,6 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.authentication;
 
+import com.nowakArtur97.myMoments.feature.user.shared.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @ApiModel(description = "User data required for Authentication")
-class AuthenticationRequest implements User {
+public class AuthenticationRequest implements User {
 
     @ApiModelProperty(notes = "The user's name")
     private final String username;

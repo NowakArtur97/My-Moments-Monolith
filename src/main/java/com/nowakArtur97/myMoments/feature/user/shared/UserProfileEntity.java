@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user;
+package com.nowakArtur97.myMoments.feature.user.shared;
 
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
 import lombok.*;
@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @ToString
-class UserProfileEntity extends AbstractEntity implements UserProfile {
+public class UserProfileEntity extends AbstractEntity implements UserProfile {
 
     @Column
     private String about;
