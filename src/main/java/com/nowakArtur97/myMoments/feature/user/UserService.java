@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-class UserService {
+public class UserService {
 
     @Value("${my-moments.default-user-role:ROLE_USER}")
     private String defaultUserRole;
@@ -24,17 +24,17 @@ class UserService {
 
     private final RoleService roleService;
 
-    Optional<UserEntity> findByUsername(String username) {
+    public Optional<UserEntity> findByUsername(String username) {
 
         return userRepository.findByUsername(username);
     }
 
-    Optional<UserEntity> findByEmail(String email) {
+    public Optional<UserEntity> findByEmail(String email) {
 
         return userRepository.findByEmail(email);
     }
 
-    public UserEntity register(UserDTO userDTO) throws RoleNotFoundException {
+    UserEntity register(UserDTO userDTO) throws RoleNotFoundException {
 
         UserEntity newUser = modelMapper.map(userDTO, UserEntity.class);
 

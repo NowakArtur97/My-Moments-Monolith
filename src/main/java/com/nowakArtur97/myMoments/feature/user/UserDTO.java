@@ -1,5 +1,9 @@
 package com.nowakArtur97.myMoments.feature.user;
 
+import com.nowakArtur97.myMoments.feature.user.validation.PasswordsMatch;
+import com.nowakArtur97.myMoments.feature.user.validation.UniqueEmail;
+import com.nowakArtur97.myMoments.feature.user.validation.UniqueUserName;
+import com.nowakArtur97.myMoments.feature.user.validation.ValidPasswords;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -16,18 +20,18 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @ToString
-@PasswordsMatch(message = "{user.password.notMatch}")
-@ValidPasswords
+@PasswordsMatch(message = "{user.password.notMatch}", groups = BasicUserValidationConstraints.class)
+@ValidPasswords(groups = BasicUserValidationConstraints.class)
 @ApiModel(description = "Model responsible for User validation during registration")
 public class UserDTO implements User {
 
-    @UniqueUserName(message = "{user.name.unique}")
+    @UniqueUserName(message = "{user.name.unique}", groups = BasicUserValidationConstraints.class)
     @NotBlank(message = "{user.name.notBlank}")
     @Size(min = 5, max = 40, message = "{user.name.size}")
     @ApiModelProperty(notes = "The user's name", required = true)
     private String username;
 
-    @UniqueEmail(message = "{user.email.unique}")
+    @UniqueEmail(message = "{user.email.unique}", groups = BasicUserValidationConstraints.class)
     @Email(message = "{user.email.wrongFormat}")
     @NotBlank(message = "{user.email.notBlank}")
     @ApiModelProperty(notes = "The user's email", required = true)
