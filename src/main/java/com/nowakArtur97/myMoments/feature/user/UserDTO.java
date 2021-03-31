@@ -19,8 +19,7 @@ import java.util.Objects;
 @PasswordsMatch(message = "{user.password.notMatch}")
 @ValidPasswords
 @ApiModel(description = "Model responsible for User validation during registration")
-public
-class UserDTO {
+public class UserDTO {
 
     @UniqueUserName(message = "{user.name.unique}")
     @NotBlank(message = "{user.name.notBlank}")

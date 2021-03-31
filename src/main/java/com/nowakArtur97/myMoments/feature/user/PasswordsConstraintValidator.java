@@ -66,12 +66,10 @@ class PasswordsConstraintValidator implements ConstraintValidator<ValidPasswords
 
         context.disableDefaultConstraintViolation();
 
-        for (String message : matchingPasswordResultMessages) {
-
-            context.buildConstraintViolationWithTemplate(message)
-                    .addPropertyNode(message)
-                    .addConstraintViolation();
-        }
+        matchingPasswordResultMessages.forEach(message ->
+                context.buildConstraintViolationWithTemplate(message)
+                        .addConstraintViolation()
+                        .disableDefaultConstraintViolation());
 
         return false;
     }
