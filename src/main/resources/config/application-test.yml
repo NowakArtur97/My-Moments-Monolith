@@ -8,6 +8,6 @@ spring:
       max-idle-time: 30m
       max-size: 500
       validation-query: SELECT 1
-    url: jdbc:mysql://192.168.99.100:3306/my-moments?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Warsaw
+    url: jdbc:mysql://192.168.99.100:3366/my-moments?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Warsaw
     username: my-moments-user
     password: my-moments-password123

@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(NameWithSpacesGenerator.class)
 @Tag("UserRegistrationController_Tests")
-public class UserRegistrationControllerTest {
+class UserRegistrationControllerTest {
 
     private final String AUTHENTICATION_BASE_PATH = "http://localhost:8080/api/v1/registration";
     private final String REGISTRATION_BASE_PATH = AUTHENTICATION_BASE_PATH + "/register";
@@ -54,14 +54,14 @@ public class UserRegistrationControllerTest {
     private static UserTestBuilder userTestBuilder;
 
     @BeforeAll
-    private static void setUpBuilders() {
+    static void setUpBuilders() {
 
         userProfileTestBuilder = new UserProfileTestBuilder();
         userTestBuilder = new UserTestBuilder();
     }
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
 
         UserRegistrationController userRegistrationController
                 = new UserRegistrationController(userService, customUserDetailsService, jwtUtil);
@@ -72,7 +72,7 @@ public class UserRegistrationControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(userRegistrationController, globalResponseEntityExceptionHandler)
                 .build();
 
-        ReflectionTestUtils.setField(userRegistrationController,"validity",36000000);
+        ReflectionTestUtils.setField(userRegistrationController, "validity", 36000000);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class UserRegistrationControllerTest {
     void when_register_valid_user_should_register_user() {
 
         UserDTO userDTO = UserTestBuilder.DEFAULT_USER_DTO_WITHOUT_PROFILE;
-        UserEntity userEntity = UserTestBuilder.DEFAULT_USER_ENTITY;
+        UserEntity userEntity = UserTestBuilder.DEFAULT_USER_ENTITY_WITHOUT_PROFILE;
 
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("user"));
         User userDetails = new User(userEntity.getUsername(),

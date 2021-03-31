@@ -8,7 +8,49 @@ server:
 #
 spring:
   profiles:
-    active: ${SPRING_ACTIVE_PROFILE:dev}
+    active: ${SPRING_ACTIVE_PROFILE:test}
+  #
+  # Flyway
+  #
+  flyway:
+    enabled: true
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    schemas: my_moments_schemas
+    validate-on-migrate: true
+    table: my_moments_schema_version
+    locations: classpath:db/mysql/migration
+  #
+  # JPA / HIBERNATE
+  #
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+#
+# Spring Boot Actuator
+#
+management:
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  security:
+    enabled: false
 #
 # Custom properties
 #
