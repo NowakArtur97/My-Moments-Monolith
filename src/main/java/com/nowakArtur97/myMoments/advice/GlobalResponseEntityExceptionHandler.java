@@ -6,6 +6,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -27,6 +28,18 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
                 .collect(Collectors.toList());
 
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), errors);
+
+        return new ResponseEntity<>(errorResponse, headers, status);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException exception,
+                                                                  HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        String error = "Malformed JSON request " + exception.getMessage();
+
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                List.of(error));
 
         return new ResponseEntity<>(errorResponse, headers, status);
     }

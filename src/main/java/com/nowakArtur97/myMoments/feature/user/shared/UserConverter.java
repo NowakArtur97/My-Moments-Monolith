@@ -17,20 +17,22 @@ public class UserConverter {
             userProfile.setUser(userEntity);
         }
 
-        if (userEntity.getProfile().getGender() == null) {
-            userEntity.getProfile().setGender(Gender.UNSPECIFIED);
+        UserProfileEntity userProfileEntity = userEntity.getProfile();
+
+        if (userProfileEntity.getGender() == null) {
+            userProfileEntity.setGender(Gender.UNSPECIFIED);
         }
-        if (userEntity.getProfile().getAbout() == null) {
-            userEntity.getProfile().setAbout("");
+        if (userProfileEntity.getAbout() == null) {
+            userProfileEntity.setAbout("");
         }
-        if (userEntity.getProfile().getInterests() == null) {
-            userEntity.getProfile().setInterests("");
+        if (userProfileEntity.getInterests() == null) {
+            userProfileEntity.setInterests("");
         }
-        if (userEntity.getProfile().getLanguages() == null) {
-            userEntity.getProfile().setLanguages("");
+        if (userProfileEntity.getLanguages() == null) {
+            userProfileEntity.setLanguages("");
         }
-        if (userEntity.getProfile().getLocation() == null) {
-            userEntity.getProfile().setLocation("");
+        if (userProfileEntity.getLocation() == null) {
+            userProfileEntity.setLocation("");
         }
 
         return userEntity;

@@ -13,7 +13,7 @@ class FlywayConfiguration {
     private final Environment env;
 
     @Bean(initMethod = "migrate")
-    public Flyway flyway() {
+    public Flyway getFlyway() {
 
         return new Flyway(
                 Flyway.configure()

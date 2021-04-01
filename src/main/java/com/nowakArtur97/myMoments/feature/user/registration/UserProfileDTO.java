@@ -2,6 +2,7 @@ package com.nowakArtur97.myMoments.feature.user.registration;
 
 import com.nowakArtur97.myMoments.feature.user.shared.Gender;
 import com.nowakArtur97.myMoments.feature.user.shared.UserProfile;
+import com.nowakArtur97.myMoments.feature.user.validation.EnumValidator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -22,8 +23,11 @@ public class UserProfileDTO implements UserProfile {
     @ApiModelProperty(notes = "The user's information")
     private String about;
 
+    @EnumValidator(
+            enumClazz = Gender.class,
+            message = "{userProfile.gender.valid}")
     @ApiModelProperty(notes = "The user's gender")
-    private Gender gender;
+    private String gender;
 
     @Size(message = "{userProfile.interests.size}", max = 250)
     @ApiModelProperty(notes = "The user's interests")
