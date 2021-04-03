@@ -47,7 +47,7 @@ class UserRegistrationController {
                                                         @RequestPart("image") MultipartFile image)
             throws RoleNotFoundException, IOException {
 
-        UserDTO userDTO = userService.getUserFromJson(userString);
+        UserDTO userDTO = userService.getUserDTOFromString(userString);
 
         UserEntity newUser = userService.register(userDTO, image);
 

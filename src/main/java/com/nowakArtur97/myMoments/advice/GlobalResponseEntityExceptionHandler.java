@@ -48,6 +48,16 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
         return new ResponseEntity<>(errorResponse, headers, status);
     }
 
+    @Override
+    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException exception,
+                                                                     HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                List.of(exception.getMessage()));
+
+        return new ResponseEntity<>(errorResponse, headers, status);
+    }
+
     @ExceptionHandler({ConstraintViolationException.class})
     ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException exception) {
 
@@ -58,15 +68,5 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), errors);
 
         return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException exception,
-                                                                     HttpHeaders headers, HttpStatus status, WebRequest request) {
-
-        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
-                List.of(exception.getMessage()));
-
-        return new ResponseEntity<>(errorResponse, headers, status);
     }
 }

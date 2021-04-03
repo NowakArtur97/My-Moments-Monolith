@@ -48,8 +48,6 @@ public class UserService {
     UserEntity register(@Valid UserDTO userDTO, MultipartFile image) throws RoleNotFoundException, IOException {
 
         UserEntity newUser = modelMapper.map(userDTO, UserEntity.class);
-        log.info("HELLO2");
-        log.info(newUser.toString());
 
         newUser.getProfile().setImage(image.getBytes());
         newUser.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
@@ -59,26 +57,21 @@ public class UserService {
 
         newUser.addRole(role);
 
-//        return userRepository.save(newUser);
-        return newUser;
+        return userRepository.save(newUser);
     }
 
-    public UserDTO getUserFromJson(String user) {
-
-        UserDTO userDTOAsJSON = new UserDTO();
+    UserDTO getUserDTOFromString(String user) {
 
         try {
+
             ObjectMapper objectMapper = new ObjectMapper();
-            userDTOAsJSON = objectMapper.readValue(user, UserDTO.class);
+
+            return objectMapper.readValue(user, UserDTO.class);
 
         } catch (IOException exception) {
-            log.info("Error: " + exception.toString());
+            log.info("IOException: " + exception.toString());
         }
 
-        log.info("HELLO1");
-        log.info(userDTOAsJSON.toString());
-
-        return userDTOAsJSON;
-
+        return new UserDTO();
     }
 }

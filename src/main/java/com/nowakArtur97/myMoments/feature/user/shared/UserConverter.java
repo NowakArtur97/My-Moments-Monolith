@@ -11,9 +11,6 @@ public class UserConverter {
         UserDTO userDTO = context.getSource();
 
         UserProfileEntity userProfileEntity = userEntity.getProfile();
-        System.out.println("HELLO0");
-        System.out.println(userEntity.toString());
-        System.out.println(userDTO.toString());
 
         if (userDTO.getProfile() == null) {
 

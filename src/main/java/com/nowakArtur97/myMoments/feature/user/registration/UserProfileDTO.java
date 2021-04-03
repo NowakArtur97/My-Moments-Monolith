@@ -39,8 +39,4 @@ public class UserProfileDTO implements UserProfile {
     @Size(message = "{userProfile.location.size}", max = 50)
     @ApiModelProperty(notes = "The user's location")
     private String location;
-//
-//    @ToString.Exclude
-//    @ApiModelProperty(notes = "The user's image")
-//    private MultipartFile image;
 }
