@@ -1,19 +1,27 @@
 package com.nowakArtur97.myMoments.feature.user.registration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nowakArtur97.myMoments.feature.user.shared.RoleEntity;
 import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.shared.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.management.relation.RoleNotFoundException;
+import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
+@Validated(UserValidationGroupSequence.class)
 public class UserService {
 
     @Value("${my-moments.default-user-role:ROLE_USER}")
@@ -37,10 +45,13 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    UserEntity register(UserDTO userDTO) throws RoleNotFoundException {
+    UserEntity register(@Valid UserDTO userDTO, MultipartFile image) throws RoleNotFoundException, IOException {
 
         UserEntity newUser = modelMapper.map(userDTO, UserEntity.class);
+        log.info("HELLO2");
+        log.info(newUser.toString());
 
+        newUser.getProfile().setImage(image.getBytes());
         newUser.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
 
         RoleEntity role = roleService.findByName(defaultUserRole)
@@ -48,6 +59,26 @@ public class UserService {
 
         newUser.addRole(role);
 
-        return userRepository.save(newUser);
+//        return userRepository.save(newUser);
+        return newUser;
+    }
+
+    public UserDTO getUserFromJson(String user) {
+
+        UserDTO userDTOAsJSON = new UserDTO();
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            userDTOAsJSON = objectMapper.readValue(user, UserDTO.class);
+
+        } catch (IOException exception) {
+            log.info("Error: " + exception.toString());
+        }
+
+        log.info("HELLO1");
+        log.info(userDTOAsJSON.toString());
+
+        return userDTOAsJSON;
+
     }
 }

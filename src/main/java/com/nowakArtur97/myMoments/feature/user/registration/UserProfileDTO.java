@@ -6,7 +6,6 @@ import com.nowakArtur97.myMoments.feature.user.validation.EnumValidator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Size;
 
@@ -40,8 +39,8 @@ public class UserProfileDTO implements UserProfile {
     @Size(message = "{userProfile.location.size}", max = 50)
     @ApiModelProperty(notes = "The user's location")
     private String location;
-
-    @ToString.Exclude
-    @ApiModelProperty(notes = "The user's image")
-    private MultipartFile image;
+//
+//    @ToString.Exclude
+//    @ApiModelProperty(notes = "The user's image")
+//    private MultipartFile image;
 }

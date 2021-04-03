@@ -10,14 +10,18 @@ public class UserConverter {
         UserEntity userEntity = context.getDestination();
         UserDTO userDTO = context.getSource();
 
-        if (userDTO.getProfile() == null) {
-            UserProfileEntity userProfile = new UserProfileEntity();
+        UserProfileEntity userProfileEntity = userEntity.getProfile();
+        System.out.println("HELLO0");
+        System.out.println(userEntity.toString());
+        System.out.println(userDTO.toString());
 
-            userEntity.setProfile(userProfile);
-            userProfile.setUser(userEntity);
+        if (userDTO.getProfile() == null) {
+
+            userProfileEntity = new UserProfileEntity();
+            userEntity.setProfile(userProfileEntity);
         }
 
-        UserProfileEntity userProfileEntity = userEntity.getProfile();
+        userProfileEntity.setUser(userEntity);
 
         if (userProfileEntity.getGender() == null) {
             userProfileEntity.setGender(Gender.UNSPECIFIED);
