@@ -47,9 +47,16 @@ public class UserService {
 
     UserEntity register(@Valid UserDTO userDTO, MultipartFile image) throws RoleNotFoundException, IOException {
 
+        if (userDTO.getProfile() != null) {
+            userDTO.getProfile().setGender(userDTO.getProfile().getGender().toUpperCase());
+        }
+
         UserEntity newUser = modelMapper.map(userDTO, UserEntity.class);
 
-        newUser.getProfile().setImage(image.getBytes());
+        if (image != null) {
+            newUser.getProfile().setImage(image.getBytes());
+        }
+
         newUser.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
 
         RoleEntity role = roleService.findByName(defaultUserRole)

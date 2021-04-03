@@ -12,7 +12,7 @@ class EnumConstraintValidator implements ConstraintValidator<EnumValidator, Stri
     @Override
     public void initialize(EnumValidator constraintAnnotation) {
 
-        valueList = new ArrayList<String>();
+        valueList = new ArrayList<>();
         Class<? extends Enum<?>> enumClass = constraintAnnotation.enumClazz();
 
         @SuppressWarnings("rawtypes")

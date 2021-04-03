@@ -44,7 +44,7 @@ class UserRegistrationController {
     ResponseEntity<AuthenticationResponse> registerUser(@ApiParam(value = "The user's data", name = "userString", required = true)
                                                         @RequestPart("userString") String userString,
                                                         @ApiParam(value = "The user's image", name = "image")
-                                                        @RequestPart("image") MultipartFile image)
+                                                        @RequestPart(value = "image", required = false) MultipartFile image)
             throws RoleNotFoundException, IOException {
 
         UserDTO userDTO = userService.getUserDTOFromString(userString);
