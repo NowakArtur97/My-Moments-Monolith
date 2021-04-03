@@ -41,13 +41,13 @@ class UserRegistrationController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully created a new account", response = String.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
-    ResponseEntity<AuthenticationResponse> registerUser(@ApiParam(value = "The user's data", name = "userString", required = true)
-                                                        @RequestPart("userString") String userString,
+    ResponseEntity<AuthenticationResponse> registerUser(@ApiParam(value = "The user's data", name = "user", required = true)
+                                                        @RequestPart("user") String user,
                                                         @ApiParam(value = "The user's image", name = "image")
                                                         @RequestPart(value = "image", required = false) MultipartFile image)
             throws RoleNotFoundException, IOException {
 
-        UserDTO userDTO = userService.getUserDTOFromString(userString);
+        UserDTO userDTO = userService.getUserDTOFromString(user);
 
         UserEntity newUser = userService.register(userDTO, image);
 

@@ -67,13 +67,13 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    UserDTO getUserDTOFromString(String user) {
+    UserDTO getUserDTOFromString(String userAsString) {
 
         try {
 
             ObjectMapper objectMapper = new ObjectMapper();
 
-            return objectMapper.readValue(user, UserDTO.class);
+            return objectMapper.readValue(userAsString, UserDTO.class);
 
         } catch (IOException exception) {
             log.info("IOException: " + exception.toString());

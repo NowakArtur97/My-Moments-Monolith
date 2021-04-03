@@ -28,7 +28,7 @@ public class UserDTO implements User {
 
     @UniqueUserName(message = "{user.name.unique}", groups = BasicUserValidationConstraints.class)
     @NotBlank(message = "{user.name.notBlank}")
-    @Size(min = 5, max = 40, message = "{user.name.size}")
+    @Size(min = 4, max = 40, message = "{user.name.size}")
     @ApiModelProperty(notes = "The user's name", required = true)
     private String username;
 

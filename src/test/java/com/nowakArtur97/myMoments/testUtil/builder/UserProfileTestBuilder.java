@@ -10,8 +10,8 @@ import org.springframework.mock.web.MockMultipartFile;
 
 public class UserProfileTestBuilder {
 
-    public static UserProfileDTO DEFAULT_USER_PROFILE_DTO = new UserProfileDTO("about", Gender.UNSPECIFIED,
-            "interests", "languages", "location", new MockMultipartFile("data", "filename.txt", "text/plain", "image".getBytes()));
+    public static UserProfileDTO DEFAULT_USER_PROFILE_DTO = new UserProfileDTO("about", "UNSPECIFIED",
+            "interests", "languages", "location");
 
     public static UserProfileEntity DEFAULT_USER_PROFILE_ENTITY_WITH_USER = new UserProfileEntity("about",
             Gender.UNSPECIFIED, "interests", "languages", "location", "image".getBytes(),
@@ -21,7 +21,9 @@ public class UserProfileTestBuilder {
 
     private String about = "about";
 
-    private Gender gender = Gender.MALE;
+    private Gender gender = Gender.UNSPECIFIED;
+
+    private String genderString = "UNSPECIFIED";
 
     private String interests = "interests";
 
@@ -46,6 +48,13 @@ public class UserProfileTestBuilder {
     public UserProfileTestBuilder withGender(Gender gender) {
 
         this.gender = gender;
+
+        return this;
+    }
+
+    public UserProfileTestBuilder withGender(String gender) {
+
+        this.genderString = gender;
 
         return this;
     }
@@ -100,7 +109,7 @@ public class UserProfileTestBuilder {
 
             case DTO:
 
-                userProfile = new UserProfileDTO(about, gender, interests, languages, location, imageFile);
+                userProfile = new UserProfileDTO(about, genderString, interests, languages, location);
 
                 break;
 
@@ -123,7 +132,9 @@ public class UserProfileTestBuilder {
 
         about = "about" + ID;
 
-        gender = Gender.MALE;
+        gender = Gender.UNSPECIFIED;
+
+        genderString = "UNSPECIFIED";
 
         interests = "interests" + ID;
 
@@ -131,7 +142,7 @@ public class UserProfileTestBuilder {
 
         location = "location" + ID;
 
-        image = "image".getBytes();
+        image = ("image" + ID).getBytes();
 
         imageFile = new MockMultipartFile("data" + ID, "filename.txt", "text/plain", image);
 
