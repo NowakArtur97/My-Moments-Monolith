@@ -58,13 +58,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -86,13 +86,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -110,13 +110,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -133,13 +133,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -156,14 +156,14 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE,
                 userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -182,13 +182,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -207,13 +207,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -231,13 +231,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -256,13 +256,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -279,13 +279,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -303,13 +303,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -328,13 +328,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -355,13 +355,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -381,13 +381,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -406,13 +406,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -429,13 +429,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -455,13 +455,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -481,13 +481,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -505,13 +505,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -529,13 +529,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -554,13 +554,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -579,13 +579,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -604,13 +604,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
@@ -629,13 +629,13 @@ class UserRegistrationValidationControllerTest {
 
         String userAsString = ObjectTestMapper.asJsonString(userDTO);
 
-        MockMultipartFile metadata = new MockMultipartFile("user", "request",
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
-                                .file(metadata)
+                                .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())

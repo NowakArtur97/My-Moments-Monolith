@@ -10,7 +10,7 @@ import org.springframework.mock.web.MockMultipartFile;
 
 public class UserProfileTestBuilder {
 
-    public static UserProfileDTO DEFAULT_USER_PROFILE_DTO = new UserProfileDTO("about", "UNSPECIFIED",
+    public static UserProfileDTO DEFAULT_USER_PROFILE_DTO = new UserProfileDTO("about", "unspecified",
             "interests", "languages", "location");
 
     public static UserProfileEntity DEFAULT_USER_PROFILE_ENTITY_WITH_USER = new UserProfileEntity("about",
