@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user.validation;
 
-import com.nowakArtur97.myMoments.feature.user.registration.UserService;
+import com.nowakArtur97.myMoments.feature.user.registration.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.ConstraintValidator;
@@ -9,11 +9,11 @@ import javax.validation.ConstraintValidatorContext;
 @RequiredArgsConstructor
 class UniqueUserNameConstraintValidator implements ConstraintValidator<UniqueUserName, String> {
 
-    private final UserService userService;
+    private final UserRegistrationService userRegistrationService;
 
     @Override
-    public boolean isValid(String email, ConstraintValidatorContext context) {
+    public boolean isValid(String username, ConstraintValidatorContext context) {
 
-        return userService.findByUsername(email).isEmpty();
+        return !userRegistrationService.isUsernameAlreadyInUse(username);
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nowakArtur97.myMoments.feature.user.shared.RoleEntity;
 import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.shared.UserRepository;
+import com.nowakArtur97.myMoments.feature.user.shared.UserValidationGroupSequence;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -16,13 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 @Validated(UserValidationGroupSequence.class)
-public class UserService {
+public class UserRegistrationService {
 
     @Value("${my-moments.default-user-role:USER_ROLE}")
     private String defaultUserRole;
@@ -35,17 +35,17 @@ public class UserService {
 
     private final RoleService roleService;
 
-    public Optional<UserEntity> findByUsername(String username) {
+    public boolean isUsernameAlreadyInUse(String username) {
 
-        return userRepository.findByUsername(username);
+        return userRepository.existsUserByUsername(username);
     }
 
-    public Optional<UserEntity> findByEmail(String email) {
+    public boolean isEmailAlreadyInUse(String email) {
 
-        return userRepository.findByEmail(email);
+        return userRepository.existsUserByEmail(email);
     }
 
-    UserEntity register(@Valid UserDTO userDTO, MultipartFile image) throws RoleNotFoundException, IOException {
+    public UserEntity register(@Valid UserDTO userDTO, MultipartFile image) throws RoleNotFoundException, IOException {
 
         if (userDTO.getProfile() != null) {
             userDTO.getProfile().setGender(userDTO.getProfile().getGender().toUpperCase());
@@ -67,7 +67,7 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    UserDTO getUserDTOFromString(String userAsString) {
+    public UserDTO getUserDTOFromString(String userAsString) {
 
         try {
 

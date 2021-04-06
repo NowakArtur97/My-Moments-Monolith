@@ -30,7 +30,7 @@ class UserRegistrationController {
     @Value("${my-moments.jwt.validity:36000000}")
     private long validity;
 
-    private final UserService userService;
+    private final UserRegistrationService userRegistrationService;
 
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -47,9 +47,9 @@ class UserRegistrationController {
                                                         @RequestPart(value = "image", required = false) MultipartFile image)
             throws RoleNotFoundException, IOException {
 
-        UserDTO userDTO = userService.getUserDTOFromString(user);
+        UserDTO userDTO = userRegistrationService.getUserDTOFromString(user);
 
-        UserEntity newUser = userService.register(userDTO, image);
+        UserEntity newUser = userRegistrationService.register(userDTO, image);
 
         UserDetails userDetails = new User(newUser.getUsername(), newUser.getPassword(),
                 customUserDetailsService.getAuthorities(newUser.getRoles()));

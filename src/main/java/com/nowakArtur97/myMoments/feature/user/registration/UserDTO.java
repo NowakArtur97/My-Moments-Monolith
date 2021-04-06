@@ -1,5 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user.registration;
 
+import com.nowakArtur97.myMoments.feature.user.shared.BasicUserValidationConstraints;
 import com.nowakArtur97.myMoments.feature.user.shared.User;
 import com.nowakArtur97.myMoments.feature.user.validation.PasswordsMatch;
 import com.nowakArtur97.myMoments.feature.user.validation.UniqueEmail;
