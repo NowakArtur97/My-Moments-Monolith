@@ -5,6 +5,7 @@ import com.nowakArtur97.myMoments.common.util.JwtUtil;
 import com.nowakArtur97.myMoments.feature.user.shared.AuthenticationResponse;
 import com.nowakArtur97.myMoments.feature.user.shared.CustomUserDetailsService;
 import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
+import com.nowakArtur97.myMoments.feature.user.shared.UserObjectMapper;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,8 @@ class UserRegistrationController {
 
     private final JwtUtil jwtUtil;
 
+    private final UserObjectMapper userObjectMapper;
+
     @PostMapping(value = "/register", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "Create an account", notes = "Create an account (required for generating API key)")
     @ApiResponses({
@@ -47,7 +50,7 @@ class UserRegistrationController {
                                                         @RequestPart(value = "image", required = false) MultipartFile image)
             throws RoleNotFoundException, IOException {
 
-        UserDTO userDTO = userRegistrationService.getUserDTOFromString(user);
+        UserDTO userDTO = userObjectMapper.getUserDTOFromString(user);
 
         UserEntity newUser = userRegistrationService.register(userDTO, image);
 

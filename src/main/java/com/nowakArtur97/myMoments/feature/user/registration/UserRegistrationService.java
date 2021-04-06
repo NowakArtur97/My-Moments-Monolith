@@ -1,12 +1,10 @@
 package com.nowakArtur97.myMoments.feature.user.registration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nowakArtur97.myMoments.feature.user.shared.RoleEntity;
 import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.shared.UserRepository;
 import com.nowakArtur97.myMoments.feature.user.shared.UserValidationGroupSequence;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +18,6 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 @Validated(UserValidationGroupSequence.class)
 public class UserRegistrationService {
 
@@ -65,20 +62,5 @@ public class UserRegistrationService {
         newUser.addRole(role);
 
         return userRepository.save(newUser);
-    }
-
-    public UserDTO getUserDTOFromString(String userAsString) {
-
-        try {
-
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            return objectMapper.readValue(userAsString, UserDTO.class);
-
-        } catch (IOException exception) {
-            log.info("IOException: " + exception.toString());
-        }
-
-        return new UserDTO();
     }
 }
