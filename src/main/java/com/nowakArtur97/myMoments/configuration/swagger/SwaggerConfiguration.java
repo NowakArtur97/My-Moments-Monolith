@@ -1,6 +1,7 @@
 package com.nowakArtur97.myMoments.configuration.swagger;
 
 import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationTag;
+import com.nowakArtur97.myMoments.feature.user.edition.UserTag;
 import com.nowakArtur97.myMoments.feature.user.registration.UserRegistrationTag;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +35,8 @@ class SwaggerConfiguration {
                 .apiInfo(getApiDetails(swaggerConfigurationProperties))
                 .tags(
                         new Tag(UserRegistrationTag.RESOURCE, UserRegistrationTag.DESCRIPTION),
-                        new Tag(AuthenticationTag.RESOURCE, AuthenticationTag.DESCRIPTION)
+                        new Tag(AuthenticationTag.RESOURCE, AuthenticationTag.DESCRIPTION),
+                        new Tag(UserTag.RESOURCE, UserTag.DESCRIPTION)
                 )
                 .securityContexts(List.of(getSecurityContext(swaggerConfigurationProperties)))
                 .securitySchemes(List.of(getApiKey(swaggerConfigurationProperties)));

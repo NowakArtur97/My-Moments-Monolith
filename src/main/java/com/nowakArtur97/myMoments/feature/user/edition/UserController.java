@@ -2,7 +2,6 @@ package com.nowakArtur97.myMoments.feature.user.edition;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
 import com.nowakArtur97.myMoments.feature.user.registration.UserDTO;
-import com.nowakArtur97.myMoments.feature.user.registration.UserRegistrationTag;
 import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.shared.UserObjectMapper;
 import io.swagger.annotations.*;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-@Api(tags = {UserRegistrationTag.RESOURCE})
+@Api(tags = {UserTag.RESOURCE})
 class UserController {
 
     private final UserService userService;
@@ -25,7 +24,7 @@ class UserController {
     private final UserObjectMapper userObjectMapper;
 
     @PutMapping(path = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    @ApiOperation(value = "Create an account", notes = "Create an account (required for generating API key)")
+    @ApiOperation(value = "Update an account", notes = "Update an account")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully updated account", response = String.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
