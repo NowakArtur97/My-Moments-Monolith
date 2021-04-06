@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 @Tag("UserService_Tests")
 class UserServiceTest {
 
-    private final String defaultUserRole = "ROLE_USER";
+    private final String defaultUserRole = "USER_ROLE";
 
     private UserService userService;
 
@@ -68,7 +68,7 @@ class UserServiceTest {
 
         userService = new UserService(userRepository, modelMapper, bCryptPasswordEncoder, roleService);
 
-        ReflectionTestUtils.setField(userService, "defaultUserRole", "ROLE_USER");
+        ReflectionTestUtils.setField(userService, "defaultUserRole", "USER_ROLE");
     }
 
     @Test

@@ -55,7 +55,7 @@ management:
 # Custom properties
 #
 my-moments:
-  default-user-role: ROLE_USER
+  default-user-role: USER_ROLE
   #
   # Swagger
   #

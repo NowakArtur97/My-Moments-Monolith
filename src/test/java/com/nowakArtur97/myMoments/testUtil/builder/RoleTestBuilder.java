@@ -4,7 +4,7 @@ import com.nowakArtur97.myMoments.feature.user.shared.RoleEntity;
 
 public class RoleTestBuilder {
 
-    public static RoleEntity DEFAULT_ROLE_ENTITY = new RoleEntity("ROLE_USER");
+    public static RoleEntity DEFAULT_ROLE_ENTITY = new RoleEntity("USER_ROLE");
 
     private String name = "role";
 

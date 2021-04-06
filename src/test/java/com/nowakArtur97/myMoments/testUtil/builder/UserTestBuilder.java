@@ -12,10 +12,6 @@ import java.util.Set;
 
 public class UserTestBuilder {
 
-    public static UserEntity DEFAULT_USER_ENTITY_WITHOUT_PROFILE = new UserEntity("username", "user@email.com",
-            "SecretPassword123!@", new UserProfileEntity(),
-            new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY)));
-
     private String username = "user123";
 
     private String password = "SecretPassword123!@";

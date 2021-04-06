@@ -5,12 +5,11 @@ import com.nowakArtur97.myMoments.advice.AuthenticationControllerAdvice;
 import com.nowakArtur97.myMoments.advice.GlobalResponseEntityExceptionHandler;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
 import com.nowakArtur97.myMoments.feature.user.shared.CustomUserDetailsService;
+import com.nowakArtur97.myMoments.testUtil.builder.UserTestBuilder;
+import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;
 import com.nowakArtur97.myMoments.testUtil.mapper.ObjectTestMapper;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -53,6 +52,14 @@ class AuthenticationControllerTest {
     @Mock
     private JwtUtil jwtUtil;
 
+    private static UserTestBuilder userTestBuilder;
+
+    @BeforeAll
+    private static void setUpBuilders() {
+
+        userTestBuilder = new UserTestBuilder();
+    }
+
     @BeforeEach
     private void setUp() {
 
@@ -72,14 +79,13 @@ class AuthenticationControllerTest {
     @Test
     void when_authenticate_valid_user_should_generate_token() {
 
-        String userName = "user123";
-        String password = "Password1@";
-        String email = "email@email.com";
+        AuthenticationRequest authenticationRequest = (AuthenticationRequest) userTestBuilder.build(ObjectType.REQUEST);
+        String userName = authenticationRequest.getUsername();
+        String password = authenticationRequest.getPassword();
 
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest(userName, password, email);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 userName, password);
-        User userDetails = new User(userName, password, List.of(new SimpleGrantedAuthority("USER_ROLE")));
+        User userDetails = new User(userName, password, List.of(new SimpleGrantedAuthority("ROLE_USER")));
         String token = "generated token";
 
         when(customUserDetailsService.loadUserByUsername(userName)).thenReturn(userDetails);
@@ -105,11 +111,8 @@ class AuthenticationControllerTest {
     @Test
     void when_authenticate_not_existing_user_should_return_error_response() {
 
-        String userName = "user123";
-        String password = "Password1@";
-        String email = "email@email.com";
-
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest(userName, password, email);
+        AuthenticationRequest authenticationRequest = (AuthenticationRequest) userTestBuilder.build(ObjectType.REQUEST);
+        String userName = authenticationRequest.getUsername();
 
         when(customUserDetailsService.loadUserByUsername(userName))
                 .thenThrow(new UsernameNotFoundException("User with name/email: '" + userName + "' not found."));
@@ -134,14 +137,13 @@ class AuthenticationControllerTest {
     @Test
     void when_authenticate_user_with_incorrect_data_should_return_error_response() {
 
-        String userName = "user123";
-        String password = "Password1@";
-        String email = "email@email.com";
+        AuthenticationRequest authenticationRequest = (AuthenticationRequest) userTestBuilder.build(ObjectType.REQUEST);
+        String userName = authenticationRequest.getUsername();
+        String password = authenticationRequest.getPassword();
 
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest(userName, password, email);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 userName, password);
-        User userDetails = new User(userName, password, List.of(new SimpleGrantedAuthority("USER_ROLE")));
+        User userDetails = new User(userName, password, List.of(new SimpleGrantedAuthority("ROLE_USER")));
 
         when(customUserDetailsService.loadUserByUsername(userName)).thenReturn(userDetails);
         when(authenticationManager.authenticate(usernamePasswordAuthenticationToken)).thenThrow(new BadCredentialsException(""));

@@ -35,7 +35,7 @@ class RoleServiceTest {
     @Test
     void when_find_role_by_name_should_return_role() {
 
-        String roleName = "ROLE_USER";
+        String roleName = "USER_ROLE";
 
         RoleEntity roleEntityExpected = RoleTestBuilder.DEFAULT_ROLE_ENTITY;
 

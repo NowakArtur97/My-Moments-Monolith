@@ -24,7 +24,7 @@ import java.util.Optional;
 @Validated(UserValidationGroupSequence.class)
 public class UserService {
 
-    @Value("${my-moments.default-user-role:ROLE_USER}")
+    @Value("${my-moments.default-user-role:USER_ROLE}")
     private String defaultUserRole;
 
     private final UserRepository userRepository;

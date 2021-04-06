@@ -1,11 +1,10 @@
 package com.nowakArtur97.myMoments.feature.user.shared;
 
+import com.nowakArtur97.myMoments.testUtil.builder.UserProfileTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.builder.UserTestBuilder;
+import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,6 +31,16 @@ class CustomUserDetailsServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    private static UserProfileTestBuilder userProfileTestBuilder;
+    private static UserTestBuilder userTestBuilder;
+
+    @BeforeAll
+    private static void setUpBuilders() {
+
+        userProfileTestBuilder = new UserProfileTestBuilder();
+        userTestBuilder = new UserTestBuilder();
+    }
+
     @BeforeEach
     void setUp() {
 
@@ -41,17 +50,20 @@ class CustomUserDetailsServiceTest {
     @Test
     void when_load_user_by_user_name_should_return_user_details() {
 
-        String userName = "username";
+        String expectedUsername = "username";
 
-        UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY_WITHOUT_PROFILE;
+        UserProfileEntity userProfileExpected = (UserProfileEntity) userProfileTestBuilder.build(ObjectType.ENTITY);
+        UserEntity userEntityExpected = (UserEntity) userTestBuilder.withUsername(expectedUsername).withProfile(userProfileExpected)
+                .withRoles(Set.of(new RoleEntity("USER_ROLE"))).build(ObjectType.ENTITY);
         User userDetailsExpected = new User(userEntityExpected.getUsername(), userEntityExpected.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+                List.of(new SimpleGrantedAuthority("USER_ROLE")));
 
-        when(userRepository.findByUsernameOrEmail(userName, userName)).thenReturn(Optional.of(userEntityExpected));
+        when(userRepository.findByUsernameOrEmail(expectedUsername, expectedUsername)).thenReturn(Optional.of(userEntityExpected));
 
-        UserDetails userDetailsActual = customUserDetailsService.loadUserByUsername(userName);
+        UserDetails userDetailsActual = customUserDetailsService.loadUserByUsername(expectedUsername);
 
-        assertAll(
+        assertAll(() -> assertEquals(userDetailsExpected, userDetailsActual, () -> "should return user details: "
+                        + userDetailsExpected + ", but was: " + userDetailsActual),
                 () -> assertEquals(userDetailsExpected.getUsername(), userDetailsActual.getUsername(),
                         () -> "should return user details with user name: " + userDetailsExpected.getUsername()
                                 + ", but was: " + userDetailsActual.getUsername()),
@@ -61,24 +73,28 @@ class CustomUserDetailsServiceTest {
                 () -> assertEquals(userDetailsExpected.getAuthorities(), userDetailsActual.getAuthorities(),
                         () -> "should return user details with authorities: " + userDetailsExpected.getAuthorities()
                                 + ", but was: " + userDetailsActual.getAuthorities()),
-                () -> verify(userRepository, times(1)).findByUsernameOrEmail(userName, userName),
+                () -> verify(userRepository, times(1))
+                        .findByUsernameOrEmail(expectedUsername, expectedUsername),
                 () -> verifyNoMoreInteractions(userRepository));
     }
 
     @Test
     void when_load_user_by_email_should_return_user_details() {
 
-        String email = "user@email.com";
+        String expectedEmail = "user@email.com";
 
-        UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY_WITHOUT_PROFILE;
+        UserProfileEntity userProfileExpected = (UserProfileEntity) userProfileTestBuilder.build(ObjectType.ENTITY);
+        UserEntity userEntityExpected = (UserEntity) userTestBuilder.withEmail(expectedEmail).withProfile(userProfileExpected)
+                .withRoles(Set.of(new RoleEntity("USER_ROLE"))).build(ObjectType.ENTITY);
         User userDetailsExpected = new User(userEntityExpected.getUsername(), userEntityExpected.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+                List.of(new SimpleGrantedAuthority("USER_ROLE")));
 
-        when(userRepository.findByUsernameOrEmail(email, email)).thenReturn(Optional.of(userEntityExpected));
+        when(userRepository.findByUsernameOrEmail(expectedEmail, expectedEmail)).thenReturn(Optional.of(userEntityExpected));
 
-        UserDetails userDetailsActual = customUserDetailsService.loadUserByUsername(email);
+        UserDetails userDetailsActual = customUserDetailsService.loadUserByUsername(expectedEmail);
 
-        assertAll(
+        assertAll(() -> assertEquals(userDetailsExpected, userDetailsActual, () -> "should return user details: "
+                        + userDetailsExpected + ", but was: " + userDetailsActual),
                 () -> assertEquals(userDetailsExpected.getUsername(), userDetailsActual.getUsername(),
                         () -> "should return user details with user name: " + userDetailsExpected.getUsername()
                                 + ", but was: " + userDetailsActual.getUsername()),
@@ -88,7 +104,7 @@ class CustomUserDetailsServiceTest {
                 () -> assertEquals(userDetailsExpected.getAuthorities(), userDetailsActual.getAuthorities(),
                         () -> "should return user details with authorities: " + userDetailsExpected.getAuthorities()
                                 + ", but was: " + userDetailsActual.getAuthorities()),
-                () -> verify(userRepository, times(1)).findByUsernameOrEmail(email, email),
+                () -> verify(userRepository, times(1)).findByUsernameOrEmail(expectedEmail, expectedEmail),
                 () -> verifyNoMoreInteractions(userRepository));
     }
 
@@ -110,8 +126,10 @@ class CustomUserDetailsServiceTest {
     @Test
     void when_get_user_authorities_should_return_list_of_authorities() {
 
-        Set<RoleEntity> authoritiesExpected = Set.of(new RoleEntity("ROLE_USER"));
-        UserEntity userEntityExpected = UserTestBuilder.DEFAULT_USER_ENTITY_WITHOUT_PROFILE;
+        Set<RoleEntity> authoritiesExpected = Set.of(new RoleEntity("USER_ROLE"));
+        UserProfileEntity userProfileExpected = (UserProfileEntity) userProfileTestBuilder.build(ObjectType.ENTITY);
+        UserEntity userEntityExpected = (UserEntity) userTestBuilder.withRoles(authoritiesExpected).withProfile(userProfileExpected)
+                .build(ObjectType.ENTITY);
 
         List<GrantedAuthority> authoritiesActual = customUserDetailsService.getAuthorities(userEntityExpected.getRoles());
 
@@ -119,7 +137,7 @@ class CustomUserDetailsServiceTest {
                 () -> assertEquals(authoritiesExpected.size(), authoritiesActual.size(),
                         () -> "should return: " + authoritiesExpected.size() + " authorities, but was: "
                                 + authoritiesActual.size()),
-                () -> assertEquals(authoritiesActual.get(0).getAuthority(), "ROLE_USER",
+                () -> assertEquals(authoritiesActual.get(0).getAuthority(), "USER_ROLE",
                         () -> "should return user authority, but was: " + authoritiesActual.get(0).getAuthority()),
                 () -> verifyNoInteractions(userRepository));
     }

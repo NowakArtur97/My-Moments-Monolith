@@ -7,6 +7,6 @@ INSERT INTO `user_profile`(id, uuid, about, gender, interests, languages, locati
 (2, 'b0544377-77c8-40b9-b824-3d4af8cdb9f0', 'I am an admin', 'FEMALE', 'I like alpacas', 'Polish and Japanese', 'Poland');
 
 INSERT INTO `role` (uuid, name)
-VALUES ('ba50fd96-8973-41f7-9866-221c66d2dd05', 'ROLE_USER'), ('f0ded723-fa8d-4b54-a4c4-95c3dc8caf0f', 'ROLE_ADMIN');
+VALUES ('ba50fd96-8973-41f7-9866-221c66d2dd05', 'USER_ROLE'), ('f0ded723-fa8d-4b54-a4c4-95c3dc8caf0f', 'ADMIN_ROLE');
 
 INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 1), (2, 1), (2, 2);
