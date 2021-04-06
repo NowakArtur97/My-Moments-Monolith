@@ -13,12 +13,6 @@ public class UserProfileTestBuilder {
     public static UserProfileDTO DEFAULT_USER_PROFILE_DTO = new UserProfileDTO("about", "unspecified",
             "interests", "languages", "location");
 
-    public static UserProfileEntity DEFAULT_USER_PROFILE_ENTITY_WITH_USER = new UserProfileEntity("about",
-            Gender.UNSPECIFIED, "interests", "languages", "location", "image".getBytes(),
-            UserTestBuilder.DEFAULT_USER_ENTITY_WITH_PROFILE);
-
-    private static int ID = 1;
-
     private String about = "about";
 
     private Gender gender = Gender.UNSPECIFIED;
@@ -130,22 +124,20 @@ public class UserProfileTestBuilder {
 
     private void resetProperties() {
 
-        about = "about" + ID;
+        about = "about";
 
         gender = Gender.UNSPECIFIED;
 
         genderString = "UNSPECIFIED";
 
-        interests = "interests" + ID;
+        interests = "interests";
 
-        languages = "languages" + ID;
+        languages = "languages";
 
-        location = "location" + ID;
+        location = "location";
 
-        image = ("image" + ID).getBytes();
+        image = "image".getBytes();
 
-        imageFile = new MockMultipartFile("data" + ID, "filename.txt", "text/plain", image);
-
-        ID++;
+        imageFile = new MockMultipartFile("data", "filename.txt", "text/plain", image);
     }
 }

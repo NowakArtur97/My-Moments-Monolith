@@ -8,7 +8,7 @@ public class RoleTestBuilder {
 
     private String name = "role";
 
-    public RoleTestBuilder withRole(String name) {
+    public RoleTestBuilder withName(String name) {
 
         this.name = name;
 

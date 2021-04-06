@@ -43,9 +43,11 @@ class RoleServiceTest {
 
         RoleEntity roleEntityActual = roleService.findByName(roleName).get();
 
-        assertAll(
+        assertAll(() -> assertEquals(roleEntityExpected, roleEntityActual,
+                () -> "should return role: " + roleEntityExpected + ", but was: " + roleEntityActual),
                 () -> assertEquals(roleEntityExpected.getName(), roleEntityActual.getName(),
-                        () -> "should return role with name: " + roleEntityExpected.getName() + ", but was: " + roleEntityActual.getName()),
+                        () -> "should return role with name: " + roleEntityExpected.getName()
+                                + ", but was: " + roleEntityActual.getName()),
                 () -> verify(roleRepository, times(1)).findByName(roleName),
                 () -> verifyNoMoreInteractions(roleRepository));
     }

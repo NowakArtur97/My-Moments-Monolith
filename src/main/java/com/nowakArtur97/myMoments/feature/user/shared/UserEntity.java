@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-@ToString
+@ToString(callSuper = true)
 public class UserEntity extends AbstractEntity implements User {
 
     @Column(nullable = false, unique = true)
@@ -29,9 +27,7 @@ public class UserEntity extends AbstractEntity implements User {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
-    @LazyToOne(LazyToOneOption.NO_PROXY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private UserProfileEntity profile;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,

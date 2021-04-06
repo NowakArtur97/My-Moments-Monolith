@@ -12,23 +12,9 @@ import java.util.Set;
 
 public class UserTestBuilder {
 
-    public static UserDTO DEFAULT_USER_DTO_WITHOUT_PROFILE = new UserDTO("username", "user@email.com",
-            "SecretPassword123!@", "SecretPassword123!@",
-            new UserProfileDTO());
-
-    public static UserDTO DEFAULT_USER_DTO_WITH_PROFILE = new UserDTO("username", "user@email.com",
-            "SecretPassword123!@", "SecretPassword123!@",
-            UserProfileTestBuilder.DEFAULT_USER_PROFILE_DTO);
-
-    public static UserEntity DEFAULT_USER_ENTITY_WITH_PROFILE = new UserEntity("username", "user@email.com",
-            "SecretPassword123!@", UserProfileTestBuilder.DEFAULT_USER_PROFILE_ENTITY_WITH_USER,
-            new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY)));
-
     public static UserEntity DEFAULT_USER_ENTITY_WITHOUT_PROFILE = new UserEntity("username", "user@email.com",
             "SecretPassword123!@", new UserProfileEntity(),
             new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY)));
-
-    private static int ID = 1;
 
     private String username = "user123";
 
@@ -36,13 +22,13 @@ public class UserTestBuilder {
 
     private String matchingPassword = "SecretPassword123!@";
 
-    private String email = "user@email.com";
+    private String email = "userEmail123@email.com";
 
     private UserProfile profile;
 
     private Set<RoleEntity> roles = new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY));
 
-    public  UserTestBuilder withUsername(String username) {
+    public UserTestBuilder withUsername(String username) {
 
         this.username = username;
 
@@ -77,7 +63,7 @@ public class UserTestBuilder {
         return this;
     }
 
-    public  UserTestBuilder withProfile(UserProfile profile) {
+    public UserTestBuilder withProfile(UserProfile profile) {
 
         this.profile = profile;
 
@@ -119,18 +105,16 @@ public class UserTestBuilder {
 
     private void resetProperties() {
 
-        username = "user123" + ID;
+        username = "user123";
 
-        password = "SecretPassword123!@" + ID;
+        password = "SecretPassword123!@";
 
-        matchingPassword = "SecretPassword123!@" + ID;
+        matchingPassword = "SecretPassword123!@";
 
-        email = "user@email" + ID + ".com";
+        email = "userEmail123@email.com";
 
         profile = null;
 
-        roles = new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY));
-
-        ID++;
+        roles = new HashSet<>();
     }
 }

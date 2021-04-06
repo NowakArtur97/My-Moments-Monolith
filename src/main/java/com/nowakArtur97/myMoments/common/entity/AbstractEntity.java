@@ -1,6 +1,7 @@
 package com.nowakArtur97.myMoments.common.entity;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @MappedSuperclass
 @EqualsAndHashCode(of = "uuid")
+@ToString
 public abstract class AbstractEntity {
 
     @Id

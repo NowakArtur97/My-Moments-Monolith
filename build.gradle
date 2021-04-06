@@ -58,6 +58,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	// https://mvnrepository.com/artifact/org.mockito/mockito-inline
+	testImplementation group: 'org.mockito', name: 'mockito-inline', version: '3.8.0'
 }
 
 test {
