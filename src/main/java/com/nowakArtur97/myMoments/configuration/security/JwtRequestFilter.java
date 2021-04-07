@@ -41,8 +41,7 @@ class JwtRequestFilter extends OncePerRequestFilter {
         if (isBearerTypeAuthorization(authorizationHeader)) {
 
             jwt = authorizationHeader.substring(jwtConfigurationProperties.getAuthorizationHeaderLength());
-            username = jwtUtil.extractUserName(jwt);
-
+            username = jwtUtil.extractUsername(jwt);
         } else {
             throw new JwtTokenMissingException("JWT token is missing in request headers.");
         }

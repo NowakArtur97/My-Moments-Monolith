@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user.edition;
+package com.nowakArtur97.myMoments.feature.user.resource;
 
 public final class UserTag {
 

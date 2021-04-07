@@ -30,10 +30,10 @@ public class JwtUtil {
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
 
-        return (extractUserName(token).equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (extractUsername(token).equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public String extractUserName(String token) {
+    public String extractUsername(String token) {
 
         return extractClaim(token, Claims::getSubject);
     }
@@ -56,9 +56,10 @@ public class JwtUtil {
     }
 
     private String createToken(String subject, Map<String, Object> claims) {
+
         return Jwts.builder()
-                .setSubject(subject)
                 .setClaims(claims)
+                .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtConfigurationProperties.getValidity()))
                 .signWith(SignatureAlgorithm.HS256, jwtConfigurationProperties.getSecretKey())

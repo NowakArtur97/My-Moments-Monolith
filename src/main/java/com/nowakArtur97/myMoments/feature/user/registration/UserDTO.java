@@ -27,6 +27,9 @@ import java.util.Objects;
 @ApiModel(description = "Model responsible for User validation during registration")
 public class UserDTO implements User {
 
+    @ApiModelProperty(notes = "The user's id", required = true)
+    private Long id;
+
     @UniqueUserName(message = "{user.name.unique}", groups = BasicUserValidationConstraints.class)
     @NotBlank(message = "{user.name.notBlank}")
     @Size(min = 4, max = 40, message = "{user.name.size}")
@@ -49,6 +52,14 @@ public class UserDTO implements User {
 
     @Valid
     private UserProfileDTO profile;
+
+    public UserDTO(String username, String email, String password, String matchingPassword, UserProfileDTO profile) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.matchingPassword = matchingPassword;
+        this.profile = profile;
+    }
 
     @Override
     public boolean equals(Object o) {

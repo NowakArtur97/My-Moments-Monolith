@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(callSuper = true)
 public class UserProfileEntity extends AbstractEntity implements UserProfile {
 
     @Column

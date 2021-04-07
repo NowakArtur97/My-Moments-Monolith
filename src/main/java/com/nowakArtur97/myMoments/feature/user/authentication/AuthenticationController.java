@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/authentication")
 @RequiredArgsConstructor
 @Api(tags = {AuthenticationTag.RESOURCE})
+@ApiResponses(value = {
+        @ApiResponse(code = 401, message = "Permission to the resource is prohibited"),
+        @ApiResponse(code = 403, message = "Access to the resource is prohibited")})
 class AuthenticationController {
 
     @Value("${my-moments.jwt.validity:36000000}")

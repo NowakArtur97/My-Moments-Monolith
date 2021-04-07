@@ -2,10 +2,7 @@ package com.nowakArtur97.myMoments.feature.user.registration;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
-import com.nowakArtur97.myMoments.feature.user.shared.AuthenticationResponse;
-import com.nowakArtur97.myMoments.feature.user.shared.CustomUserDetailsService;
-import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
-import com.nowakArtur97.myMoments.feature.user.shared.UserObjectMapper;
+import com.nowakArtur97.myMoments.feature.user.shared.*;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +28,7 @@ class UserRegistrationController {
     @Value("${my-moments.jwt.validity:36000000}")
     private long validity;
 
-    private final UserRegistrationService userRegistrationService;
+    private final UserService userService;
 
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -39,7 +36,7 @@ class UserRegistrationController {
 
     private final UserObjectMapper userObjectMapper;
 
-    @PostMapping(value = "/register", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/registerUser", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "Create an account", notes = "Create an account (required for generating API key)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully created a new account", response = String.class),
@@ -52,7 +49,7 @@ class UserRegistrationController {
 
         UserDTO userDTO = userObjectMapper.getUserDTOFromString(user);
 
-        UserEntity newUser = userRegistrationService.register(userDTO, image);
+        UserEntity newUser = userService.registerUser(userDTO, image);
 
         UserDetails userDetails = new User(newUser.getUsername(), newUser.getPassword(),
                 customUserDetailsService.getAuthorities(newUser.getRoles()));

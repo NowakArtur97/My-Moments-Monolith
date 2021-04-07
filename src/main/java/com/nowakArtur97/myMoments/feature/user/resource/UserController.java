@@ -1,11 +1,13 @@
-package com.nowakArtur97.myMoments.feature.user.edition;
+package com.nowakArtur97.myMoments.feature.user.resource;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
 import com.nowakArtur97.myMoments.feature.user.registration.UserDTO;
+import com.nowakArtur97.myMoments.feature.user.shared.UserService;
 import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.shared.UserObjectMapper;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +15,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Api(tags = {UserTag.RESOURCE})
+@Slf4j
 class UserController {
 
     private final UserService userService;
@@ -35,12 +40,14 @@ class UserController {
             @ApiParam(value = "The user's data", name = "user", required = true)
             @RequestPart("user") String user,
             @ApiParam(value = "The user's image", name = "image")
-            @RequestPart(value = "image", required = false) MultipartFile image) {
+            @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
 
         UserEntity userEntity = userService.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User with id: '" + id + "' not found."));
 
         UserDTO userDTO = userObjectMapper.getUserDTOFromString(user);
+
+        userDTO.setId(id);
 
         UserEntity updatedUserEntity = userService.updateUser(userEntity, userDTO, image);
 

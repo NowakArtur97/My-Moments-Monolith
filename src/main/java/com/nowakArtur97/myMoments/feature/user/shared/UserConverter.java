@@ -2,7 +2,9 @@ package com.nowakArtur97.myMoments.feature.user.shared;
 
 import com.nowakArtur97.myMoments.feature.user.registration.UserDTO;
 import org.modelmapper.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserConverter {
 
     public static Converter<UserDTO, UserEntity> userDTOConverter = context -> {
@@ -18,6 +20,14 @@ public class UserConverter {
             userEntity.setProfile(userProfileEntity);
         }
 
+        setupDefaultProfileValues(userEntity, userProfileEntity);
+
+        return userEntity;
+    };
+
+    private static void setupDefaultProfileValues(UserEntity userEntity, UserProfileEntity userProfileEntity) {
+
+        userProfileEntity.setId(userEntity.getId());
         userProfileEntity.setUser(userEntity);
 
         if (userProfileEntity.getGender() == null) {
@@ -35,7 +45,5 @@ public class UserConverter {
         if (userProfileEntity.getLocation() == null) {
             userProfileEntity.setLocation("");
         }
-
-        return userEntity;
-    };
+    }
 }

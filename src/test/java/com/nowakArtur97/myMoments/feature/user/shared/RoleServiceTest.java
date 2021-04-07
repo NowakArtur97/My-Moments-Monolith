@@ -1,6 +1,5 @@
-package com.nowakArtur97.myMoments.feature.user.registration;
+package com.nowakArtur97.myMoments.feature.user.shared;
 
-import com.nowakArtur97.myMoments.feature.user.shared.RoleEntity;
 import com.nowakArtur97.myMoments.testUtil.builder.RoleTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +43,7 @@ class RoleServiceTest {
         RoleEntity roleEntityActual = roleService.findByName(roleName).get();
 
         assertAll(() -> assertEquals(roleEntityExpected, roleEntityActual,
-                () -> "should return role: " + roleEntityExpected + ", but was: " + roleEntityActual),
+                () -> "should return role: " + roleEntityExpected + ", but was: empty"),
                 () -> assertEquals(roleEntityExpected.getName(), roleEntityActual.getName(),
                         () -> "should return role with name: " + roleEntityExpected.getName()
                                 + ", but was: " + roleEntityActual.getName()),
