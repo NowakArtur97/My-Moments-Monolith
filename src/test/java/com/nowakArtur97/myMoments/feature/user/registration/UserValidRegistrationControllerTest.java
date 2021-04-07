@@ -38,11 +38,13 @@ class UserValidRegistrationControllerTest {
     @Autowired
     private Flyway flyway;
 
+    private static UserProfileTestBuilder userProfileTestBuilder;
     private static UserTestBuilder userTestBuilder;
 
     @BeforeAll
     static void setUpBuilders() {
 
+        userProfileTestBuilder = new UserProfileTestBuilder();
         userTestBuilder = new UserTestBuilder();
     }
 
@@ -54,7 +56,7 @@ class UserValidRegistrationControllerTest {
     }
 
     @Test
-    void when_register_valid_user_should_register_user() {
+    void when_register_valid_user_without_profile_should_register_user() {
 
         UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUser")
                 .withEmail("validUser123@email.com").withPassword("ValidPassword123!").withMatchingPassword("ValidPassword123!")
@@ -83,6 +85,60 @@ class UserValidRegistrationControllerTest {
         UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUserWithProfile")
                 .withEmail("validUser123Profile@email.com").withPassword("ValidPassword123!")
                 .withMatchingPassword("ValidPassword123!").withProfile(UserProfileTestBuilder.DEFAULT_USER_PROFILE_DTO)
+                .build(ObjectType.CREATE_DTO);
+
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
+
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
+
+        assertAll(
+                () -> mockMvc
+                        .perform(multipart(REGISTRATION_BASE_PATH)
+                                .file(userData)
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("token", notNullValue()))
+                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(expirationTimeInMilliseconds))));
+    }
+
+    @Test
+    void when_register_valid_user_with_null_profile_fields_should_register_user() {
+
+        UserProfileDTO userProfileDTO = (UserProfileDTO)userProfileTestBuilder.withAbout(null).withInterests(null)
+                .withLanguages(null).withLocation(null).build(ObjectType.CREATE_DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUserWithProfile")
+                .withEmail("validUser123Profile@email.com").withPassword("ValidPassword123!")
+                .withMatchingPassword("ValidPassword123!").withProfile(userProfileDTO)
+                .build(ObjectType.CREATE_DTO);
+
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
+
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
+
+        assertAll(
+                () -> mockMvc
+                        .perform(multipart(REGISTRATION_BASE_PATH)
+                                .file(userData)
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("token", notNullValue()))
+                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(expirationTimeInMilliseconds))));
+    }
+
+    @Test
+    void when_register_valid_user_with_empty_profile_fields_should_register_user() {
+
+        UserProfileDTO userProfileDTO = (UserProfileDTO)userProfileTestBuilder.withAbout("").withInterests("")
+                .withLanguages("").withLocation("").build(ObjectType.CREATE_DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUserWithProfile")
+                .withEmail("validUser123Profile@email.com").withPassword("ValidPassword123!")
+                .withMatchingPassword("ValidPassword123!").withProfile(userProfileDTO)
                 .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
