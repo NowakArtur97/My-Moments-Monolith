@@ -1,20 +1,20 @@
 package com.nowakArtur97.myMoments.feature.user.shared;
 
-import com.nowakArtur97.myMoments.feature.user.registration.UserDTO;
+import com.nowakArtur97.myMoments.feature.user.registration.UserRegistrationDTO;
 import org.modelmapper.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserConverter {
 
-    public static Converter<UserDTO, UserEntity> userDTOConverter = context -> {
+    public static Converter<UserRegistrationDTO, UserEntity> userDTOConverter = context -> {
 
         UserEntity userEntity = context.getDestination();
-        UserDTO userDTO = context.getSource();
+        UserRegistrationDTO userRegistrationDTO = context.getSource();
 
         UserProfileEntity userProfileEntity = userEntity.getProfile();
 
-        if (userDTO.getProfile() == null) {
+        if (userRegistrationDTO.getProfile() == null) {
 
             userProfileEntity = new UserProfileEntity();
             userEntity.setProfile(userProfileEntity);

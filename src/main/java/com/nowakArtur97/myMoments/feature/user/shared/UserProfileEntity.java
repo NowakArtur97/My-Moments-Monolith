@@ -1,5 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user.shared;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -35,11 +36,15 @@ public class UserProfileEntity extends AbstractEntity implements UserProfile {
     @Type(type = "org.hibernate.type.BinaryType")
     @Lob
     @ToString.Exclude
+    // TODO: Remove after creating model
+    @JsonIgnore
     private byte[] image;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")
     @ToString.Exclude
+    // TODO: Remove after creating model
+    @JsonIgnore
     private UserEntity user;
 }

@@ -1,10 +1,9 @@
 package com.nowakArtur97.myMoments.feature.user.resource;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
-import com.nowakArtur97.myMoments.feature.user.registration.UserDTO;
-import com.nowakArtur97.myMoments.feature.user.shared.UserService;
 import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.shared.UserObjectMapper;
+import com.nowakArtur97.myMoments.feature.user.shared.UserService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,11 +44,11 @@ class UserController {
         UserEntity userEntity = userService.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User with id: '" + id + "' not found."));
 
-        UserDTO userDTO = userObjectMapper.getUserDTOFromString(user);
+        UserUpdateDTO userUpdateDTO = userObjectMapper.getUserDTOFromString2(user);
 
-        userDTO.setId(id);
+        userUpdateDTO.setId(id);
 
-        UserEntity updatedUserEntity = userService.updateUser(userEntity, userDTO, image);
+        UserEntity updatedUserEntity = userService.updateUser(userEntity, userUpdateDTO, image);
 
         return new ResponseEntity<>(updatedUserEntity, HttpStatus.OK);
     }

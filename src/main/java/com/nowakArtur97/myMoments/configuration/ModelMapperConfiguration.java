@@ -1,7 +1,7 @@
 package com.nowakArtur97.myMoments.configuration;
 
 import com.nowakArtur97.myMoments.feature.user.shared.UserConverter;
-import com.nowakArtur97.myMoments.feature.user.registration.UserDTO;
+import com.nowakArtur97.myMoments.feature.user.registration.UserRegistrationDTO;
 import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -18,7 +18,7 @@ class ModelMapperConfiguration {
 
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        modelMapper.createTypeMap(UserDTO.class, UserEntity.class).setPostConverter(UserConverter.userDTOConverter);
+        modelMapper.createTypeMap(UserRegistrationDTO.class, UserEntity.class).setPostConverter(UserConverter.userDTOConverter);
 
         return modelMapper;
     }

@@ -1,8 +1,6 @@
 package com.nowakArtur97.myMoments.testUtil.builder;
 
 import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationRequest;
-import com.nowakArtur97.myMoments.feature.user.registration.UserDTO;
-import com.nowakArtur97.myMoments.feature.user.registration.UserProfileDTO;
 import com.nowakArtur97.myMoments.feature.user.shared.*;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 
@@ -74,9 +72,10 @@ public class UserTestBuilder {
 
             case DTO:
 
-                user = new UserDTO(username, email, password, matchingPassword, (UserProfileDTO) profile);
+//                user = new UserRegistrationDTO(username, email, password, matchingPassword, (UserProfileDTO) profile);
+                throw new RuntimeException("The specified type does not exist");
 
-                break;
+//                break;
 
             case ENTITY:
 

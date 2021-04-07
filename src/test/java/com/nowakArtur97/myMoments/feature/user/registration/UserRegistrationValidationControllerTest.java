@@ -53,10 +53,10 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_null_fields_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withUsername(null).withPassword(null).withMatchingPassword(null)
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername(null).withPassword(null).withMatchingPassword(null)
                 .withEmail(null).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -65,7 +65,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -82,9 +82,9 @@ class UserRegistrationValidationControllerTest {
     @ValueSource(strings = {" "})
     void when_register_user_with_blank_username_should_return_error_response(String invalidUsername) {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withUsername(invalidUsername).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername(invalidUsername).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -93,7 +93,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -106,9 +106,9 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_too_short_username_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withUsername("u").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("u").build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -117,7 +117,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -129,9 +129,9 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_too_long_username_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withUsername("a".repeat(41)).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("a".repeat(41)).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -140,7 +140,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -152,9 +152,9 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_username_already_taken_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withUsername("user").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("user").build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE,
@@ -164,12 +164,12 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
-                        .andExpect(jsonPath("errors[0]", is("Username: '" + userDTO.getUsername()
+                        .andExpect(jsonPath("errors[0]", is("Username: '" + userRegistrationDTO.getUsername()
                                 + "' is already taken.")))
                         .andExpect(jsonPath("errors", hasSize(1))));
     }
@@ -177,10 +177,10 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_password_containing_username_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withUsername("usertest").withPassword("Pausertest1!")
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("usertest").withPassword("Pausertest1!")
                 .withMatchingPassword("Pausertest1!").build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -189,23 +189,23 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Password contains user name: '"
-                                + userDTO.getUsername() + "'.")))
+                                + userRegistrationDTO.getUsername() + "'.")))
                         .andExpect(jsonPath("errors", hasSize(1))));
     }
 
     @Test
     void when_register_user_with_password_containing_white_spaces_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withPassword("Pass Word 123 !@#")
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("Pass Word 123 !@#")
                 .withMatchingPassword("Pass Word 123 !@#").build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -214,7 +214,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -226,10 +226,10 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_password_containing_a_sequence_of_repeating_characters_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withPassword("PAAA123a!@#").withMatchingPassword("PAAA123a!@#")
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("PAAA123a!@#").withMatchingPassword("PAAA123a!@#")
                 .build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -238,7 +238,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -251,10 +251,10 @@ class UserRegistrationValidationControllerTest {
     @ValueSource(strings = {"123456", "qwerty", "iloveyou"})
     void when_register_user_with_popular_password_should_return_error_response(String popularPassword) {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withPassword(popularPassword).withMatchingPassword(popularPassword)
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword(popularPassword).withMatchingPassword(popularPassword)
                 .build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -263,7 +263,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -274,10 +274,10 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_too_short_password_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withPassword("Pa1!").withMatchingPassword("Pa1!")
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("Pa1!").withMatchingPassword("Pa1!")
                 .build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -286,7 +286,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -298,10 +298,10 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_too_long_password_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withPassword("Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!")
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!")
                 .withMatchingPassword("Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!").build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -310,7 +310,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -323,10 +323,10 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_lowercase_password_that_does_not_meet_at_least_two_requirements_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withPassword("zdcsdfrg").withMatchingPassword("zdcsdfrg")
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("zdcsdfrg").withMatchingPassword("zdcsdfrg")
                 .build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -335,7 +335,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -350,10 +350,10 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_uppercase_password_that_does_not_meet_at_least_two_requirements_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withPassword("ONLYUPPERCASELETTERS")
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("ONLYUPPERCASELETTERS")
                 .withMatchingPassword("ONLYUPPERCASELETTERS").build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -362,7 +362,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -377,9 +377,9 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_blank_email_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withEmail("     ").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withEmail("     ").build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -388,7 +388,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -402,9 +402,9 @@ class UserRegistrationValidationControllerTest {
     @ValueSource(strings = {"wrongformat", "wrong.format"})
     void when_register_user_with_an_incorrect_format_email_should_return_error_response(String invalidEmail) {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withEmail(invalidEmail).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withEmail(invalidEmail).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -413,7 +413,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -425,9 +425,9 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_email_already_taken_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withEmail("user@email.com").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withEmail("user@email.com").build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -436,12 +436,12 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
-                        .andExpect(jsonPath("errors[0]", is("Email: '" + userDTO.getEmail()
+                        .andExpect(jsonPath("errors[0]", is("Email: '" + userRegistrationDTO.getEmail()
                                 + "' is already taken.")))
                         .andExpect(jsonPath("errors", hasSize(1))));
     }
@@ -451,9 +451,9 @@ class UserRegistrationValidationControllerTest {
     @ValueSource(strings = {" "})
     void when_register_user_with_blank_password_should_return_error_response(String invalidPassword) {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withPassword(invalidPassword).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword(invalidPassword).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -462,7 +462,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -477,9 +477,9 @@ class UserRegistrationValidationControllerTest {
     @ValueSource(strings = {" "})
     void when_register_user_with_blank_matching_password_should_return_error_response(String invalidMatchingPassword) {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withMatchingPassword(invalidMatchingPassword).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withMatchingPassword(invalidMatchingPassword).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -488,7 +488,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -500,10 +500,10 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_not_matching_passwords_should_return_error_response() {
 
-        UserDTO userDTO = (UserDTO) userTestBuilder.withPassword("Password123!@#")
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("Password123!@#")
                 .withMatchingPassword("#@!321drowssaP").build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -512,7 +512,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -525,9 +525,9 @@ class UserRegistrationValidationControllerTest {
     void when_register_user_with_incorrect_gender_should_return_error_response() {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withGender("invalid gender").build(ObjectType.DTO);
-        UserDTO userDTO = (UserDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -536,7 +536,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -550,9 +550,9 @@ class UserRegistrationValidationControllerTest {
     void when_register_user_with_too_long_about_section_should_return_error_response() {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withAbout("a".repeat(251)).build(ObjectType.DTO);
-        UserDTO userDTO = (UserDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -561,7 +561,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -575,9 +575,9 @@ class UserRegistrationValidationControllerTest {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withInterests("a".repeat(251))
                 .build(ObjectType.DTO);
-        UserDTO userDTO = (UserDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -586,7 +586,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -600,9 +600,9 @@ class UserRegistrationValidationControllerTest {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withLanguages("a".repeat(251))
                 .build(ObjectType.DTO);
-        UserDTO userDTO = (UserDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -611,7 +611,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
@@ -625,9 +625,9 @@ class UserRegistrationValidationControllerTest {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withLocation("a".repeat(51))
                 .build(ObjectType.DTO);
-        UserDTO userDTO = (UserDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
 
-        String userAsString = ObjectTestMapper.asJsonString(userDTO);
+        String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
@@ -636,7 +636,7 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userDTO))
+                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))

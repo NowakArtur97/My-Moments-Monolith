@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 @ApiModel(description = "Model responsible for User Profile validation during registration")
 public class UserProfileDTO implements UserProfile {

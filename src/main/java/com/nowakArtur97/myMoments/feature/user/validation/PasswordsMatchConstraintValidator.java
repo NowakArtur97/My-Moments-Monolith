@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user.validation;
 
-import com.nowakArtur97.myMoments.feature.user.registration.UserDTO;
+import com.nowakArtur97.myMoments.feature.user.resource.UserDTO;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
