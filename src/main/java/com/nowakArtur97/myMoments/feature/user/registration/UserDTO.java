@@ -51,6 +51,7 @@ public class UserDTO implements User {
     private String matchingPassword;
 
     @Valid
+    @ApiModelProperty(notes = "The user's profile")
     private UserProfileDTO profile;
 
     public UserDTO(String username, String email, String password, String matchingPassword, UserProfileDTO profile) {

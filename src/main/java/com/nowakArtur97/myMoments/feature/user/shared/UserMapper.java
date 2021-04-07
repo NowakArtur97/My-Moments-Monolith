@@ -5,7 +5,9 @@ import com.nowakArtur97.myMoments.feature.user.registration.UserProfileDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 @Component
@@ -14,35 +16,66 @@ public class UserMapper {
 
     private final PasswordEncoder bCryptPasswordEncoder;
 
-    public void convertDTOToEntity(UserDTO userDTO, UserEntity userEntity) {
+    public UserEntity convertDTOToEntity(UserDTO userDTO, MultipartFile image, RoleEntity role) throws IOException {
 
-        userEntity.setUsername(userDTO.getUsername());
-        userEntity.setEmail(userDTO.getEmail());
+        UserEntity userEntity = new UserEntity();
+        UserProfileEntity userProfileEntity = new UserProfileEntity();
+        userEntity.setProfile(userProfileEntity);
 
-        UserProfileEntity userProfileEntity = userEntity.getProfile();
+        setUp(userEntity, userDTO, image);
+
+        userEntity.addRole(role);
+
+        return userEntity;
+    }
+
+    public void convertDTOToEntity(UserEntity userEntity, UserDTO userDTO, MultipartFile image) throws IOException {
+        setUp(userEntity, userDTO, image);
+    }
+
+    private void setUp(UserEntity userEntity, UserDTO userDTO, MultipartFile image) throws IOException {
+
+        setUserProperties(userDTO, userEntity, image);
+
         UserProfileDTO userProfileDTO = userDTO.getProfile();
+        UserProfileEntity userProfileEntity = userEntity.getProfile();
 
-        if (userProfileDTO == null) {
+        if (userProfileDTO != null) {
 
-            userProfileEntity = new UserProfileEntity();
-            userEntity.setProfile(userProfileEntity);
-        } else {
-
-            userProfileEntity.setAbout(userProfileDTO.getAbout());
-            userProfileEntity.setGender(Arrays.stream(Gender.values())
-                    .filter(gender -> gender.name().equals(userProfileDTO.getGender().toUpperCase()))
-                    .findFirst()
-                    .orElse(Gender.UNSPECIFIED));
-            userProfileEntity.setInterests(userProfileDTO.getInterests());
-            userProfileEntity.setLanguages(userProfileDTO.getLanguages());
-            userProfileEntity.setLocation(userProfileDTO.getLocation());
+            setupUserProfileProperties(userProfileEntity, userProfileDTO);
         }
 
-        userEntity.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         setupDefaultProfileValues(userEntity, userProfileEntity);
     }
 
-    private static void setupDefaultProfileValues(UserEntity userEntity, UserProfileEntity userProfileEntity) {
+    private void setUserProperties(UserDTO userDTO, UserEntity userEntity, MultipartFile image) throws IOException {
+
+        userEntity.setUsername(userDTO.getUsername());
+        userEntity.setEmail(userDTO.getEmail());
+        userEntity.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+
+        if (image != null) {
+            userEntity.getProfile().setImage(image.getBytes());
+        }
+    }
+
+    private void setupUserProfileProperties(UserProfileEntity userProfileEntity, UserProfileDTO userProfileDTO) {
+
+        userProfileEntity.setAbout(userProfileDTO.getAbout());
+
+        String userGender = userProfileDTO.getGender();
+        if (userGender != null) {
+            userProfileEntity.setGender(Arrays.stream(Gender.values())
+                    .filter(gender -> gender.name().equals(userGender.toUpperCase()))
+                    .findFirst()
+                    .orElse(Gender.UNSPECIFIED));
+        }
+        userProfileEntity.setInterests(userProfileDTO.getInterests());
+        userProfileEntity.setLanguages(userProfileDTO.getLanguages());
+        userProfileEntity.setLocation(userProfileDTO.getLocation());
+    }
+
+    private void setupDefaultProfileValues(UserEntity userEntity, UserProfileEntity userProfileEntity) {
 
         userProfileEntity.setId(userEntity.getId());
         userProfileEntity.setUser(userEntity);
