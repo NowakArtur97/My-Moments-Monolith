@@ -53,8 +53,8 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_null_fields_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername(null).withPassword(null).withMatchingPassword(null)
-                .withEmail(null).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername(null)
+                .withPassword(null).withMatchingPassword(null).withEmail(null).build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -82,7 +82,8 @@ class UserRegistrationValidationControllerTest {
     @ValueSource(strings = {" "})
     void when_register_user_with_blank_username_should_return_error_response(String invalidUsername) {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername(invalidUsername).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername(invalidUsername)
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -106,7 +107,8 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_too_short_username_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("u").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("u")
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -129,7 +131,8 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_too_long_username_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("a".repeat(41)).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("a".repeat(41))
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -152,7 +155,8 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_username_already_taken_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("user").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("user")
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -177,8 +181,8 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_password_containing_username_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("usertest").withPassword("Pausertest1!")
-                .withMatchingPassword("Pausertest1!").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("usertest")
+                .withPassword("Pausertest1!").withMatchingPassword("Pausertest1!").build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -203,7 +207,7 @@ class UserRegistrationValidationControllerTest {
     void when_register_user_with_password_containing_white_spaces_should_return_error_response() {
 
         UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("Pass Word 123 !@#")
-                .withMatchingPassword("Pass Word 123 !@#").build(ObjectType.DTO);
+                .withMatchingPassword("Pass Word 123 !@#").build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -226,8 +230,8 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_password_containing_a_sequence_of_repeating_characters_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("PAAA123a!@#").withMatchingPassword("PAAA123a!@#")
-                .build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("PAAA123a!@#")
+                .withMatchingPassword("PAAA123a!@#").build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -251,8 +255,8 @@ class UserRegistrationValidationControllerTest {
     @ValueSource(strings = {"123456", "qwerty", "iloveyou"})
     void when_register_user_with_popular_password_should_return_error_response(String popularPassword) {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword(popularPassword).withMatchingPassword(popularPassword)
-                .build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword(popularPassword)
+                .withMatchingPassword(popularPassword).build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -268,14 +272,15 @@ class UserRegistrationValidationControllerTest {
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
-                        .andExpect(jsonPath("errors", hasItem("Password contains a popular phrase: '" + popularPassword + "'."))));
+                        .andExpect(jsonPath("errors", hasItem("Password contains a popular phrase: '"
+                                + popularPassword + "'."))));
     }
 
     @Test
     void when_register_user_with_too_short_password_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("Pa1!").withMatchingPassword("Pa1!")
-                .build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("Pa1!")
+                .withMatchingPassword("Pa1!").build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -298,8 +303,9 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_too_long_password_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!")
-                .withMatchingPassword("Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder
+                .withPassword("Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!").withMatchingPassword("Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!Pa1!")
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -323,8 +329,8 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_lowercase_password_that_does_not_meet_at_least_two_requirements_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("zdcsdfrg").withMatchingPassword("zdcsdfrg")
-                .build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("zdcsdfrg")
+                .withMatchingPassword("zdcsdfrg").build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -351,7 +357,7 @@ class UserRegistrationValidationControllerTest {
     void when_register_user_with_uppercase_password_that_does_not_meet_at_least_two_requirements_should_return_error_response() {
 
         UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("ONLYUPPERCASELETTERS")
-                .withMatchingPassword("ONLYUPPERCASELETTERS").build(ObjectType.DTO);
+                .withMatchingPassword("ONLYUPPERCASELETTERS").build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -377,7 +383,8 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_blank_email_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withEmail("     ").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withEmail("     ")
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -402,7 +409,8 @@ class UserRegistrationValidationControllerTest {
     @ValueSource(strings = {"wrongformat", "wrong.format"})
     void when_register_user_with_an_incorrect_format_email_should_return_error_response(String invalidEmail) {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withEmail(invalidEmail).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withEmail(invalidEmail)
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -425,7 +433,8 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_email_already_taken_should_return_error_response() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withEmail("user@email.com").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withEmail("user@email.com")
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -451,7 +460,8 @@ class UserRegistrationValidationControllerTest {
     @ValueSource(strings = {" "})
     void when_register_user_with_blank_password_should_return_error_response(String invalidPassword) {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword(invalidPassword).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword(invalidPassword)
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -477,7 +487,8 @@ class UserRegistrationValidationControllerTest {
     @ValueSource(strings = {" "})
     void when_register_user_with_blank_matching_password_should_return_error_response(String invalidMatchingPassword) {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withMatchingPassword(invalidMatchingPassword).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withMatchingPassword
+                (invalidMatchingPassword).build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -501,7 +512,7 @@ class UserRegistrationValidationControllerTest {
     void when_register_user_with_not_matching_passwords_should_return_error_response() {
 
         UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withPassword("Password123!@#")
-                .withMatchingPassword("#@!321drowssaP").build(ObjectType.DTO);
+                .withMatchingPassword("#@!321drowssaP").build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -524,8 +535,10 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_incorrect_gender_should_return_error_response() {
 
-        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withGender("invalid gender").build(ObjectType.DTO);
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
+        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withGender("invalid gender")
+                .build(ObjectType.CREATE_DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO)
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -549,8 +562,10 @@ class UserRegistrationValidationControllerTest {
     @Test
     void when_register_user_with_too_long_about_section_should_return_error_response() {
 
-        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withAbout("a".repeat(251)).build(ObjectType.DTO);
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
+        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withAbout("a".repeat(251))
+                .build(ObjectType.CREATE_DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO)
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -574,8 +589,9 @@ class UserRegistrationValidationControllerTest {
     void when_register_user_with_too_long_interests_section_should_return_error_response() {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withInterests("a".repeat(251))
-                .build(ObjectType.DTO);
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
+                .build(ObjectType.CREATE_DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO)
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -599,8 +615,9 @@ class UserRegistrationValidationControllerTest {
     void when_register_user_with_too_long_languages_section_should_return_error_response() {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withLanguages("a".repeat(251))
-                .build(ObjectType.DTO);
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
+                .build(ObjectType.CREATE_DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO)
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -624,8 +641,9 @@ class UserRegistrationValidationControllerTest {
     void when_register_user_with_too_long_location_section_should_return_error_response() {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withLocation("a".repeat(51))
-                .build(ObjectType.DTO);
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.DTO);
+                .build(ObjectType.CREATE_DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withProfile(userProfileDTO)
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 

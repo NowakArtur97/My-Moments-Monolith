@@ -52,5 +52,10 @@ public class UserUpdateDTO extends UserDTO {
 
     public UserUpdateDTO(String username, String email, String password, String matchingPassword, UserProfileDTO profile) {
         super(username, email, password, matchingPassword, profile);
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.matchingPassword = matchingPassword;
+        this.profile = profile;
     }
 }

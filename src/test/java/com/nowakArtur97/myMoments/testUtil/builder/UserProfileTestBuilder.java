@@ -101,7 +101,7 @@ public class UserProfileTestBuilder {
 
         switch (type) {
 
-            case DTO:
+            case CREATE_DTO:
 
                 userProfile = new UserProfileDTO(about, genderString, interests, languages, location);
 

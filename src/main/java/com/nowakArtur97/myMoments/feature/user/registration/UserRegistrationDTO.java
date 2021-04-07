@@ -53,5 +53,10 @@ public class UserRegistrationDTO extends UserDTO {
 
     public UserRegistrationDTO(String username, String email, String password, String matchingPassword, UserProfileDTO profile) {
         super(username, email, password, matchingPassword, profile);
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.matchingPassword = matchingPassword;
+        this.profile = profile;
     }
 }

@@ -56,8 +56,9 @@ class UserValidRegistrationControllerTest {
     @Test
     void when_register_valid_user_should_register_user() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUser").withEmail("validUser123@email.com")
-                .withPassword("ValidPassword123!").withMatchingPassword("ValidPassword123!").build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUser")
+                .withEmail("validUser123@email.com").withPassword("ValidPassword123!").withMatchingPassword("ValidPassword123!")
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -79,9 +80,10 @@ class UserValidRegistrationControllerTest {
     @Test
     void when_register_valid_user_with_profile_should_register_user() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUserWithProfile").withEmail("validUser123Profile@email.com")
-                .withPassword("ValidPassword123!").withMatchingPassword("ValidPassword123!")
-                .withProfile(UserProfileTestBuilder.DEFAULT_USER_PROFILE_DTO).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUserWithProfile")
+                .withEmail("validUser123Profile@email.com").withPassword("ValidPassword123!")
+                .withMatchingPassword("ValidPassword123!").withProfile(UserProfileTestBuilder.DEFAULT_USER_PROFILE_DTO)
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -103,9 +105,10 @@ class UserValidRegistrationControllerTest {
     @Test
     void when_register_valid_user_with_profile_and_image_should_register_user() {
 
-        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUserWithImage").withEmail("validUser123Image@email.com")
-                .withPassword("ValidPassword123!").withMatchingPassword("ValidPassword123!")
-                .withProfile(UserProfileTestBuilder.DEFAULT_USER_PROFILE_DTO).build(ObjectType.DTO);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUserWithImage")
+                .withEmail("validUser123Image@email.com").withPassword("ValidPassword123!")
+                .withMatchingPassword("ValidPassword123!").withProfile(UserProfileTestBuilder.DEFAULT_USER_PROFILE_DTO)
+                .build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 

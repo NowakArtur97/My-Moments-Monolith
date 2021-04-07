@@ -1,6 +1,7 @@
 package com.nowakArtur97.myMoments.feature.user.resource;
 
 import com.nowakArtur97.myMoments.feature.user.registration.UserProfileDTO;
+import com.nowakArtur97.myMoments.feature.user.shared.User;
 import lombok.*;
 
 import java.util.Objects;
@@ -10,7 +11,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public abstract class UserDTO {
+public abstract class UserDTO implements User {
 
     protected String username;
 

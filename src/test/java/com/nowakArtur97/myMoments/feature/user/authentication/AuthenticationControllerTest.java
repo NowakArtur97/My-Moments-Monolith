@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AuthenticationControllerTest {
 
     private final String AUTHENTICATION_BASE_PATH = "http://localhost:8080/api/v1/authentication";
-    private final int expirationTimeInMilliseconds = 36000000;
+    private final int EXPIRATION_TIME_IN_MILLISECONDS = 36000000;
 
     private MockMvc mockMvc;
 
@@ -73,7 +73,7 @@ class AuthenticationControllerTest {
                 .setControllerAdvice(new AuthenticationControllerAdvice())
                 .build();
 
-        ReflectionTestUtils.setField(authenticationController, "validity", expirationTimeInMilliseconds);
+        ReflectionTestUtils.setField(authenticationController, "validity", EXPIRATION_TIME_IN_MILLISECONDS);
     }
 
     @Test
@@ -99,7 +99,7 @@ class AuthenticationControllerTest {
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("token", is(token)))
-                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(expirationTimeInMilliseconds))),
+                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(EXPIRATION_TIME_IN_MILLISECONDS))),
                 () -> verify(customUserDetailsService, times(1)).loadUserByUsername(userName),
                 () -> verifyNoMoreInteractions(customUserDetailsService),
                 () -> verify(authenticationManager, times(1)).authenticate(usernamePasswordAuthenticationToken),

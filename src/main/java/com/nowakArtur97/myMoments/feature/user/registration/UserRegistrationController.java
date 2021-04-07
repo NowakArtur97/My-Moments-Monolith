@@ -36,7 +36,7 @@ class UserRegistrationController {
 
     private final UserObjectMapper userObjectMapper;
 
-    @PostMapping(value = "/registerUser", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/register", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "Create an account", notes = "Create an account (required for generating API key)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully created a new account", response = String.class),
