@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @RequiredArgsConstructor
-class UniqueUserNameConstraintValidator implements ConstraintValidator<UniqueUserName, String> {
+class UsernameNotTakenByAnotherConstraintValidator implements ConstraintValidator<UniqueUsername, String> {
 
     private final UserService userService;
 

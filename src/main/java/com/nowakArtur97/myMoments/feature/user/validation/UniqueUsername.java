@@ -11,12 +11,12 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
-@Constraint(validatedBy = UniqueUserNameConstraintValidator.class)
+@Constraint(validatedBy = UniqueUsernameConstraintValidator.class)
 @Target({FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-public @interface UniqueUserName {
+public @interface UniqueUsername {
 
-    String message() default "User name is already taken.";
+    String message() default "Username is already taken.";
 
     Class<?>[] groups() default {};
 

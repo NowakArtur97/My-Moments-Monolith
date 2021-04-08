@@ -3,6 +3,7 @@ package com.nowakArtur97.myMoments.feature.user.resource;
 import com.nowakArtur97.myMoments.feature.user.registration.UserProfileDTO;
 import com.nowakArtur97.myMoments.feature.user.shared.BasicUserValidationConstraints;
 import com.nowakArtur97.myMoments.feature.user.validation.PasswordsMatch;
+import com.nowakArtur97.myMoments.feature.user.validation.UsernameNotTakenByAnother;
 import com.nowakArtur97.myMoments.feature.user.validation.ValidPasswords;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,6 +29,7 @@ public class UserUpdateDTO extends UserDTO {
     @ApiModelProperty(notes = "The user's id", required = true)
     protected Long id;
 
+    @UsernameNotTakenByAnother(message = "{user.name.unique}", groups = BasicUserValidationConstraints.class)
     @NotBlank(message = "{user.name.notBlank}")
     @Size(min = 4, max = 40, message = "{user.name.size}")
     @ApiModelProperty(notes = "The user's name", required = true)

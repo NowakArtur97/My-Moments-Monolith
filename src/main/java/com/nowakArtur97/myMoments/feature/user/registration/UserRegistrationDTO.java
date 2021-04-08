@@ -4,7 +4,7 @@ import com.nowakArtur97.myMoments.feature.user.resource.UserDTO;
 import com.nowakArtur97.myMoments.feature.user.shared.BasicUserValidationConstraints;
 import com.nowakArtur97.myMoments.feature.user.validation.PasswordsMatch;
 import com.nowakArtur97.myMoments.feature.user.validation.UniqueEmail;
-import com.nowakArtur97.myMoments.feature.user.validation.UniqueUserName;
+import com.nowakArtur97.myMoments.feature.user.validation.UniqueUsername;
 import com.nowakArtur97.myMoments.feature.user.validation.ValidPasswords;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,7 +27,7 @@ import javax.validation.constraints.Size;
 @ApiModel(description = "Model responsible for User validation during registration")
 public class UserRegistrationDTO extends UserDTO {
 
-    @UniqueUserName(message = "{user.name.unique}", groups = BasicUserValidationConstraints.class)
+    @UniqueUsername(message = "{user.name.unique}", groups = BasicUserValidationConstraints.class)
     @NotBlank(message = "{user.name.notBlank}")
     @Size(min = 4, max = 40, message = "{user.name.size}")
     @ApiModelProperty(notes = "The user's name", required = true)

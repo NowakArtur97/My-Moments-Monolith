@@ -6,7 +6,6 @@ import com.nowakArtur97.myMoments.feature.user.shared.UserObjectMapper;
 import com.nowakArtur97.myMoments.feature.user.shared.UserService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import java.io.IOException;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Api(tags = {UserTag.RESOURCE})
-@Slf4j
 class UserController {
 
     private final UserService userService;
