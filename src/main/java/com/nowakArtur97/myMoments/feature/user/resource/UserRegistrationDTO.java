@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @ToString
 @PasswordsMatch(message = "{user.password.notMatch}", groups = BasicUserValidationConstraints.class)
 @ValidPasswords(groups = BasicUserValidationConstraints.class)
-@ApiModel(description = "Model responsible for User validation during registration")
+@ApiModel(description = "Model responsible for User's validation during registration")
 public class UserRegistrationDTO extends UserDTO {
 
     @UniqueUsername(message = "{user.name.unique}", groups = BasicUserValidationConstraints.class)

@@ -1,13 +1,20 @@
 package com.nowakArtur97.myMoments.feature.user.resource;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
+import com.nowakArtur97.myMoments.common.util.JwtUtil;
+import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationResponse;
+import com.nowakArtur97.myMoments.feature.user.entity.CustomUserDetailsService;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,16 +27,25 @@ import java.io.IOException;
 @Api(tags = {UserTag.RESOURCE})
 class UserController {
 
+    @Value("${my-moments.jwt.validity:36000000}")
+    private long validity;
+
     private final UserService userService;
 
+    private final CustomUserDetailsService customUserDetailsService;
+
+    private final JwtUtil jwtUtil;
+
     private final UserObjectMapper userObjectMapper;
+
+    private final ModelMapper modelMapper;
 
     @PutMapping(path = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "Update an account", notes = "Update an account")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully updated account", response = String.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
-    ResponseEntity<UserEntity> updateUser(
+    ResponseEntity<UserModel> updateUser(
             @ApiParam(value = "Id of the User being updated", name = "id", type = "integer",
                     required = true, example = "1")
             @PathVariable("id") Long id,
@@ -45,6 +61,15 @@ class UserController {
 
         UserEntity updatedUserEntity = userService.updateUser(id, userEntity, userUpdateDTO, image);
 
-        return new ResponseEntity<>(updatedUserEntity, HttpStatus.OK);
+        UserModel userModel = modelMapper.map(updatedUserEntity, UserModel.class);
+
+        UserDetails userDetails = new User(updatedUserEntity.getUsername(), updatedUserEntity.getPassword(),
+                customUserDetailsService.getAuthorities(updatedUserEntity.getRoles()));
+
+        String token = jwtUtil.generateToken(userDetails);
+
+        userModel.setAuthenticationResponse(new AuthenticationResponse(token, validity));
+
+        return new ResponseEntity<>(userModel, HttpStatus.OK);
     }
 }

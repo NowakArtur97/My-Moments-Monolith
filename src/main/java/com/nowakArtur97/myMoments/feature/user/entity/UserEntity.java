@@ -1,6 +1,5 @@
 package com.nowakArtur97.myMoments.feature.user.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,8 +25,6 @@ public class UserEntity extends AbstractEntity implements User {
     private String email;
 
     @Column(nullable = false)
-    // TODO: Remove after creating model
-    @JsonIgnore
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)

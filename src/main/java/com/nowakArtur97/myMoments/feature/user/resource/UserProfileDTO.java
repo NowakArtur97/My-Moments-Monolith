@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@ApiModel(description = "Model responsible for User Profile validation during registration")
+@ApiModel(description = "Model responsible for User's Profile validation during registration")
 public class UserProfileDTO implements UserProfile {
 
     @Size(message = "{userProfile.about.size}", max = 250)
