@@ -27,6 +27,6 @@ class EmailNotTakenByAnotherConstraintValidator implements ConstraintValidator<E
             return false;
         }
 
-        return userOptional.get().getEmail().equals(email) || !userService.isUsernameAlreadyInUse(email);
+        return userOptional.get().getEmail().equals(email) || !userService.isEmailAlreadyInUse(email);
     }
 }

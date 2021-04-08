@@ -145,6 +145,80 @@ class UserUpdateControllerTest {
     }
 
     @Test
+    void when_update_valid_user_without_changing_username_should_update_user() {
+
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername(userEntity.getUsername())
+                .withEmail("validUser123@email.com").withPassword("ValidPassword123!").withMatchingPassword("ValidPassword123!")
+                .build(ObjectType.UPDATE_DTO);
+
+        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
+
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
+
+        assertAll(
+                () -> mockMvc
+                        .perform(builder
+                                .file(userData)
+                                .header("Authorization", "Bearer " + token)
+                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("id", is(userEntity.getId().intValue())))
+                        .andExpect(jsonPath("username", is(userEntity.getUsername())))
+                        .andExpect(jsonPath("email", is(userUpdateDTO.getEmail())))
+                        .andExpect(jsonPath("password").doesNotExist())
+                        .andExpect(jsonPath("profile.id", is(userProfileEntity.getId().intValue())))
+                        .andExpect(jsonPath("profile.about", is(userProfileEntity.getAbout())))
+                        .andExpect(jsonPath("profile.gender", is(userProfileEntity.getGender().toString())))
+                        .andExpect(jsonPath("profile.interests", is(userProfileEntity.getInterests())))
+                        .andExpect(jsonPath("profile.languages", is(userProfileEntity.getLanguages())))
+                        .andExpect(jsonPath("profile.location", is(userProfileEntity.getLocation())))
+                        .andExpect(jsonPath("profile.image").doesNotExist())
+                        .andExpect(jsonPath("roles[0].id", is(roleEntity.getId().intValue())))
+                        .andExpect(jsonPath("roles[0].name", is(roleEntity.getName())))
+        );
+    }
+
+    @Test
+    void when_update_valid_user_without_changing_email_should_update_user() {
+
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername("validUser")
+                .withEmail(userEntity.getEmail()).withPassword("ValidPassword123!").withMatchingPassword("ValidPassword123!")
+                .build(ObjectType.UPDATE_DTO);
+
+        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
+
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
+
+        assertAll(
+                () -> mockMvc
+                        .perform(builder
+                                .file(userData)
+                                .header("Authorization", "Bearer " + token)
+                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("id", is(userEntity.getId().intValue())))
+                        .andExpect(jsonPath("username", is(userUpdateDTO.getUsername())))
+                        .andExpect(jsonPath("email", is(userEntity.getEmail())))
+                        .andExpect(jsonPath("password").doesNotExist())
+                        .andExpect(jsonPath("profile.id", is(userProfileEntity.getId().intValue())))
+                        .andExpect(jsonPath("profile.about", is(userProfileEntity.getAbout())))
+                        .andExpect(jsonPath("profile.gender", is(userProfileEntity.getGender().toString())))
+                        .andExpect(jsonPath("profile.interests", is(userProfileEntity.getInterests())))
+                        .andExpect(jsonPath("profile.languages", is(userProfileEntity.getLanguages())))
+                        .andExpect(jsonPath("profile.location", is(userProfileEntity.getLocation())))
+                        .andExpect(jsonPath("profile.image").doesNotExist())
+                        .andExpect(jsonPath("roles[0].id", is(roleEntity.getId().intValue())))
+                        .andExpect(jsonPath("roles[0].name", is(roleEntity.getName())))
+        );
+    }
+
+    @Test
     void when_update_valid_user_with_profile_should_update_user() {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withAbout("new about")

@@ -217,33 +217,32 @@ class UserUpdateValidationControllerTest {
                         .andExpect(jsonPath("errors", hasSize(1))));
     }
 
-    // TODO: Check if user username on update already taken
-//    @Test
-//    void when_update_user_with_username_already_taken_should_return_error_response() {
-//
-//        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername("user")
-//                .build(ObjectType.UPDATE_DTO);
-//
-//        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
-//
-//        MockMultipartFile userData = new MockMultipartFile("user", "request",
-//                MediaType.MULTIPART_FORM_DATA_VALUE,
-//                userAsString.getBytes(StandardCharsets.UTF_8));
-//
-//        assertAll(
-//                 () -> mockMvc
-//                        .perform(builder
-//                                .file(userData)
-//                                .header("Authorization", "Bearer " + token)
-//                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
-//                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
-//                        .andExpect(status().isBadRequest())
-//                        .andExpect(jsonPath("timestamp", is(notNullValue())))
-//                        .andExpect(jsonPath("status", is(400)))
-//                        .andExpect(jsonPath("errors[0]", is("Username: '" + userUpdateDTO.getUsername()
-//                                + "' is already taken.")))
-//                        .andExpect(jsonPath("errors", hasSize(1))));
-//    }
+    @Test
+    void when_update_user_with_username_already_taken_should_return_error_response() {
+
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername("user")
+                .build(ObjectType.UPDATE_DTO);
+
+        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
+
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE,
+                userAsString.getBytes(StandardCharsets.UTF_8));
+
+        assertAll(
+                 () -> mockMvc
+                        .perform(builder
+                                .file(userData)
+                                .header("Authorization", "Bearer " + token)
+                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("timestamp", is(notNullValue())))
+                        .andExpect(jsonPath("status", is(400)))
+                        .andExpect(jsonPath("errors[0]", is("Username: '" + userUpdateDTO.getUsername()
+                                + "' is already taken.")))
+                        .andExpect(jsonPath("errors", hasSize(1))));
+    }
 
     @Test
     void when_update_user_with_password_containing_username_should_return_error_response() {
@@ -507,32 +506,31 @@ class UserUpdateValidationControllerTest {
                         .andExpect(jsonPath("errors", hasSize(1))));
     }
 
-    // TODO: Check if user email on update already taken
-//    @Test
-//    void when_update_user_with_email_already_taken_should_return_error_response() {
-//
-//        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withEmail("user@email.com")
-//                .build(ObjectType.UPDATE_DTO);
-//
-//        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
-//
-//        MockMultipartFile userData = new MockMultipartFile("user", "request",
-//                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
-//
-//        assertAll(
-//                 () -> mockMvc
-//                        .perform(builder
-//                                .file(userData)
-//                                .header("Authorization", "Bearer " + token)
-//                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
-//                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
-//                        .andExpect(status().isBadRequest())
-//                        .andExpect(jsonPath("timestamp", is(notNullValue())))
-//                        .andExpect(jsonPath("status", is(400)))
-//                        .andExpect(jsonPath("errors[0]", is("Email: '" + userUpdateDTO.getEmail()
-//                                + "' is already taken.")))
-//                        .andExpect(jsonPath("errors", hasSize(1))));
-//    }
+    @Test
+    void when_update_user_with_email_already_taken_should_return_error_response() {
+
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withEmail("user@email.com")
+                .build(ObjectType.UPDATE_DTO);
+
+        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
+
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
+
+        assertAll(
+                 () -> mockMvc
+                        .perform(builder
+                                .file(userData)
+                                .header("Authorization", "Bearer " + token)
+                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("timestamp", is(notNullValue())))
+                        .andExpect(jsonPath("status", is(400)))
+                        .andExpect(jsonPath("errors[0]", is("Email: '" + userUpdateDTO.getEmail()
+                                + "' is already taken.")))
+                        .andExpect(jsonPath("errors", hasSize(1))));
+    }
 
     @ParameterizedTest(name = "{index}: For User password: {0}")
     @NullAndEmptySource
