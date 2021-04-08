@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,6 +38,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserUpdateControllerTest {
 
     private final String USERS_BASE_PATH = "http://localhost:8080/api/v1/users/{id}";
+
+    @Value("${my-moments.jwt.validity:36000000}")
+    private Long validity;
 
     @Value("${my-moments.default-user-role:USER_ROLE}")
     private String defaultUserRole;
@@ -118,7 +122,7 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-        assertAll(
+      assertAll(
                 () -> mockMvc
                         .perform(builder
                                 .file(userData)
@@ -131,6 +135,9 @@ class UserUpdateControllerTest {
                         .andExpect(jsonPath("username", is(userUpdateDTO.getUsername())))
                         .andExpect(jsonPath("email", is(userUpdateDTO.getEmail())))
                         .andExpect(jsonPath("password").doesNotExist())
+                        .andExpect(jsonPath("authenticationResponse.token", notNullValue()))
+                        .andExpect(jsonPath("authenticationResponse.expirationTimeInMilliseconds",
+                                is(validity.intValue())))
                         .andExpect(jsonPath("profile.id", is(userProfileEntity.getId().intValue())))
                         .andExpect(jsonPath("profile.about", is(userProfileEntity.getAbout())))
                         .andExpect(jsonPath("profile.gender", is(userProfileEntity.getGender().toString())))
@@ -155,7 +162,7 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-        assertAll(
+      assertAll(
                 () -> mockMvc
                         .perform(builder
                                 .file(userData)
@@ -168,6 +175,9 @@ class UserUpdateControllerTest {
                         .andExpect(jsonPath("username", is(userEntity.getUsername())))
                         .andExpect(jsonPath("email", is(userUpdateDTO.getEmail())))
                         .andExpect(jsonPath("password").doesNotExist())
+                        .andExpect(jsonPath("authenticationResponse.token", notNullValue()))
+                        .andExpect(jsonPath("authenticationResponse.expirationTimeInMilliseconds",
+                                is(validity.intValue())))
                         .andExpect(jsonPath("profile.id", is(userProfileEntity.getId().intValue())))
                         .andExpect(jsonPath("profile.about", is(userProfileEntity.getAbout())))
                         .andExpect(jsonPath("profile.gender", is(userProfileEntity.getGender().toString())))
@@ -192,7 +202,7 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-        assertAll(
+      assertAll(
                 () -> mockMvc
                         .perform(builder
                                 .file(userData)
@@ -205,6 +215,9 @@ class UserUpdateControllerTest {
                         .andExpect(jsonPath("username", is(userUpdateDTO.getUsername())))
                         .andExpect(jsonPath("email", is(userEntity.getEmail())))
                         .andExpect(jsonPath("password").doesNotExist())
+                        .andExpect(jsonPath("authenticationResponse.token", notNullValue()))
+                        .andExpect(jsonPath("authenticationResponse.expirationTimeInMilliseconds",
+                                is(validity.intValue())))
                         .andExpect(jsonPath("profile.id", is(userProfileEntity.getId().intValue())))
                         .andExpect(jsonPath("profile.about", is(userProfileEntity.getAbout())))
                         .andExpect(jsonPath("profile.gender", is(userProfileEntity.getGender().toString())))
@@ -233,7 +246,7 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-        assertAll(
+      assertAll(
                 () -> mockMvc
                         .perform(builder
                                 .file(userData)
@@ -246,6 +259,9 @@ class UserUpdateControllerTest {
                         .andExpect(jsonPath("username", is(userUpdateDTO.getUsername())))
                         .andExpect(jsonPath("email", is(userUpdateDTO.getEmail())))
                         .andExpect(jsonPath("password").doesNotExist())
+                        .andExpect(jsonPath("authenticationResponse.token", notNullValue()))
+                        .andExpect(jsonPath("authenticationResponse.expirationTimeInMilliseconds",
+                                is(validity.intValue())))
                         .andExpect(jsonPath("profile.id", is(userProfileEntity.getId().intValue())))
                         .andExpect(jsonPath("profile.about", is(userProfileDTO.getAbout())))
                         .andExpect(jsonPath("profile.gender", is(userProfileDTO.getGender().toString())))
@@ -273,7 +289,7 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-        assertAll(
+      assertAll(
                 () -> mockMvc
                         .perform(builder
                                 .file(userData)
@@ -286,6 +302,9 @@ class UserUpdateControllerTest {
                         .andExpect(jsonPath("username", is(userUpdateDTO.getUsername())))
                         .andExpect(jsonPath("email", is(userUpdateDTO.getEmail())))
                         .andExpect(jsonPath("password").doesNotExist())
+                        .andExpect(jsonPath("authenticationResponse.token", notNullValue()))
+                        .andExpect(jsonPath("authenticationResponse.expirationTimeInMilliseconds",
+                                is(validity.intValue())))
                         .andExpect(jsonPath("profile.id", is(userProfileEntity.getId().intValue())))
                         .andExpect(jsonPath("profile.about", is("")))
                         .andExpect(jsonPath("profile.gender", is(Gender.UNSPECIFIED.toString())))
@@ -313,7 +332,7 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-        assertAll(
+      assertAll(
                 () -> mockMvc
                         .perform(builder
                                 .file(userData)
@@ -326,6 +345,9 @@ class UserUpdateControllerTest {
                         .andExpect(jsonPath("username", is(userUpdateDTO.getUsername())))
                         .andExpect(jsonPath("email", is(userUpdateDTO.getEmail())))
                         .andExpect(jsonPath("password").doesNotExist())
+                        .andExpect(jsonPath("authenticationResponse.token", notNullValue()))
+                        .andExpect(jsonPath("authenticationResponse.expirationTimeInMilliseconds",
+                                is(validity.intValue())))
                         .andExpect(jsonPath("profile.id", is(userProfileEntity.getId().intValue())))
                         .andExpect(jsonPath("profile.about", is("")))
                         .andExpect(jsonPath("profile.gender", is(Gender.UNSPECIFIED.toString())))
@@ -357,7 +379,7 @@ class UserUpdateControllerTest {
         MockMultipartFile image = new MockMultipartFile("image", "image", "application/json",
                 "image.jpg".getBytes());
 
-        assertAll(
+      assertAll(
                 () -> mockMvc
                         .perform(builder
                                 .file(userData)
@@ -371,6 +393,9 @@ class UserUpdateControllerTest {
                         .andExpect(jsonPath("username", is(userUpdateDTO.getUsername())))
                         .andExpect(jsonPath("email", is(userUpdateDTO.getEmail())))
                         .andExpect(jsonPath("password").doesNotExist())
+                        .andExpect(jsonPath("authenticationResponse.token", notNullValue()))
+                        .andExpect(jsonPath("authenticationResponse.expirationTimeInMilliseconds",
+                                is(validity.intValue())))
                         .andExpect(jsonPath("profile.id", is(userProfileEntity.getId().intValue())))
                         .andExpect(jsonPath("profile.about", is(userProfileDTO.getAbout())))
                         .andExpect(jsonPath("profile.gender", is(userProfileDTO.getGender().toString())))

@@ -16,9 +16,6 @@ import java.util.List;
 @ApiModel(description = "Details about the User")
 public class UserModel implements User {
 
-    @ApiModelProperty(notes = "API key")
-    private AuthenticationResponse authenticationResponse;
-
     @ApiModelProperty(notes = "The unique id of the User")
     private Long id;
 
@@ -27,6 +24,9 @@ public class UserModel implements User {
 
     @ApiModelProperty(notes = "The user's email")
     private String email;
+
+    @ApiModelProperty(notes = "API key")
+    private AuthenticationResponse authenticationResponse;
 
     @ApiModelProperty(notes = "The user's profile")
     private UserProfileModel profile;

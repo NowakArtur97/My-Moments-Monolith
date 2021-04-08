@@ -66,9 +66,9 @@ class UserController {
         UserDetails userDetails = new User(updatedUserEntity.getUsername(), updatedUserEntity.getPassword(),
                 customUserDetailsService.getAuthorities(updatedUserEntity.getRoles()));
 
-        String token = jwtUtil.generateToken(userDetails);
+        String newToken = jwtUtil.generateToken(userDetails);
 
-        userModel.setAuthenticationResponse(new AuthenticationResponse(token, validity));
+        userModel.setAuthenticationResponse(new AuthenticationResponse(newToken, validity));
 
         return new ResponseEntity<>(userModel, HttpStatus.OK);
     }

@@ -10,6 +10,7 @@ import org.flywaydb.core.Flyway;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -30,8 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("UserRegistrationController_Tests")
 class UserRegistrationControllerTest {
 
+    @Value("${my-moments.jwt.validity:36000000}")
+    private Long validity;
+    
     private final String REGISTRATION_BASE_PATH = "http://localhost:8080/api/v1/registration/register";
-    private final int expirationTimeInMilliseconds = 36000000;
 
     @Autowired
     private MockMvc mockMvc;
@@ -77,7 +80,7 @@ class UserRegistrationControllerTest {
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("token", CoreMatchers.notNullValue()))
-                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(expirationTimeInMilliseconds))));
+                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(validity.intValue()))));
     }
 
     @Test
@@ -104,7 +107,7 @@ class UserRegistrationControllerTest {
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("token", notNullValue()))
-                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(expirationTimeInMilliseconds))));
+                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(validity.intValue()))));
     }
 
     @Test
@@ -131,7 +134,7 @@ class UserRegistrationControllerTest {
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("token", notNullValue()))
-                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(expirationTimeInMilliseconds))));
+                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(validity.intValue()))));
     }
 
     @Test
@@ -158,7 +161,7 @@ class UserRegistrationControllerTest {
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("token", notNullValue()))
-                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(expirationTimeInMilliseconds))));
+                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(validity.intValue()))));
     }
 
     @Test
@@ -187,6 +190,6 @@ class UserRegistrationControllerTest {
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("token", notNullValue()))
-                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(expirationTimeInMilliseconds))));
+                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(validity.intValue()))));
     }
 }
