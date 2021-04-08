@@ -1,6 +1,7 @@
 package com.nowakArtur97.myMoments.testUtil.builder;
 
 import com.nowakArtur97.myMoments.feature.user.shared.RoleEntity;
+import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 
 public class RoleTestBuilder {
 
@@ -15,8 +16,29 @@ public class RoleTestBuilder {
         return this;
     }
 
-    public RoleEntity build() {
+    public RoleEntity build(ObjectType type) {
 
-        return new RoleEntity(name);
+        RoleEntity role;
+
+        switch (type) {
+
+            case ENTITY:
+
+                role = new RoleEntity(name);
+
+                break;
+
+            default:
+                throw new RuntimeException("The specified type does not exist");
+        }
+
+        resetProperties();
+
+        return role;
+    }
+
+    private void resetProperties(){
+
+        name = "role";
     }
 }

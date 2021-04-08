@@ -6,7 +6,6 @@ import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.shared.UserProfile;
 import com.nowakArtur97.myMoments.feature.user.shared.UserProfileEntity;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
-import org.springframework.mock.web.MockMultipartFile;
 
 public class UserProfileTestBuilder {
 
@@ -26,9 +25,6 @@ public class UserProfileTestBuilder {
     private String location = "location";
 
     private byte[] image = "image".getBytes();
-
-    private MockMultipartFile imageFile = new MockMultipartFile("data", "filename.txt",
-            "text/plain", image);
 
     private UserEntity user;
 
@@ -81,13 +77,6 @@ public class UserProfileTestBuilder {
         return this;
     }
 
-    public UserProfileTestBuilder withImageFile(MockMultipartFile imageFile) {
-
-        this.imageFile = imageFile;
-
-        return this;
-    }
-
     public UserProfileTestBuilder withUserEntity(UserEntity user) {
 
         this.user = user;
@@ -102,6 +91,7 @@ public class UserProfileTestBuilder {
         switch (type) {
 
             case CREATE_DTO:
+            case UPDATE_DTO:
 
                 userProfile = new UserProfileDTO(about, genderString, interests, languages, location);
 
@@ -137,7 +127,5 @@ public class UserProfileTestBuilder {
         location = "location";
 
         image = "image".getBytes();
-
-        imageFile = new MockMultipartFile("data", "filename.txt", "text/plain", image);
     }
 }

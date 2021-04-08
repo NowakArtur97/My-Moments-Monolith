@@ -1,5 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user.registration;
 
+import com.nowakArtur97.myMoments.feature.user.shared.Gender;
 import com.nowakArtur97.myMoments.testUtil.builder.UserProfileTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.builder.UserTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
@@ -27,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DisplayNameGeneration(NameWithSpacesGenerator.class)
 @Tag("UserRegistrationController_Tests")
-class UserValidRegistrationControllerTest {
+class UserRegistrationControllerTest {
 
     private final String REGISTRATION_BASE_PATH = "http://localhost:8080/api/v1/registration/register";
     private final int expirationTimeInMilliseconds = 36000000;
@@ -82,10 +83,12 @@ class UserValidRegistrationControllerTest {
     @Test
     void when_register_valid_user_with_profile_should_register_user() {
 
+        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withAbout("about")
+                .withInterests("interests").withLanguages("languages").withLocation("location")
+                .withGender(Gender.FEMALE).build(ObjectType.UPDATE_DTO);
         UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userTestBuilder.withUsername("validUserWithProfile")
                 .withEmail("validUser123Profile@email.com").withPassword("ValidPassword123!")
-                .withMatchingPassword("ValidPassword123!").withProfile(UserProfileTestBuilder.DEFAULT_USER_PROFILE_DTO)
-                .build(ObjectType.CREATE_DTO);
+                .withMatchingPassword("ValidPassword123!").withProfile(userProfileDTO).build(ObjectType.CREATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userRegistrationDTO);
 
@@ -170,6 +173,7 @@ class UserValidRegistrationControllerTest {
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
+
         MockMultipartFile image = new MockMultipartFile("image", "image", "application/json",
                 "image.jpg".getBytes());
 
