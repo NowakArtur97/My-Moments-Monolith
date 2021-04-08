@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user.shared;
+package com.nowakArtur97.myMoments.feature.user.entity;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

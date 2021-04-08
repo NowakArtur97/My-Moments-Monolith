@@ -4,7 +4,7 @@ package com.nowakArtur97.myMoments.feature.user.authentication;
 import com.nowakArtur97.myMoments.advice.AuthenticationControllerAdvice;
 import com.nowakArtur97.myMoments.advice.GlobalResponseEntityExceptionHandler;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
-import com.nowakArtur97.myMoments.feature.user.shared.CustomUserDetailsService;
+import com.nowakArtur97.myMoments.feature.user.entity.CustomUserDetailsService;
 import com.nowakArtur97.myMoments.testUtil.builder.UserTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;

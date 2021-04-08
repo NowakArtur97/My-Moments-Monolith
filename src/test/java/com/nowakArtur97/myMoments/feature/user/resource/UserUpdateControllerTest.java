@@ -1,9 +1,8 @@
-package com.nowakArtur97.myMoments.feature.user.registration;
+package com.nowakArtur97.myMoments.feature.user.resource;
 
 import com.nowakArtur97.myMoments.common.exception.RoleNotFoundException;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
-import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
-import com.nowakArtur97.myMoments.feature.user.shared.*;
+import com.nowakArtur97.myMoments.feature.user.entity.*;
 import com.nowakArtur97.myMoments.testUtil.builder.UserProfileTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.builder.UserTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;

@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user.shared;
+package com.nowakArtur97.myMoments.feature.user.authentication;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

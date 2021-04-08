@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user.shared;
+package com.nowakArtur97.myMoments.feature.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;

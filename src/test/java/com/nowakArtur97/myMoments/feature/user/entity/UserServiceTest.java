@@ -1,8 +1,8 @@
-package com.nowakArtur97.myMoments.feature.user.shared;
+package com.nowakArtur97.myMoments.feature.user.entity;
 
 
-import com.nowakArtur97.myMoments.feature.user.registration.UserProfileDTO;
-import com.nowakArtur97.myMoments.feature.user.registration.UserRegistrationDTO;
+import com.nowakArtur97.myMoments.feature.user.resource.UserProfileDTO;
+import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
 import com.nowakArtur97.myMoments.testUtil.builder.UserProfileTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.builder.UserTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;

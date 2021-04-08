@@ -2,8 +2,7 @@ package com.nowakArtur97.myMoments.feature.user.authentication;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
-import com.nowakArtur97.myMoments.feature.user.shared.AuthenticationResponse;
-import com.nowakArtur97.myMoments.feature.user.shared.CustomUserDetailsService;
+import com.nowakArtur97.myMoments.feature.user.entity.CustomUserDetailsService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

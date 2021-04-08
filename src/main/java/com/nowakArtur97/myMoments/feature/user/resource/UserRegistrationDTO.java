@@ -1,11 +1,6 @@
-package com.nowakArtur97.myMoments.feature.user.registration;
+package com.nowakArtur97.myMoments.feature.user.resource;
 
-import com.nowakArtur97.myMoments.feature.user.resource.UserDTO;
-import com.nowakArtur97.myMoments.feature.user.shared.BasicUserValidationConstraints;
-import com.nowakArtur97.myMoments.feature.user.validation.PasswordsMatch;
-import com.nowakArtur97.myMoments.feature.user.validation.UniqueEmail;
-import com.nowakArtur97.myMoments.feature.user.validation.UniqueUsername;
-import com.nowakArtur97.myMoments.feature.user.validation.ValidPasswords;
+import com.nowakArtur97.myMoments.feature.user.validation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

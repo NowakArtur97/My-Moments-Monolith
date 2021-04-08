@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user.shared;
+package com.nowakArtur97.myMoments.feature.user.entity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

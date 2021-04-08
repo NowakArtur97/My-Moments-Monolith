@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user.authentication;
 
-import com.nowakArtur97.myMoments.feature.user.shared.User;
+import com.nowakArtur97.myMoments.feature.user.entity.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

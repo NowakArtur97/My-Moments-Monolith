@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.testUtil.builder;
 
-import com.nowakArtur97.myMoments.feature.user.shared.RoleEntity;
+import com.nowakArtur97.myMoments.feature.user.entity.RoleEntity;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 
 public class RoleTestBuilder {

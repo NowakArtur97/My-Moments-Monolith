@@ -1,6 +1,6 @@
-package com.nowakArtur97.myMoments.feature.user.registration;
+package com.nowakArtur97.myMoments.feature.user.resource;
 
-import com.nowakArtur97.myMoments.feature.user.shared.Gender;
+import com.nowakArtur97.myMoments.feature.user.entity.Gender;
 import com.nowakArtur97.myMoments.testUtil.builder.UserProfileTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.builder.UserTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;

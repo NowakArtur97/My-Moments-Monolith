@@ -2,7 +2,7 @@ package com.nowakArtur97.myMoments.configuration.swagger;
 
 import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationTag;
 import com.nowakArtur97.myMoments.feature.user.resource.UserTag;
-import com.nowakArtur97.myMoments.feature.user.registration.UserRegistrationTag;
+import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationTag;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

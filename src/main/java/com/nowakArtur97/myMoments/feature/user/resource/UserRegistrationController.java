@@ -1,8 +1,11 @@
-package com.nowakArtur97.myMoments.feature.user.registration;
+package com.nowakArtur97.myMoments.feature.user.resource;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
-import com.nowakArtur97.myMoments.feature.user.shared.*;
+import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationResponse;
+import com.nowakArtur97.myMoments.feature.user.entity.CustomUserDetailsService;
+import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
+import com.nowakArtur97.myMoments.feature.user.entity.UserService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,7 +50,8 @@ class UserRegistrationController {
                                                         @RequestPart(value = "image", required = false) MultipartFile image)
             throws RoleNotFoundException, IOException {
 
-        UserRegistrationDTO userRegistrationDTO = userObjectMapper.getUserDTOFromString(user);
+        UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) userObjectMapper
+                .getUserDTOFromString(user, UserRegistrationDTO.class);
 
         UserEntity newUser = userService.registerUser(userRegistrationDTO, image);
 

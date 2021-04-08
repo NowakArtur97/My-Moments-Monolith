@@ -1,10 +1,10 @@
 package com.nowakArtur97.myMoments.testUtil.builder;
 
-import com.nowakArtur97.myMoments.feature.user.registration.UserProfileDTO;
-import com.nowakArtur97.myMoments.feature.user.shared.Gender;
-import com.nowakArtur97.myMoments.feature.user.shared.UserEntity;
-import com.nowakArtur97.myMoments.feature.user.shared.UserProfile;
-import com.nowakArtur97.myMoments.feature.user.shared.UserProfileEntity;
+import com.nowakArtur97.myMoments.feature.user.resource.UserProfileDTO;
+import com.nowakArtur97.myMoments.feature.user.entity.Gender;
+import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
+import com.nowakArtur97.myMoments.feature.user.entity.UserProfile;
+import com.nowakArtur97.myMoments.feature.user.entity.UserProfileEntity;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 
 public class UserProfileTestBuilder {

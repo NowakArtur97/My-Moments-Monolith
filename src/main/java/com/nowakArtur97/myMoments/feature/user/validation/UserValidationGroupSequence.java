@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.feature.user.shared;
+package com.nowakArtur97.myMoments.feature.user.validation;
 
 import javax.validation.GroupSequence;
 import javax.validation.groups.Default;

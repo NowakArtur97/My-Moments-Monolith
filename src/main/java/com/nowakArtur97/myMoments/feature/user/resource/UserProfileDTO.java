@@ -1,7 +1,7 @@
-package com.nowakArtur97.myMoments.feature.user.registration;
+package com.nowakArtur97.myMoments.feature.user.resource;
 
-import com.nowakArtur97.myMoments.feature.user.shared.Gender;
-import com.nowakArtur97.myMoments.feature.user.shared.UserProfile;
+import com.nowakArtur97.myMoments.feature.user.entity.Gender;
+import com.nowakArtur97.myMoments.feature.user.entity.UserProfile;
 import com.nowakArtur97.myMoments.feature.user.validation.EnumValidator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

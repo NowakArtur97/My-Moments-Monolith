@@ -1,10 +1,10 @@
 package com.nowakArtur97.myMoments.testUtil.builder;
 
 import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationRequest;
-import com.nowakArtur97.myMoments.feature.user.registration.UserProfileDTO;
-import com.nowakArtur97.myMoments.feature.user.registration.UserRegistrationDTO;
+import com.nowakArtur97.myMoments.feature.user.resource.UserProfileDTO;
+import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
-import com.nowakArtur97.myMoments.feature.user.shared.*;
+import com.nowakArtur97.myMoments.feature.user.entity.*;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 
 import java.util.Collections;

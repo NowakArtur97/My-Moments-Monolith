@@ -1,7 +1,8 @@
-package com.nowakArtur97.myMoments.feature.user.shared;
+package com.nowakArtur97.myMoments.feature.user.entity;
 
-import com.nowakArtur97.myMoments.feature.user.registration.UserRegistrationDTO;
+import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
+import com.nowakArtur97.myMoments.feature.user.validation.UserValidationGroupSequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,10 @@ public class UserService {
         return userRepository.save(newUserEntity);
     }
 
-    public UserEntity updateUser(UserEntity userEntity, @Valid UserUpdateDTO userUpdateDTO, MultipartFile image) throws IOException {
+    public UserEntity updateUser(Long id, UserEntity userEntity, @Valid UserUpdateDTO userUpdateDTO, MultipartFile image)
+            throws IOException {
+
+        userUpdateDTO.setId(id);
 
         userMapper.convertDTOToEntity(userEntity, userUpdateDTO, image);
 
