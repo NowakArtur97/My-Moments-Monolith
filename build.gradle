@@ -47,6 +47,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.passay/passay
 	compile group: 'org.passay', name: 'passay', version: '1.6.0'
 
+	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.0'
+
 	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
