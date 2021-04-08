@@ -2,6 +2,7 @@ package com.nowakArtur97.myMoments.feature.user.resource;
 
 import com.nowakArtur97.myMoments.feature.user.registration.UserProfileDTO;
 import com.nowakArtur97.myMoments.feature.user.shared.BasicUserValidationConstraints;
+import com.nowakArtur97.myMoments.feature.user.validation.EmailNotTakenByAnother;
 import com.nowakArtur97.myMoments.feature.user.validation.PasswordsMatch;
 import com.nowakArtur97.myMoments.feature.user.validation.UsernameNotTakenByAnother;
 import com.nowakArtur97.myMoments.feature.user.validation.ValidPasswords;
@@ -35,6 +36,7 @@ public class UserUpdateDTO extends UserDTO {
     @ApiModelProperty(notes = "The user's name", required = true)
     protected String username;
 
+    @EmailNotTakenByAnother(message = "{user.email.unique}", groups = BasicUserValidationConstraints.class)
     @Email(message = "{user.email.wrongFormat}")
     @NotBlank(message = "{user.email.notBlank}")
     @ApiModelProperty(notes = "The user's email", required = true)

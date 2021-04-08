@@ -43,6 +43,11 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Optional<UserEntity> findByUsername(String username) {
+
+        return userRepository.findByUsername(username);
+    }
+
     public UserEntity registerUser(@Valid UserRegistrationDTO userRegistrationDTO, MultipartFile image)
             throws RoleNotFoundException, IOException {
 
