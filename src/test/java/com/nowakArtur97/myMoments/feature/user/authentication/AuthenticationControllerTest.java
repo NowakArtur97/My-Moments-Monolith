@@ -102,7 +102,8 @@ class AuthenticationControllerTest {
                         .andExpect(jsonPath("expirationTimeInMilliseconds", is(EXPIRATION_TIME_IN_MILLISECONDS))),
                 () -> verify(customUserDetailsService, times(1)).loadUserByUsername(userName),
                 () -> verifyNoMoreInteractions(customUserDetailsService),
-                () -> verify(authenticationManager, times(1)).authenticate(usernamePasswordAuthenticationToken),
+                () -> verify(authenticationManager, times(1))
+                        .authenticate(usernamePasswordAuthenticationToken),
                 () -> verifyNoMoreInteractions(authenticationManager),
                 () -> verify(jwtUtil, times(1)).generateToken(userDetails),
                 () -> verifyNoMoreInteractions(jwtUtil));
