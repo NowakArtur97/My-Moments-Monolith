@@ -1,6 +1,7 @@
 package com.nowakArtur97.myMoments.advice;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
+import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +26,15 @@ public class AuthenticationControllerAdvice {
 
     @ExceptionHandler({UsernameNotFoundException.class})
     ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException exception) {
+
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.UNAUTHORIZED.value(),
+                List.of(exception.getMessage()));
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({NotAuthorizedException.class})
+    ResponseEntity<ErrorResponse> handleNotAuthorizedException(NotAuthorizedException exception) {
 
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.UNAUTHORIZED.value(),
                 List.of(exception.getMessage()));
