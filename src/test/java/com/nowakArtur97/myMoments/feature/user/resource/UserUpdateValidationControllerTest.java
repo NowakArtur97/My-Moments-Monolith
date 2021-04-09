@@ -49,7 +49,7 @@ class UserUpdateValidationControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private MockMultipartHttpServletRequestBuilder builder;
+    private MockMultipartHttpServletRequestBuilder mockRequestBuilder;
 
     @Autowired
     private Flyway flyway;
@@ -93,8 +93,8 @@ class UserUpdateValidationControllerTest {
         token = jwtUtil.generateToken(new User(userEntity.getUsername(), userEntity.getPassword(),
                 List.of(new SimpleGrantedAuthority(defaultUserRole))));
 
-        builder = MockMvcRequestBuilders.multipart(USERS_BASE_PATH, userEntity.getId());
-        builder.with(request -> {
+        mockRequestBuilder = MockMvcRequestBuilders.multipart(USERS_BASE_PATH, userEntity.getId());
+        mockRequestBuilder.with(request -> {
             request.setMethod("PUT");
             return request;
         });
@@ -122,7 +122,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -153,7 +153,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -180,7 +180,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -206,7 +206,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -233,7 +233,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -260,7 +260,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -287,7 +287,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -313,7 +313,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -340,7 +340,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -366,7 +366,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -393,7 +393,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -420,7 +420,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -449,7 +449,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -478,7 +478,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -506,7 +506,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -532,7 +532,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -561,7 +561,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -590,7 +590,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -616,7 +616,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -644,7 +644,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -673,7 +673,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -701,7 +701,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -729,7 +729,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -757,7 +757,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -784,7 +784,7 @@ class UserUpdateValidationControllerTest {
 
         assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
@@ -793,6 +793,41 @@ class UserUpdateValidationControllerTest {
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(401)))
                         .andExpect(jsonPath("errors[0]", is("JWT token is missing in request headers.")))
+                        .andExpect(jsonPath("errors", hasSize(1))));
+    }
+
+    @Test
+    void when_update_other_user_should_return_error_response() {
+
+        Long someOtherUserId = 2L;
+
+        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
+                .build(ObjectType.UPDATE_DTO);
+
+        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
+
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
+
+        mockRequestBuilder = MockMvcRequestBuilders.multipart(USERS_BASE_PATH, someOtherUserId);
+        mockRequestBuilder.with(request -> {
+            request.setMethod("PUT");
+            return request;
+        });
+
+        assertAll(
+                () -> mockMvc
+                        .perform(mockRequestBuilder
+                                .file(userData)
+                                .header("Authorization", "Bearer " + token)
+                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isUnauthorized())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("timestamp", is(notNullValue())))
+                        .andExpect(jsonPath("status", is(401)))
+                        .andExpect(jsonPath("errors[0]", is("User can only update his own account.")))
                         .andExpect(jsonPath("errors", hasSize(1))));
     }
 }

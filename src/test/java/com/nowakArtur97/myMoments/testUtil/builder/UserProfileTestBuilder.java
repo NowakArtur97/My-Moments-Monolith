@@ -9,9 +9,6 @@ import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 
 public class UserProfileTestBuilder {
 
-    public static UserProfileDTO DEFAULT_USER_PROFILE_DTO = new UserProfileDTO("about", "unspecified",
-            "interests", "languages", "location");
-
     private String about = "about";
 
     private Gender gender = Gender.UNSPECIFIED;

@@ -45,10 +45,10 @@ class UserUpdateControllerTest {
     @Value("${my-moments.default-user-role:USER_ROLE}")
     private String defaultUserRole;
 
+    private MockMultipartHttpServletRequestBuilder mockRequestBuilder;
+
     @Autowired
     private MockMvc mockMvc;
-
-    private MockMultipartHttpServletRequestBuilder builder;
 
     @Autowired
     private Flyway flyway;
@@ -94,8 +94,8 @@ class UserUpdateControllerTest {
         token = jwtUtil.generateToken(new User(userEntity.getUsername(), userEntity.getPassword(),
                 List.of(new SimpleGrantedAuthority(defaultUserRole))));
 
-        builder = MockMvcRequestBuilders.multipart(USERS_BASE_PATH, userEntity.getId());
-        builder.with(request -> {
+        mockRequestBuilder = MockMvcRequestBuilders.multipart(USERS_BASE_PATH, userEntity.getId());
+        mockRequestBuilder.with(request -> {
             request.setMethod("PUT");
             return request;
         });
@@ -122,9 +122,9 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-      assertAll(
+        assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -162,9 +162,9 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-      assertAll(
+        assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -202,9 +202,9 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-      assertAll(
+        assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -246,9 +246,9 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-      assertAll(
+        assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -289,9 +289,9 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-      assertAll(
+        assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -332,9 +332,9 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-      assertAll(
+        assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
@@ -366,8 +366,8 @@ class UserUpdateControllerTest {
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withAbout("new about 2")
                 .withInterests("new interests 2").withLanguages("new languages 2").withLocation("new location 2")
                 .withGender(Gender.FEMALE).build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername("validUserWithImage")
-                .withEmail("validUser123Image@email.com").withPassword("ValidPassword123!")
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername("validUserWithImage2")
+                .withEmail("validUser123Image2@email.com").withPassword("ValidPassword123!")
                 .withMatchingPassword("ValidPassword123!").withProfile(userProfileDTO)
                 .build(ObjectType.UPDATE_DTO);
 
@@ -376,12 +376,12 @@ class UserUpdateControllerTest {
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-        MockMultipartFile image = new MockMultipartFile("image", "image", "application/json",
+        MockMultipartFile image = new MockMultipartFile("image", "image", MediaType.IMAGE_JPEG_VALUE,
                 "image.jpg".getBytes());
 
-      assertAll(
+        assertAll(
                 () -> mockMvc
-                        .perform(builder
+                        .perform(mockRequestBuilder
                                 .file(userData)
                                 .file(image)
                                 .header("Authorization", "Bearer " + token)
