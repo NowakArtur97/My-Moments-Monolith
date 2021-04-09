@@ -1,10 +1,13 @@
 package com.nowakArtur97.myMoments.feature.user.entity;
 
+import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
 import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
 import com.nowakArtur97.myMoments.feature.user.validation.UserValidationGroupSequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
@@ -72,5 +75,25 @@ public class UserService {
         }
 
         return userRepository.save(userEntity);
+    }
+
+    public Optional<UserEntity> deleteUser(Long id) {
+
+        Optional<UserEntity> userOptional = userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String usernameInContext = auth != null ? auth.getName() : "";
+            UserEntity userEntity = userOptional.get();
+
+            if (userEntity.getUsername().equals(usernameInContext)) {
+                userRepository.delete(userEntity);
+            } else {
+                throw new NotAuthorizedException("User can only delete his own account.");
+            }
+        }
+
+        return userOptional;
     }
 }
