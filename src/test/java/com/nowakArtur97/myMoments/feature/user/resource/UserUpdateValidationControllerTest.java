@@ -33,8 +33,7 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
@@ -122,13 +121,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors", hasItem("Username cannot be empty.")))
@@ -152,13 +152,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors", hasItem("Username cannot be empty.")))
@@ -178,13 +179,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Username must be between 4 and 40 characters.")))
@@ -203,13 +205,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Username must be between 4 and 40 characters.")))
@@ -229,13 +232,14 @@ class UserUpdateValidationControllerTest {
                 userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Username: '" + userUpdateDTO.getUsername()
@@ -255,13 +259,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Password contains user name: '"
@@ -281,13 +286,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Password contains a whitespace character.")))
@@ -306,13 +312,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Password contains a repetitive string: 'AAA'.")))
@@ -332,13 +339,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors", hasItem("Password contains a popular phrase: '"
@@ -357,13 +365,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Password must be 6 or more characters in length.")))
@@ -383,13 +392,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]",
@@ -409,13 +419,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors",
@@ -437,13 +448,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors",
@@ -465,13 +477,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors", hasItem("Email cannot be empty.")))
@@ -492,13 +505,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Email must be a valid email address.")))
@@ -517,13 +531,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Email: '" + userUpdateDTO.getEmail()
@@ -545,13 +560,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Password cannot be empty.")))
@@ -573,13 +589,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Matching password cannot be empty.")))
@@ -598,13 +615,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Passwords don't match.")))
@@ -625,13 +643,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]",
@@ -653,13 +672,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("About section cannot be longer than 250.")))
@@ -680,13 +700,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Interest section cannot be longer than 250.")))
@@ -707,13 +728,14 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Languages section cannot be longer than 250.")))
@@ -734,16 +756,43 @@ class UserUpdateValidationControllerTest {
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
-                 () -> mockMvc
+                () -> mockMvc
                         .perform(builder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(400)))
                         .andExpect(jsonPath("errors[0]", is("Location cannot be longer than 50.")))
+                        .andExpect(jsonPath("errors", hasSize(1))));
+    }
+
+    @Test
+    void when_update_user_without_token_should_return_error_response() {
+
+        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
+                .build(ObjectType.UPDATE_DTO);
+
+        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
+
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
+
+        assertAll(
+                () -> mockMvc
+                        .perform(builder
+                                .file(userData)
+                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isUnauthorized())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("timestamp", is(notNullValue())))
+                        .andExpect(jsonPath("status", is(401)))
+                        .andExpect(jsonPath("errors[0]", is("JWT token is missing in request headers.")))
                         .andExpect(jsonPath("errors", hasSize(1))));
     }
 }
