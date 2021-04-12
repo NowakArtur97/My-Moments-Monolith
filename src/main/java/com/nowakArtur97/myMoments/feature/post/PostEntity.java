@@ -3,7 +3,6 @@ package com.nowakArtur97.myMoments.feature.post;
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
 import com.nowakArtur97.myMoments.feature.picture.PictureEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,7 +15,6 @@ import java.util.Set;
 @Table(name = "post", schema = "my_moments")
 @Getter
 @Setter
-@Builder
 @ToString(callSuper = true)
 public class PostEntity extends AbstractEntity {
 
@@ -29,7 +27,7 @@ public class PostEntity extends AbstractEntity {
 
     @OneToMany(mappedBy = "relatedPost", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    private final Set<PictureEntity> photos = new HashSet<>();
+    private final Set<PictureEntity> photos;
 
     public void addPhoto(PictureEntity photo) {
 
@@ -41,5 +39,17 @@ public class PostEntity extends AbstractEntity {
 
         this.getPhotos().remove(photo);
         photo.setRelatedPost(null);
+    }
+
+    public PostEntity() {
+
+        this.photos = new HashSet<>();
+    }
+
+    public PostEntity(String caption, UserEntity author, Set<PictureEntity> photos) {
+
+        this.caption = caption;
+        this.author = author;
+        this.photos = photos;
     }
 }
