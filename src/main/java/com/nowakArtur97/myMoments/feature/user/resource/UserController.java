@@ -44,7 +44,7 @@ class UserController {
     @PutMapping(path = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "Update an account", notes = "Update an account")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Successfully updated account", response = String.class),
+            @ApiResponse(code = 200, message = "Successfully updated account", response = UserModel.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
     ResponseEntity<UserModel> updateUser(
             @ApiParam(value = "Id of the User being updated", name = "id", type = "integer",

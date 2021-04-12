@@ -1,10 +1,11 @@
 package com.nowakArtur97.myMoments.testUtil.builder;
 
+import com.nowakArtur97.myMoments.feature.post.PostEntity;
 import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationRequest;
+import com.nowakArtur97.myMoments.feature.user.entity.*;
 import com.nowakArtur97.myMoments.feature.user.resource.UserProfileDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
-import com.nowakArtur97.myMoments.feature.user.entity.*;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 
 import java.util.Collections;
@@ -22,6 +23,8 @@ public class UserTestBuilder {
     private String email = "userEmail123@email.com";
 
     private UserProfile profile;
+
+    private Set<PostEntity> posts = new HashSet<>();
 
     private Set<RoleEntity> roles = new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY));
 
@@ -60,6 +63,13 @@ public class UserTestBuilder {
         return this;
     }
 
+    public UserTestBuilder withPosts(Set<PostEntity> posts) {
+
+        this.posts = posts;
+
+        return this;
+    }
+
     public UserTestBuilder withProfile(UserProfile profile) {
 
         this.profile = profile;
@@ -87,7 +97,7 @@ public class UserTestBuilder {
 
             case ENTITY:
 
-                user = new UserEntity(username, email, password, (UserProfileEntity) profile, roles);
+                user = new UserEntity(username, email, password, (UserProfileEntity) profile, roles, posts);
 
                 break;
 
@@ -119,5 +129,7 @@ public class UserTestBuilder {
         profile = null;
 
         roles = new HashSet<>();
+
+        posts = new HashSet<>();
     }
 }

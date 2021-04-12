@@ -3,6 +3,7 @@ package com.nowakArtur97.myMoments.advice;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
+import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -53,7 +54,7 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException exception,
                                                                      HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(),status.value(),
                 List.of(exception.getMessage()));
 
         return new ResponseEntity<>(errorResponse, headers, status);
@@ -78,5 +79,14 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
                 List.of(exception.getMessage()));
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({InvalidContentTypeException.class})
+    ResponseEntity<Object> handleInvalidContentTypeException(InvalidContentTypeException exception) {
+
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                List.of(exception.getMessage()));
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }

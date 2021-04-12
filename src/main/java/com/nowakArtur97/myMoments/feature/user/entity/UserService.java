@@ -55,10 +55,10 @@ public class UserService {
     public UserEntity registerUser(@Valid UserRegistrationDTO userRegistrationDTO, MultipartFile image)
             throws RoleNotFoundException, IOException {
 
-        RoleEntity role = roleService.findByName(defaultUserRole)
+        RoleEntity roleEntity = roleService.findByName(defaultUserRole)
                 .orElseThrow(() -> new RoleNotFoundException("Role with name: '" + defaultUserRole + "' not found."));
 
-        UserEntity newUserEntity = userMapper.convertDTOToEntity(userRegistrationDTO, image, role);
+        UserEntity newUserEntity = userMapper.convertDTOToEntity(userRegistrationDTO, image, roleEntity);
 
         return userRepository.save(newUserEntity);
     }

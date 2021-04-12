@@ -1,5 +1,6 @@
 package com.nowakArtur97.myMoments.feature.post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
 import com.nowakArtur97.myMoments.feature.picture.PictureEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
@@ -23,10 +24,14 @@ public class PostEntity extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    // TODO: Remove
+    @JsonIgnore
     private UserEntity author;
 
     @OneToMany(mappedBy = "relatedPost", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
+    // TODO: Remove
+    @JsonIgnore
     private final Set<PictureEntity> photos;
 
     public void addPhoto(PictureEntity photo) {
@@ -44,6 +49,13 @@ public class PostEntity extends AbstractEntity {
     public PostEntity() {
 
         this.photos = new HashSet<>();
+    }
+
+    public PostEntity(String caption, UserEntity author) {
+
+        this();
+        this.caption = caption;
+        this.author = author;
     }
 
     public PostEntity(String caption, UserEntity author, Set<PictureEntity> photos) {

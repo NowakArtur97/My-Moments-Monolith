@@ -42,7 +42,7 @@ class UserRegistrationController {
     @PostMapping(value = "/register", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "Create an account", notes = "Create an account (required for generating API key)")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Successfully created a new account", response = String.class),
+            @ApiResponse(code = 200, message = "Successfully created a new account", response = AuthenticationResponse.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
     ResponseEntity<AuthenticationResponse> registerUser(@ApiParam(value = "The user's data", name = "user", required = true)
                                                         @RequestPart("user") String user,

@@ -25,4 +25,9 @@ public class PictureEntity extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity relatedPost;
+
+    public PictureEntity(byte[] photo) {
+
+        this.photo = photo;
+    }
 }
