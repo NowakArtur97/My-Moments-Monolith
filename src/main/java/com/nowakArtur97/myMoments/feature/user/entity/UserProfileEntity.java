@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString(callSuper = true)
 public class UserProfileEntity extends AbstractEntity implements UserProfile {
 
@@ -31,7 +30,7 @@ public class UserProfileEntity extends AbstractEntity implements UserProfile {
     @Column
     private String location;
 
-    @Column(name = "image")
+    @Column
     @Type(type = "org.hibernate.type.BinaryType")
     @Lob
     @ToString.Exclude
