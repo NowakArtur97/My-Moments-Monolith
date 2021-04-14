@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @ApiModel(description = "Details about the Picture")
-public class PictureModel {
+class PictureModel {
 
     @ApiModelProperty(notes = "The unique id of the Picture")
     private Long id;

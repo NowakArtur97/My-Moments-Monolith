@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user.entity;
 
-import com.nowakArtur97.myMoments.testUtil.builder.RoleTestBuilder;
+import com.nowakArtur97.myMoments.feature.user.testBuilder.RoleTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;

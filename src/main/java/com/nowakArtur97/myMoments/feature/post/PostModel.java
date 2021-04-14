@@ -2,7 +2,10 @@ package com.nowakArtur97.myMoments.feature.post;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @ApiModel(description = "Details about the Post")
-public class PostModel {
+class PostModel {
 
     @ApiModelProperty(notes = "The unique id of the Post")
     private Long id;

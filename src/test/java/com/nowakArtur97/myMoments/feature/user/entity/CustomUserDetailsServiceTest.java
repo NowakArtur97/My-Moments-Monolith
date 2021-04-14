@@ -1,7 +1,7 @@
 package com.nowakArtur97.myMoments.feature.user.entity;
 
-import com.nowakArtur97.myMoments.testUtil.builder.UserProfileTestBuilder;
-import com.nowakArtur97.myMoments.testUtil.builder.UserTestBuilder;
+import com.nowakArtur97.myMoments.feature.user.testBuilder.UserProfileTestBuilder;
+import com.nowakArtur97.myMoments.feature.user.testBuilder.UserTestBuilder;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;
 import org.junit.jupiter.api.*;
