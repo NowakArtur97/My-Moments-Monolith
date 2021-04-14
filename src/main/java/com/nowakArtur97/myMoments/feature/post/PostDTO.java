@@ -8,8 +8,9 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,12 +23,12 @@ public class PostDTO {
     @ApiModelProperty(notes = "The post's caption")
     private String caption;
 
-    @NotNull(message = "{post.photos.size}")
+    @NotEmpty(message = "{post.photos.notEmpty}")
     @Size(min = 1, max = 10, message = "{post.photos.size}")
     @ApiModelProperty(notes = "The post's photos")
-    private MultipartFile[] photos;
+    private List<MultipartFile> photos;
 
-    public PostDTO(MultipartFile[] photos) {
+    public PostDTO(List<MultipartFile> photos) {
 
         this.photos = photos;
     }

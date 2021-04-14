@@ -32,7 +32,7 @@ class PostController {
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
     ResponseEntity<PostEntity> cretePost(
             @ApiParam(value = "The post's photos", name = "photos", required = true)
-            @RequestPart(value = "photos") MultipartFile[] photos,
+            @RequestPart(value = "photos", required = false) MultipartFile[] photos,
             @ApiParam(value = "The post's data", name = "post") @RequestPart(value = "post", required = false) String post,
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader
     ) {

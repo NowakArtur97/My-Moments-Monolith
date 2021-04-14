@@ -6,6 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 class PostObjectMapper {
@@ -14,13 +18,15 @@ class PostObjectMapper {
 
     public PostDTO getPostDTOFromString(String postAsString, MultipartFile[] photos) {
 
+        List<MultipartFile> photosSet = photos != null ? Arrays.asList(photos) : new ArrayList<>();
+
         if (postAsString == null) {
-            return new PostDTO(photos);
+            return new PostDTO(photosSet);
         }
 
         try {
             PostDTO postDTO = objectMapper.readValue(postAsString, PostDTO.class);
-            postDTO.setPhotos(photos);
+            postDTO.setPhotos(photosSet);
             return postDTO;
 
         } catch (JsonProcessingException e) {

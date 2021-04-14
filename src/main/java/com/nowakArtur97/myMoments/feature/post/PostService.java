@@ -8,15 +8,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.Basic;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
-@Validated({Basic.class})
+@Validated
 class PostService {
 
     private final PostRepository postRepository;
@@ -30,16 +28,21 @@ class PostService {
 
         PostEntity postEntity = new PostEntity(postDTO.getCaption(), userEntity);
 
-        Arrays.stream(postDTO.getPhotos()).forEach(photo -> {
+        setPhotos(postDTO, postEntity);
+
+        userEntity.addPost(postEntity);
+
+        return postRepository.save(postEntity);
+    }
+
+    private void setPhotos(PostDTO postDTO, PostEntity postEntity) {
+
+        postDTO.getPhotos().forEach(photo -> {
             try {
                 postEntity.addPhoto(new PictureEntity(photo.getBytes()));
             } catch (IOException e) {
                 throw new UncheckedIOException(e);
             }
         });
-
-        userEntity.addPost(postEntity);
-
-        return postRepository.save(postEntity);
     }
 }
