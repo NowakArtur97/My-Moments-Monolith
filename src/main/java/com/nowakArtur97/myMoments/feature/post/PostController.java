@@ -37,10 +37,10 @@ class PostController {
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader
     ) {
 
+        PostDTO postDTO = postObjectMapper.getPostDTOFromString(post, photos);
+
         String jwt = authorizationHeader.substring(jwtConfigurationProperties.getAuthorizationHeaderLength());
         String username = jwtUtil.extractUsername(jwt);
-
-        PostDTO postDTO = postObjectMapper.getPostDTOFromString(post, photos);
 
         return new ResponseEntity<>(postService.createPost(username, postDTO), HttpStatus.CREATED);
     }

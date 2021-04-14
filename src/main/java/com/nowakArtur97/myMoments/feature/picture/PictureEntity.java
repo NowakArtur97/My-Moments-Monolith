@@ -3,6 +3,7 @@ package com.nowakArtur97.myMoments.feature.picture;
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
 import com.nowakArtur97.myMoments.feature.post.PostEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Type;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @Table(name = "picture", schema = "my_moments")
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString(callSuper = true)
 public class PictureEntity extends AbstractEntity {
 
