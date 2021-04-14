@@ -6,15 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Set;
-
 @Component
 @RequiredArgsConstructor
 class PostObjectMapper {
 
     private final ObjectMapper objectMapper;
 
-    public PostDTO getPostDTOFromString(String postAsString, Set<MultipartFile> photos) {
+    public PostDTO getPostDTOFromString(String postAsString, MultipartFile[] photos) {
 
         if (postAsString == null) {
             return new PostDTO(photos);

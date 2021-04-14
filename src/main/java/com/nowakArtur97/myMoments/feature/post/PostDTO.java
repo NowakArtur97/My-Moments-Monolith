@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -26,9 +25,9 @@ public class PostDTO {
     @NotNull(message = "{post.photos.size}")
     @Size(min = 1, max = 10, message = "{post.photos.size}")
     @ApiModelProperty(notes = "The post's photos")
-    private Set<MultipartFile> photos;
+    private MultipartFile[] photos;
 
-    public PostDTO(Set<MultipartFile> photos) {
+    public PostDTO(MultipartFile[] photos) {
 
         this.photos = photos;
     }

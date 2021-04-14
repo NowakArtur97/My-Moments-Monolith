@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Set;
-
 @RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
@@ -27,14 +25,14 @@ class PostController {
 
     private final PostObjectMapper postObjectMapper;
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "Create a post", notes = "Create a post")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Successfully created post", response = ResponseEntity.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
     ResponseEntity<PostEntity> cretePost(
             @ApiParam(value = "The post's photos", name = "photos", required = true)
-            @RequestPart(value = "photos") MultipartFile photos,
+            @RequestPart(value = "photos") MultipartFile[] photos,
             @ApiParam(value = "The post's data", name = "post") @RequestPart(value = "post", required = false) String post,
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader
     ) {
@@ -42,7 +40,8 @@ class PostController {
         String jwt = authorizationHeader.substring(jwtConfigurationProperties.getAuthorizationHeaderLength());
         String username = jwtUtil.extractUsername(jwt);
 
-        return new ResponseEntity<>(postService.createPost(username,
-                postObjectMapper.getPostDTOFromString(post, Set.of(photos))), HttpStatus.CREATED);
+        PostDTO postDTO = postObjectMapper.getPostDTOFromString(post, photos);
+
+        return new ResponseEntity<>(postService.createPost(username, postDTO), HttpStatus.CREATED);
     }
 }

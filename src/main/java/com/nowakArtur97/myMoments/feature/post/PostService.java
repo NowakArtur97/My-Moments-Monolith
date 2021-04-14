@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ class PostService {
 
         PostEntity postEntity = new PostEntity(postDTO.getCaption(), userEntity);
 
-        postDTO.getPhotos().forEach(photo -> {
+        Arrays.stream(postDTO.getPhotos()).forEach(photo -> {
             try {
                 postEntity.addPhoto(new PictureEntity(photo.getBytes()));
             } catch (IOException e) {
