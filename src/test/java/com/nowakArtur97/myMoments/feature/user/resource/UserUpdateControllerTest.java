@@ -127,7 +127,6 @@ class UserUpdateControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -167,7 +166,6 @@ class UserUpdateControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -207,7 +205,6 @@ class UserUpdateControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -251,7 +248,6 @@ class UserUpdateControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -294,7 +290,6 @@ class UserUpdateControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -337,7 +332,6 @@ class UserUpdateControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -385,7 +379,6 @@ class UserUpdateControllerTest {
                                 .file(userData)
                                 .file(image)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

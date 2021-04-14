@@ -75,7 +75,6 @@ class UserRegistrationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -102,7 +101,6 @@ class UserRegistrationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -129,8 +127,6 @@ class UserRegistrationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                // TODO: Remove?
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -157,7 +153,6 @@ class UserRegistrationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -187,7 +182,6 @@ class UserRegistrationControllerTest {
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
                                 .file(image)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

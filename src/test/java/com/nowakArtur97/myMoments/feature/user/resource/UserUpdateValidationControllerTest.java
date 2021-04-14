@@ -125,7 +125,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -156,7 +155,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -183,7 +181,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -209,7 +206,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -236,7 +232,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -263,7 +258,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -290,7 +284,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -316,7 +309,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -343,7 +335,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -369,7 +360,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -396,7 +386,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -423,7 +412,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -452,7 +440,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -481,7 +468,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -509,7 +495,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -535,7 +520,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -564,7 +548,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -593,7 +576,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -619,7 +601,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -647,7 +628,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -676,7 +656,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -704,7 +683,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -732,7 +710,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -760,7 +737,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -786,7 +762,6 @@ class UserUpdateValidationControllerTest {
                 () -> mockMvc
                         .perform(mockRequestBuilder
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isUnauthorized())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -821,7 +796,6 @@ class UserUpdateValidationControllerTest {
                         .perform(mockRequestBuilder
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
-                                .content(ObjectTestMapper.asJsonString(userUpdateDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isUnauthorized())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

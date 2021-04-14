@@ -64,7 +64,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -94,7 +93,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -120,7 +118,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -145,7 +142,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -171,7 +167,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -197,7 +192,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -223,7 +217,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -248,7 +241,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -274,7 +266,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -299,7 +290,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -325,7 +315,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -351,7 +340,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -379,7 +367,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -407,7 +394,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -434,7 +420,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -459,7 +444,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -487,7 +471,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -515,7 +498,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -540,7 +522,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -567,7 +548,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -595,7 +575,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -622,7 +601,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -649,7 +627,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -676,7 +653,6 @@ class UserRegistrationValidationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
-                                .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
