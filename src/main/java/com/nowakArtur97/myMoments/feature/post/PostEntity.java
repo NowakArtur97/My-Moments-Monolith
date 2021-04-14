@@ -1,8 +1,6 @@
 package com.nowakArtur97.myMoments.feature.post;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
-import com.nowakArtur97.myMoments.feature.picture.PictureEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,14 +22,10 @@ public class PostEntity extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    // TODO: Remove
-    @JsonIgnore
     private UserEntity author;
 
     @OneToMany(mappedBy = "relatedPost", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    // TODO: Remove
-    @JsonIgnore
     private final Set<PictureEntity> photos;
 
     public void addPhoto(PictureEntity photo) {

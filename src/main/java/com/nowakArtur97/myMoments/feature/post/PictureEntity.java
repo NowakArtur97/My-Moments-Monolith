@@ -1,7 +1,6 @@
-package com.nowakArtur97.myMoments.feature.picture;
+package com.nowakArtur97.myMoments.feature.post;
 
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
-import com.nowakArtur97.myMoments.feature.post.PostEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class PictureEntity extends AbstractEntity {
+class PictureEntity extends AbstractEntity {
 
     @Column
     @Type(type = "org.hibernate.type.BinaryType")

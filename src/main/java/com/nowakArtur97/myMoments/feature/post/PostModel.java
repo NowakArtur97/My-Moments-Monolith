@@ -1,0 +1,31 @@
+package com.nowakArtur97.myMoments.feature.post;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@ToString
+@ApiModel(description = "Details about the Post")
+public class PostModel {
+
+    @ApiModelProperty(notes = "The unique id of the Post")
+    private Long id;
+
+    @ApiModelProperty(notes = "The post's caption")
+    private String caption;
+
+    @ToString.Exclude
+    @ApiModelProperty(notes = "The post's photos")
+    private final Set<PictureModel> photos;
+
+    public PostModel() {
+
+        photos = new HashSet<>();
+    }
+}

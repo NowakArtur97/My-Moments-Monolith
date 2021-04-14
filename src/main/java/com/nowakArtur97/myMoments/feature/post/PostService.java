@@ -1,6 +1,5 @@
 package com.nowakArtur97.myMoments.feature.post;
 
-import com.nowakArtur97.myMoments.feature.picture.PictureEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserService;
 import lombok.RequiredArgsConstructor;

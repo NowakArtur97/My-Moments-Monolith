@@ -18,15 +18,15 @@ class PostObjectMapper {
 
     public PostDTO getPostDTOFromString(String postAsString, MultipartFile[] photos) {
 
-        List<MultipartFile> photosSet = photos != null ? Arrays.asList(photos) : new ArrayList<>();
+        List<MultipartFile> photosList = photos != null ? Arrays.asList(photos) : new ArrayList<>();
 
         if (postAsString == null) {
-            return new PostDTO(photosSet);
+            return new PostDTO(photosList);
         }
 
         try {
             PostDTO postDTO = objectMapper.readValue(postAsString, PostDTO.class);
-            postDTO.setPhotos(photosSet);
+            postDTO.setPhotos(photosList);
             return postDTO;
 
         } catch (JsonProcessingException e) {
