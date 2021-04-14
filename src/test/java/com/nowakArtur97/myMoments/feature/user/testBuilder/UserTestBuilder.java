@@ -1,4 +1,4 @@
-package com.nowakArtur97.myMoments.testUtil.builder;
+package com.nowakArtur97.myMoments.feature.user.testBuilder;
 
 import com.nowakArtur97.myMoments.feature.post.PostEntity;
 import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationRequest;
