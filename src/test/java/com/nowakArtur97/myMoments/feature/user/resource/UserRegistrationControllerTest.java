@@ -129,6 +129,7 @@ class UserRegistrationControllerTest {
                 () -> mockMvc
                         .perform(multipart(REGISTRATION_BASE_PATH)
                                 .file(userData)
+                                // TODO: Remove?
                                 .content(ObjectTestMapper.asJsonString(userRegistrationDTO))
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())

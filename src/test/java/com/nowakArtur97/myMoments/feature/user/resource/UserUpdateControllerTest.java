@@ -84,9 +84,9 @@ class UserUpdateControllerTest {
                 .orElseThrow(() -> new RoleNotFoundException("Role: '" + defaultUserRole + "' not found."));
 
         userProfileEntity = (UserProfileEntity) userProfileTestBuilder.build(ObjectType.ENTITY);
-        userEntity = (UserEntity) userTestBuilder.withUsername("user456")
-                .withEmail("u4se5r@em6ail.com").withPassword("userASD!").withMatchingPassword("userASD!")
-                .withProfile(userProfileEntity).withRoles(Set.of(roleEntity)).build(ObjectType.ENTITY);
+        userEntity = (UserEntity) userTestBuilder.withUsername("user456").withEmail("u4se5r@em6ail.com")
+                .withPassword("userASD!").withMatchingPassword("userASD!").withProfile(userProfileEntity)
+                .withRoles(Set.of(roleEntity)).build(ObjectType.ENTITY);
         userProfileEntity.setUser(userEntity);
 
         userRepository.save(userEntity);
