@@ -53,6 +53,8 @@ class UserServiceTest {
     @Mock
     private SecurityContext securityContext;
 
+    private static MockedStatic mocked;
+
     private static UserProfileTestBuilder userProfileTestBuilder;
     private static UserTestBuilder userTestBuilder;
 
@@ -63,7 +65,7 @@ class UserServiceTest {
         userTestBuilder = new UserTestBuilder();
 
         UUID uuid = UUID.randomUUID();
-        MockedStatic mocked = mockStatic(UUID.class);
+         mocked = mockStatic(UUID.class);
         mocked.when(UUID::randomUUID).thenReturn(uuid);
     }
 
@@ -73,6 +75,14 @@ class UserServiceTest {
         userService = new UserService(userRepository, userMapper, roleService);
 
         ReflectionTestUtils.setField(userService, "defaultUserRole", "USER_ROLE");
+    }
+
+    @AfterAll
+    private static void cleanUp() {
+
+        if (!mocked.isClosed()) {
+            mocked.close();
+        }
     }
 
     @Nested

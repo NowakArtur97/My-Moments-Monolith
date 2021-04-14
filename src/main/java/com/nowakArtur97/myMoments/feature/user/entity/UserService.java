@@ -66,15 +66,13 @@ public class UserService {
     public UserEntity updateUser(Long id, UserEntity userEntity, @Valid UserUpdateDTO userUpdateDTO, MultipartFile image)
             throws IOException {
 
-        checkIfUserChangingOwnData(userEntity, "User can only update his own account.");
+        if (!isUserChangingOwnData(userEntity.getUsername())) {
+            throw new NotAuthorizedException("User can only update his own account.");
+        }
 
         userUpdateDTO.setId(id);
 
         userMapper.convertDTOToEntity(userEntity, userUpdateDTO, image);
-
-        if (image != null) {
-            userEntity.getProfile().setImage(image.getBytes());
-        }
 
         return userRepository.save(userEntity);
     }
@@ -87,22 +85,22 @@ public class UserService {
 
             UserEntity userEntity = userOptional.get();
 
-            checkIfUserChangingOwnData(userEntity, "User can only delete his own account.");
-
-            userRepository.delete(userEntity);
+            if (isUserChangingOwnData(userEntity.getUsername())) {
+                userRepository.delete(userEntity);
+            } else {
+                throw new NotAuthorizedException("User can only delete his own account.");
+            }
         }
 
         return userOptional;
     }
 
-
-    private void checkIfUserChangingOwnData(UserEntity userEntity, String exceptionMessage) {
+    public boolean isUserChangingOwnData(String username) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
         String usernameInContext = auth != null ? auth.getName() : "";
 
-        if (!userEntity.getUsername().equals(usernameInContext)) {
-            throw new NotAuthorizedException(exceptionMessage);
-        }
+        return username.equals(usernameInContext);
     }
 }
