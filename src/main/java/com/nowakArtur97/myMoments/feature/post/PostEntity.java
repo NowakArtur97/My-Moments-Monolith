@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class PostEntity extends AbstractEntity {
+public class PostEntity extends AbstractEntity implements Post {
 
     @Column
     private String caption;

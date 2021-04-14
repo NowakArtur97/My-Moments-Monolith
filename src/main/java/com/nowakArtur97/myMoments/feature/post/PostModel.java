@@ -15,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @ApiModel(description = "Details about the Post")
-class PostModel {
+class PostModel implements Post {
 
     @ApiModelProperty(notes = "The unique id of the Post")
     private Long id;

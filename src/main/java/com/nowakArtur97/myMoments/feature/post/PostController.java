@@ -47,7 +47,7 @@ class PostController {
         String jwt = authorizationHeader.substring(jwtConfigurationProperties.getAuthorizationHeaderLength());
         String username = jwtUtil.extractUsername(jwt);
 
-        PostEntity postEntity =  postService.createPost(username, postDTO);
+        PostEntity postEntity = postService.createPost(username, postDTO);
 
         return new ResponseEntity<>(modelMapper.map(postEntity, PostModel.class), HttpStatus.CREATED);
     }

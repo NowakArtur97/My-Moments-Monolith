@@ -17,11 +17,14 @@ class PostObjectMapper {
     public PostDTO getPostDTOFromString(String postAsString, List<MultipartFile> photos) {
 
         if (postAsString == null) {
-            return new PostDTO(photos);
+            return new PostDTO("", photos);
         }
 
         try {
             PostDTO postDTO = objectMapper.readValue(postAsString, PostDTO.class);
+            if (postDTO.getCaption() == null) {
+                postDTO.setCaption("");
+            }
             postDTO.setPhotos(photos);
             return postDTO;
 
