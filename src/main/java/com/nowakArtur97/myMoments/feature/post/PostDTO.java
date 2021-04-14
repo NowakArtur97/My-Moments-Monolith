@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class PostDTO {
     @ApiModelProperty(notes = "The post's caption")
     private String caption;
 
-    @NotEmpty(message = "{post.photos.notEmpty}")
+    @NotEmptyMultipartList(message = "{post.photos.notEmpty}")
     @Size(min = 1, max = 10, message = "{post.photos.size}")
     @ApiModelProperty(notes = "The post's photos")
     private List<MultipartFile> photos;
