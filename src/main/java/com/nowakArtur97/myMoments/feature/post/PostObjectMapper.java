@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -16,9 +15,9 @@ class PostObjectMapper {
 
     private final ObjectMapper objectMapper;
 
-    public PostDTO getPostDTOFromString(String postAsString, MultipartFile[] photos) {
+    public PostDTO getPostDTOFromString(String postAsString, List<MultipartFile> photos) {
 
-        List<MultipartFile> photosList = photos != null ? Arrays.asList(photos) : new ArrayList<>();
+        List<MultipartFile> photosList = hasPhotos(photos) ? photos : new ArrayList<>();
 
         if (postAsString == null) {
             return new PostDTO(photosList);
@@ -32,5 +31,10 @@ class PostObjectMapper {
         } catch (JsonProcessingException e) {
             return null;
         }
+    }
+
+    private boolean hasPhotos(List<MultipartFile> photos) {
+
+        return photos != null && photos.stream().allMatch(photo -> photo.getSize() > 0);
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ class PostController {
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
     ResponseEntity<PostModel> cretePost(
             @ApiParam(value = "The post's photos", name = "photos", required = true)
-            @RequestPart(value = "photos", required = false) MultipartFile[] photos,
+            @RequestPart(value = "photos", required = false) List<MultipartFile> photos,
             @ApiParam(value = "The post's data", name = "post") @RequestPart(value = "post", required = false) String post,
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader
     ) {
