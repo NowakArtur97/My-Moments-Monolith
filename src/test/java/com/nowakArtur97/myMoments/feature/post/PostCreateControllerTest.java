@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DisplayNameGeneration(NameWithSpacesGenerator.class)
 @Tag("PostController_Tests")
-class PostControllerTest {
+class PostCreateControllerTest {
 
     private final String POSTS_BASE_PATH = "http://localhost:8080/api/v1/posts";
 

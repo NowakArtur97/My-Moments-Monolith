@@ -806,7 +806,41 @@ class UserUpdateValidationControllerTest {
     }
 
     @Test
-    void when_update_not_existing_user_should_return_error_response() {
+    void when_update_user_with_not_existing_id_should_return_error_response() {
+
+        Long notExistingUserId = 10L;
+
+        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
+                .build(ObjectType.UPDATE_DTO);
+
+        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
+
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
+
+        mockRequestBuilder = MockMvcRequestBuilders.multipart(USERS_BASE_PATH, notExistingUserId);
+        mockRequestBuilder.with(request -> {
+            request.setMethod("PUT");
+            return request;
+        });
+
+        assertAll(
+                () -> mockMvc
+                        .perform(mockRequestBuilder
+                                .file(userData)
+                                .header("Authorization", "Bearer " + token)
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isNotFound())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("timestamp", is(notNullValue())))
+                        .andExpect(jsonPath("status", is(401)))
+                        .andExpect(jsonPath("errors[0]", is("User with id: '" + notExistingUserId + "' not found.")))
+                        .andExpect(jsonPath("errors", hasSize(1))));
+    }
+
+    @Test
+    void when_update_user_with_not_existing_username_should_return_error_response() {
 
         String notExistingUsername = "iAmNotExist";
 
@@ -833,7 +867,7 @@ class UserUpdateValidationControllerTest {
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(401)))
                         .andExpect(jsonPath("errors[0]",
-                                is("User with namename/email: '" + notExistingUsername + "' not found.")))
+                                is("User with name/email: '" + notExistingUsername + "' not found.")))
                         .andExpect(jsonPath("errors", hasSize(1))));
     }
 }
