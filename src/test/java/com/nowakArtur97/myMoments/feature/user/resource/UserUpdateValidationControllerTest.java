@@ -834,7 +834,7 @@ class UserUpdateValidationControllerTest {
                         .andExpect(status().isNotFound())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
-                        .andExpect(jsonPath("status", is(401)))
+                        .andExpect(jsonPath("status", is(404)))
                         .andExpect(jsonPath("errors[0]", is("User with id: '" + notExistingUserId + "' not found.")))
                         .andExpect(jsonPath("errors", hasSize(1))));
     }

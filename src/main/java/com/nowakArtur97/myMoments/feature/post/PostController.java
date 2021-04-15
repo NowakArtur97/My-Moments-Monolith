@@ -68,7 +68,7 @@ class PostController {
 
         PostEntity postEntity = postService.updatePost(id, username, postDTO);
 
-        return new ResponseEntity<>(modelMapper.map(postEntity, PostModel.class), HttpStatus.CREATED);
+        return new ResponseEntity<>(modelMapper.map(postEntity, PostModel.class), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")

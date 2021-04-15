@@ -701,7 +701,7 @@ class UserServiceTest {
             when(authentication.getName()).thenReturn(userExpected.getUsername());
 
             assertAll(() -> assertDoesNotThrow(() -> userService.deleteUser(userId),
-                    "should throw ResourceNotFoundException but wasn't"),
+                    "should not throw ResourceNotFoundException or NotAuthorizedException but was"),
                     () -> verify(userRepository, times(1)).findById(userId),
                     () -> verify(userRepository, times(1)).delete(userExpected),
                     () -> verifyNoMoreInteractions(userRepository),
