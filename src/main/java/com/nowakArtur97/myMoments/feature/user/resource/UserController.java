@@ -1,7 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user.resource;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
-import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
 import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationResponse;
 import com.nowakArtur97.myMoments.feature.user.entity.CustomUserDetailsService;
@@ -82,7 +81,7 @@ class UserController {
                     required = true, example = "1")
             @PathVariable("id") Long id) {
 
-        userService.deleteUser(id).orElseThrow(() -> new ResourceNotFoundException("User", id));
+        userService.deleteUser(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

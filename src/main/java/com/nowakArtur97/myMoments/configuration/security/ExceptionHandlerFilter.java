@@ -6,6 +6,7 @@ import com.nowakArtur97.myMoments.common.exception.JwtTokenMissingException;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -30,7 +31,7 @@ class ExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
 
-        } catch (JwtTokenMissingException exception) {
+        } catch (JwtTokenMissingException | AuthenticationException exception) {
 
             setErrorResponse(HttpStatus.UNAUTHORIZED, response, exception);
 

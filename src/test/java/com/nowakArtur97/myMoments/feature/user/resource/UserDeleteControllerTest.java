@@ -3,14 +3,15 @@ package com.nowakArtur97.myMoments.feature.user.resource;
 import com.nowakArtur97.myMoments.advice.AuthenticationControllerAdvice;
 import com.nowakArtur97.myMoments.advice.GlobalResponseEntityExceptionHandler;
 import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
+import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
 import com.nowakArtur97.myMoments.feature.user.entity.CustomUserDetailsService;
-import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserService;
-import com.nowakArtur97.myMoments.feature.user.testBuilder.UserTestBuilder;
-import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -18,8 +19,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -52,14 +51,6 @@ class UserDeleteControllerTest {
     @Mock
     private ModelMapper modelMapper;
 
-    private static UserTestBuilder userTestBuilder;
-
-    @BeforeAll
-    static void setUpBuilders() {
-
-        userTestBuilder = new UserTestBuilder();
-    }
-
     @BeforeEach
     private void setUp() {
 
@@ -79,10 +70,6 @@ class UserDeleteControllerTest {
 
         Long userId = 1L;
 
-        UserEntity userEntity = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
-
-        when(userService.deleteUser(userId)).thenReturn(Optional.of(userEntity));
-
         assertAll(
                 () -> mockMvc.perform(delete(USERS_BASE_PATH, userId))
                         .andExpect(status().isNoContent())
@@ -100,7 +87,7 @@ class UserDeleteControllerTest {
 
         Long userId = 1L;
 
-        when(userService.deleteUser(userId)).thenReturn(Optional.empty());
+        doThrow(new ResourceNotFoundException("User", userId)).when(userService).deleteUser(eq(userId));
 
         assertAll(
                 () -> mockMvc.perform(delete(USERS_BASE_PATH, userId))
@@ -123,7 +110,7 @@ class UserDeleteControllerTest {
 
         Long userId = 1L;
 
-        when(userService.deleteUser(userId)).thenThrow(new NotAuthorizedException("User can only delete his own account."));
+        doThrow(new NotAuthorizedException("User can only delete his own account.")).when(userService).deleteUser(eq(userId));
 
         assertAll(
                 () -> mockMvc.perform(delete(USERS_BASE_PATH, userId))

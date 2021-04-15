@@ -804,4 +804,36 @@ class UserUpdateValidationControllerTest {
                         .andExpect(jsonPath("errors[0]", is("User can only update his own account.")))
                         .andExpect(jsonPath("errors", hasSize(1))));
     }
+
+    @Test
+    void when_update_not_existing_user_should_return_error_response() {
+
+        String notExistingUsername = "iAmNotExist";
+
+        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
+                .build(ObjectType.UPDATE_DTO);
+
+        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
+
+        MockMultipartFile userData = new MockMultipartFile("user", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
+
+        token = jwtUtil.generateToken(new User(notExistingUsername, notExistingUsername,
+                List.of(new SimpleGrantedAuthority(defaultUserRole))));
+
+        assertAll(
+                () -> mockMvc
+                        .perform(mockRequestBuilder
+                                .file(userData)
+                                .header("Authorization", "Bearer " + token)
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isUnauthorized())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("timestamp", is(notNullValue())))
+                        .andExpect(jsonPath("status", is(401)))
+                        .andExpect(jsonPath("errors[0]",
+                                is("User with namename/email: '" + notExistingUsername + "' not found.")))
+                        .andExpect(jsonPath("errors", hasSize(1))));
+    }
 }

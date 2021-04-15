@@ -1,6 +1,7 @@
 package com.nowakArtur97.myMoments.feature.user.entity;
 
 import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
+import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
 import com.nowakArtur97.myMoments.feature.user.validation.UserValidationGroupSequence;
@@ -8,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
@@ -67,8 +67,7 @@ public class UserService {
     public UserEntity updateUser(Long id, @Valid UserUpdateDTO userUpdateDTO, MultipartFile image)
             throws IOException {
 
-        UserEntity userEntity = findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("User with id: '" + id + "' not found."));
+        UserEntity userEntity = findById(id).orElseThrow(() -> new ResourceNotFoundException("User", id));
 
         if (!isUserChangingOwnData(userEntity.getUsername())) {
             throw new NotAuthorizedException("User can only update his own account.");
@@ -81,22 +80,15 @@ public class UserService {
         return userRepository.save(userEntity);
     }
 
-    public Optional<UserEntity> deleteUser(Long id) {
+    public void deleteUser(Long id) {
 
-        Optional<UserEntity> userOptional = userRepository.findById(id);
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", id));
 
-        if (userOptional.isPresent()) {
-
-            UserEntity userEntity = userOptional.get();
-
-            if (isUserChangingOwnData(userEntity.getUsername())) {
-                userRepository.delete(userEntity);
-            } else {
-                throw new NotAuthorizedException("User can only delete his own account.");
-            }
+        if (isUserChangingOwnData(userEntity.getUsername())) {
+            userRepository.delete(userEntity);
+        } else {
+            throw new NotAuthorizedException("User can only delete his own account.");
         }
-
-        return userOptional;
     }
 
     public boolean isUserChangingOwnData(String username) {
