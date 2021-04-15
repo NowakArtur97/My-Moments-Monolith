@@ -2,7 +2,6 @@ package com.nowakArtur97.myMoments.feature.post;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
-import com.nowakArtur97.myMoments.configuration.security.JwtConfigurationProperties;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,8 +23,6 @@ class PostController {
 
     private final JwtUtil jwtUtil;
 
-    private final JwtConfigurationProperties jwtConfigurationProperties;
-
     private final PostObjectMapper postObjectMapper;
 
     private final ModelMapper modelMapper;
@@ -44,14 +41,12 @@ class PostController {
 
         PostDTO postDTO = postObjectMapper.getPostDTOFromString(post, photos);
 
-        String jwt = authorizationHeader.substring(jwtConfigurationProperties.getAuthorizationHeaderLength());
-        String username = jwtUtil.extractUsername(jwt);
+        String username = jwtUtil.extractUsernameFromHeader(authorizationHeader);
 
         PostEntity postEntity = postService.createPost(username, postDTO);
 
         return new ResponseEntity<>(modelMapper.map(postEntity, PostModel.class), HttpStatus.CREATED);
     }
-
 
     @PutMapping(path = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "Update a post", notes = "Update a post")
@@ -69,11 +64,30 @@ class PostController {
 
         PostDTO postDTO = postObjectMapper.getPostDTOFromString(post, photos);
 
-        String jwt = authorizationHeader.substring(jwtConfigurationProperties.getAuthorizationHeaderLength());
-        String username = jwtUtil.extractUsername(jwt);
+        String username = jwtUtil.extractUsernameFromHeader(authorizationHeader);
 
         PostEntity postEntity = postService.updatePost(id, username, postDTO);
 
         return new ResponseEntity<>(modelMapper.map(postEntity, PostModel.class), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // Added to remove the default 200 status added by Swagger
+    @ApiOperation(value = "Delete an account", notes = "Delete an account")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Successfully deleted an account"),
+            @ApiResponse(code = 400, message = "Invalid User's id supplied"),
+            @ApiResponse(code = 404, message = "Could not find User with provided id", response = ErrorResponse.class)})
+    ResponseEntity<Void> deleteUser(
+            @ApiParam(value = "Id of the Post being deleted", name = "id", type = "integer",
+                    required = true, example = "1")
+            @PathVariable("id") Long id,
+            @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader) {
+
+        String username = jwtUtil.extractUsernameFromHeader(authorizationHeader);
+
+        postService.deletePost(id, username);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

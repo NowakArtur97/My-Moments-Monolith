@@ -33,6 +33,13 @@ public class JwtUtil {
         return (extractUsername(token).equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    public String extractUsernameFromHeader(String authorizationHeader) {
+
+        String token = authorizationHeader.substring(jwtConfigurationProperties.getAuthorizationHeaderLength());
+
+        return extractClaim(token, Claims::getSubject);
+    }
+
     public String extractUsername(String token) {
 
         return extractClaim(token, Claims::getSubject);

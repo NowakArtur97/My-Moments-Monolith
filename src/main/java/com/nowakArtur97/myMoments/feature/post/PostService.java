@@ -53,6 +53,20 @@ class PostService {
         return postRepository.save(postEntity);
     }
 
+    void deletePost(Long postId, String username) {
+
+        UserEntity userEntity = userService.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with name: '" + username + "' not found."));
+        PostEntity postEntity = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", postId));
+
+        if (userService.isUserChangingOwnData(username) && userEntity.getPosts().contains(postEntity)) {
+            userEntity.removePost(postEntity);
+            postRepository.delete(postEntity);
+        } else {
+            throw new NotAuthorizedException("User can only change his own posts.");
+        }
+    }
+
     private void setPhotos(PostDTO postDTO, PostEntity postEntity) {
 
         postDTO.getPhotos().forEach(photo -> {
