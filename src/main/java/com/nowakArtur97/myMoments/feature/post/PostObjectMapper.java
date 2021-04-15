@@ -29,7 +29,7 @@ class PostObjectMapper {
             return postDTO;
 
         } catch (JsonProcessingException e) {
-            return null;
+            return new PostDTO("", photos);
         }
     }
 }

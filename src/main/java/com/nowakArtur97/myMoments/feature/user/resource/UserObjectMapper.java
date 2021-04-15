@@ -3,9 +3,9 @@ package com.nowakArtur97.myMoments.feature.user.resource;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 class UserObjectMapper {
 
@@ -13,11 +13,23 @@ class UserObjectMapper {
 
     public <T extends UserDTO> UserDTO getUserDTOFromString(String userAsString, Class<T> clazz) {
 
+        if (userAsString == null) {
+            return returnDefaultValue(clazz);
+        }
+
         try {
             return objectMapper.readValue(userAsString, clazz);
 
         } catch (JsonProcessingException e) {
-            return null;
+            return returnDefaultValue(clazz);
+        }
+    }
+
+    private <T extends UserDTO> UserDTO returnDefaultValue(Class<T> clazz) {
+        if (clazz == UserRegistrationDTO.class) {
+            return new UserRegistrationDTO();
+        } else {
+            return new UserUpdateDTO();
         }
     }
 }
