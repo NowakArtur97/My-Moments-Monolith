@@ -647,7 +647,6 @@ class UserServiceTest {
 
 
         @Test
-        @SneakyThrows
         void when_update_not_existing_user_should_throw_exception() {
 
             UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withAbout("new about")
@@ -745,7 +744,6 @@ class UserServiceTest {
         }
 
         @Test
-        @SneakyThrows
         void when_delete_not_existing_user_should_throw_exception() {
 
             Long userId = 1L;
