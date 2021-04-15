@@ -1,5 +1,7 @@
 package com.nowakArtur97.myMoments.feature.post;
 
+import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
+import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,23 @@ class PostService {
         setPhotos(postDTO, postEntity);
 
         userEntity.addPost(postEntity);
+
+        return postRepository.save(postEntity);
+    }
+
+    PostEntity updatePost(Long postId, String username, @Valid PostDTO postDTO) {
+
+        UserEntity userEntity = userService.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with name: '" + username + "' not found."));
+        PostEntity postEntity = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", postId));
+
+        if (userService.isUserChangingOwnData(username) && userEntity.getPosts().contains(postEntity)) {
+            postEntity.setCaption(postDTO.getCaption());
+            postEntity.getPhotos().removeAll(postEntity.getPhotos());
+            setPhotos(postDTO, postEntity);
+        } else {
+            throw new NotAuthorizedException("User can only change his own posts.");
+        }
 
         return postRepository.save(postEntity);
     }

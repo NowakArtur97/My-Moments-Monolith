@@ -51,4 +51,29 @@ class PostController {
 
         return new ResponseEntity<>(modelMapper.map(postEntity, PostModel.class), HttpStatus.CREATED);
     }
+
+
+    @PutMapping(path = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @ApiOperation(value = "Update a post", notes = "Update a post")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully updated post", response = ResponseEntity.class),
+            @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
+    ResponseEntity<PostModel> updatePost(
+            @ApiParam(value = "Id of the Post being updated", name = "id", type = "integer",
+                    required = true, example = "1") @PathVariable("id") Long id,
+            @ApiParam(value = "The post's photos", name = "photos", required = true)
+            @RequestPart(value = "photos", required = false) List<MultipartFile> photos,
+            @ApiParam(value = "The post's data", name = "post") @RequestPart(value = "post", required = false) String post,
+            @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader
+    ) {
+
+        PostDTO postDTO = postObjectMapper.getPostDTOFromString(post, photos);
+
+        String jwt = authorizationHeader.substring(jwtConfigurationProperties.getAuthorizationHeaderLength());
+        String username = jwtUtil.extractUsername(jwt);
+
+        PostEntity postEntity = postService.updatePost(id, username, postDTO);
+
+        return new ResponseEntity<>(modelMapper.map(postEntity, PostModel.class), HttpStatus.CREATED);
+    }
 }
