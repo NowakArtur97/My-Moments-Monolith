@@ -63,7 +63,7 @@ class PostService {
             userEntity.removePost(postEntity);
             postRepository.delete(postEntity);
         } else {
-            throw new NotAuthorizedException("User can only change his own posts.");
+            throw new NotAuthorizedException("User can only delete his own posts.");
         }
     }
 
