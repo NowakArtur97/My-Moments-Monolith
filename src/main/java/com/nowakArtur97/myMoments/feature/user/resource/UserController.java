@@ -16,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,12 +54,9 @@ class UserController {
             @ApiParam(value = "The user's image", name = "image")
             @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
 
-        UserEntity userEntity = userService.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("User with id: '" + id + "' not found."));
-
         UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userObjectMapper.getUserDTOFromString(user, UserUpdateDTO.class);
 
-        UserEntity updatedUserEntity = userService.updateUser(id, userEntity, userUpdateDTO, image);
+        UserEntity updatedUserEntity = userService.updateUser(id, userUpdateDTO, image);
 
         UserModel userModel = modelMapper.map(updatedUserEntity, UserModel.class);
 

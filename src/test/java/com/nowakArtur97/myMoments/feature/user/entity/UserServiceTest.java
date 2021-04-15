@@ -19,6 +19,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Arrays;
@@ -65,7 +66,7 @@ class UserServiceTest {
         userTestBuilder = new UserTestBuilder();
 
         UUID uuid = UUID.randomUUID();
-         mocked = mockStatic(UUID.class);
+        mocked = mockStatic(UUID.class);
         mocked.when(UUID::randomUUID).thenReturn(uuid);
     }
 
@@ -354,13 +355,16 @@ class UserServiceTest {
                     .withProfile(userProfileExpectedAfterObjectMapping).withRoles(Set.of(roleExpected))
                     .build(ObjectType.ENTITY);
 
+            Long userId = 1L;
+
             SecurityContextHolder.setContext(securityContext);
 
+            when(userRepository.findById(userId)).thenReturn(Optional.of(userExpectedBeforeUpdate));
             when(securityContext.getAuthentication()).thenReturn(authentication);
             when(authentication.getName()).thenReturn(userExpectedBeforeUpdate.getUsername());
             when(userRepository.save(userExpectedAfterPasswordEncodingAndSettingRoles)).thenReturn(userExpected);
 
-            UserEntity userActual = userService.updateUser(1L, userExpectedBeforeUpdate, userUpdateDTOExpected, image);
+            UserEntity userActual = userService.updateUser(userId, userUpdateDTOExpected, image);
 
             assertAll(() -> assertEquals(userExpected, userActual,
                     () -> "should return user: " + userExpected + ", but was" + userActual),
@@ -400,6 +404,9 @@ class UserServiceTest {
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
                                     + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                    () -> verify(userRepository, times(1)).findById(userId),
+                    () -> verify(userRepository, times(1)).save(userExpectedAfterObjectMapping),
+                    () -> verifyNoMoreInteractions(userRepository),
                     () -> verify(securityContext, times(1)).getAuthentication(),
                     () -> verifyNoMoreInteractions(securityContext),
                     () -> verify(authentication, times(1)).getName(),
@@ -407,9 +414,7 @@ class UserServiceTest {
                     () -> verify(userMapper, times(1))
                             .convertDTOToEntity(userExpectedBeforeUpdate, userUpdateDTOExpected, image),
                     () -> verifyNoMoreInteractions(userMapper),
-                    () -> verifyNoInteractions(roleService),
-                    () -> verify(userRepository, times(1)).save(userExpectedAfterObjectMapping),
-                    () -> verifyNoMoreInteractions(userRepository));
+                    () -> verifyNoInteractions(roleService));
         }
 
         @Test
@@ -443,13 +448,16 @@ class UserServiceTest {
                     .withProfile(userProfileExpectedAfterObjectMapping).withRoles(Set.of(roleExpected))
                     .build(ObjectType.ENTITY);
 
+            Long userId = 1L;
+
             SecurityContextHolder.setContext(securityContext);
 
+            when(userRepository.findById(userId)).thenReturn(Optional.of(userExpectedBeforeUpdate));
             when(securityContext.getAuthentication()).thenReturn(authentication);
             when(authentication.getName()).thenReturn(userExpectedBeforeUpdate.getUsername());
             when(userRepository.save(userExpectedAfterPasswordEncodingAndSettingRoles)).thenReturn(userExpected);
 
-            UserEntity userActual = userService.updateUser(1L, userExpectedBeforeUpdate, userUpdateDTOExpected, image);
+            UserEntity userActual = userService.updateUser(userId, userUpdateDTOExpected, image);
 
             assertAll(() -> assertEquals(userExpected, userActual,
                     () -> "should return user: " + userExpected + ", but was" + userActual),
@@ -489,6 +497,9 @@ class UserServiceTest {
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
                                     + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                    () -> verify(userRepository, times(1)).findById(userId),
+                    () -> verify(userRepository, times(1)).save(userExpectedAfterObjectMapping),
+                    () -> verifyNoMoreInteractions(userRepository),
                     () -> verify(securityContext, times(1)).getAuthentication(),
                     () -> verifyNoMoreInteractions(securityContext),
                     () -> verify(authentication, times(1)).getName(),
@@ -496,9 +507,7 @@ class UserServiceTest {
                     () -> verify(userMapper, times(1))
                             .convertDTOToEntity(userExpectedBeforeUpdate, userUpdateDTOExpected, image),
                     () -> verifyNoMoreInteractions(userMapper),
-                    () -> verifyNoInteractions(roleService),
-                    () -> verify(userRepository, times(1)).save(userExpectedAfterObjectMapping),
-                    () -> verifyNoMoreInteractions(userRepository));
+                    () -> verifyNoInteractions(roleService));
         }
 
         @Test
@@ -532,13 +541,16 @@ class UserServiceTest {
                     .withProfile(userProfileExpectedAfterObjectMapping).withRoles(Set.of(roleExpected))
                     .build(ObjectType.ENTITY);
 
+            Long userId = 1L;
+
             SecurityContextHolder.setContext(securityContext);
 
+            when(userRepository.findById(userId)).thenReturn(Optional.of(userExpectedBeforeUpdate));
             when(securityContext.getAuthentication()).thenReturn(authentication);
             when(authentication.getName()).thenReturn(userExpectedBeforeUpdate.getUsername());
             when(userRepository.save(userExpectedAfterPasswordEncodingAndSettingRoles)).thenReturn(userExpected);
 
-            UserEntity userActual = userService.updateUser(1L, userExpectedBeforeUpdate, userUpdateDTOExpected, null);
+            UserEntity userActual = userService.updateUser(userId, userUpdateDTOExpected, null);
 
             assertAll(() -> assertEquals(userExpected, userActual,
                     () -> "should return user: " + userExpected + ", but was" + userActual),
@@ -578,6 +590,9 @@ class UserServiceTest {
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
                                     + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                    () -> verify(userRepository, times(1)).findById(userId),
+                    () -> verify(userRepository, times(1)).save(userExpectedAfterObjectMapping),
+                    () -> verifyNoMoreInteractions(userRepository),
                     () -> verify(securityContext, times(1)).getAuthentication(),
                     () -> verifyNoMoreInteractions(securityContext),
                     () -> verify(authentication, times(1)).getName(),
@@ -585,9 +600,7 @@ class UserServiceTest {
                     () -> verify(userMapper, times(1))
                             .convertDTOToEntity(userExpectedBeforeUpdate, userUpdateDTOExpected, null),
                     () -> verifyNoMoreInteractions(userMapper),
-                    () -> verifyNoInteractions(roleService),
-                    () -> verify(userRepository, times(1)).save(userExpectedAfterObjectMapping),
-                    () -> verifyNoMoreInteractions(userRepository));
+                    () -> verifyNoInteractions(roleService));
         }
 
         @Test
@@ -611,19 +624,55 @@ class UserServiceTest {
                     .withEmail("prevoius@email.com").withPassword("oldPass123!").withProfile(userProfileExpectedBeforeUpdate)
                     .build(ObjectType.ENTITY);
 
+            Long userId = 1L;
+
             SecurityContextHolder.setContext(securityContext);
 
+            when(userRepository.findById(userId)).thenReturn(Optional.of(userExpectedBeforeUpdate));
             when(securityContext.getAuthentication()).thenReturn(authentication);
             when(authentication.getName()).thenReturn("some other user");
 
             assertAll(() -> assertThrows(NotAuthorizedException.class,
-                    () -> userService.updateUser(1L, userExpectedBeforeUpdate, userUpdateDTOExpected, image),
+                    () -> userService.updateUser(userId, userUpdateDTOExpected, image),
                     "should throw NotAuthorizedException but wasn't"),
+                    () -> verify(userRepository, times(1)).findById(userId),
+                    () -> verifyNoMoreInteractions(userRepository),
                     () -> verify(securityContext, times(1)).getAuthentication(),
                     () -> verifyNoMoreInteractions(securityContext),
                     () -> verify(authentication, times(1)).getName(),
                     () -> verifyNoMoreInteractions(authentication),
-                    () -> verifyNoInteractions(userRepository),
+                    () -> verifyNoInteractions(userMapper),
+                    () -> verifyNoInteractions(roleService));
+        }
+
+
+        @Test
+        @SneakyThrows
+        void when_update_not_existing_user_should_throw_exception() {
+
+            UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withAbout("new about")
+                    .withInterests("new interests").withLanguages("new languages").withLocation("new location")
+                    .withGender(Gender.FEMALE).build(ObjectType.UPDATE_DTO);
+            UserUpdateDTO userUpdateDTOExpected = (UserUpdateDTO) userTestBuilder.withUsername("validUser")
+                    .withEmail("validUser123@email.com").withPassword("ValidPassword123!")
+                    .withMatchingPassword("ValidPassword123!").withProfile(userProfileDTO).build(ObjectType.UPDATE_DTO);
+
+            MockMultipartFile image = new MockMultipartFile("image", "image", "application/json",
+                    "image.jpg".getBytes());
+
+            Long userId = 1L;
+
+            SecurityContextHolder.setContext(securityContext);
+
+            when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+            assertAll(() -> assertThrows(UsernameNotFoundException.class,
+                    () -> userService.updateUser(userId, userUpdateDTOExpected, image),
+                    "should throw UsernameNotFoundException but wasn't"),
+                    () -> verify(userRepository, times(1)).findById(userId),
+                    () -> verifyNoMoreInteractions(userRepository),
+                    () -> verifyNoInteractions(securityContext),
+                    () -> verifyNoInteractions(authentication),
                     () -> verifyNoInteractions(userMapper),
                     () -> verifyNoInteractions(roleService));
         }

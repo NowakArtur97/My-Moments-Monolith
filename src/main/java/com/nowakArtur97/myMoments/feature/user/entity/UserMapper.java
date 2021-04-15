@@ -1,18 +1,18 @@
 package com.nowakArtur97.myMoments.feature.user.entity;
 
+import com.nowakArtur97.myMoments.feature.user.resource.UserDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserProfileDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
-import com.nowakArtur97.myMoments.feature.user.resource.UserDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class UserMapper {
 

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,8 +64,11 @@ public class UserService {
         return userRepository.save(newUserEntity);
     }
 
-    public UserEntity updateUser(Long id, UserEntity userEntity, @Valid UserUpdateDTO userUpdateDTO, MultipartFile image)
+    public UserEntity updateUser(Long id, @Valid UserUpdateDTO userUpdateDTO, MultipartFile image)
             throws IOException {
+
+        UserEntity userEntity = findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User with id: '" + id + "' not found."));
 
         if (!isUserChangingOwnData(userEntity.getUsername())) {
             throw new NotAuthorizedException("User can only update his own account.");
