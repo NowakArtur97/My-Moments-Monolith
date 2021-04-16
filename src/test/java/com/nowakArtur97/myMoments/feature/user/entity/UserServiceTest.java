@@ -882,7 +882,8 @@ class UserServiceTest {
                                     + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
                     () -> verify(userRepository, times(1)).findById(expectedId),
                     () -> verifyNoMoreInteractions(userRepository),
-                    () -> verifyNoInteractions(userMapper));
+                    () -> verifyNoInteractions(userMapper),
+                    () -> verifyNoInteractions(roleService));
         }
 
         @Test
@@ -898,7 +899,8 @@ class UserServiceTest {
                     () -> "should return empty optional, but was: " + userActualOptional.get()),
                     () -> verify(userRepository, times(1)).findById(notExistingId),
                     () -> verifyNoMoreInteractions(userRepository),
-                    () -> verifyNoInteractions(userMapper));
+                    () -> verifyNoInteractions(userMapper),
+                    () -> verifyNoInteractions(roleService));
         }
 
         @Test
@@ -953,7 +955,8 @@ class UserServiceTest {
                                     + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
                     () -> verify(userRepository, times(1)).findByUsername(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userRepository),
-                    () -> verifyNoInteractions(userMapper));
+                    () -> verifyNoInteractions(userMapper),
+                    () -> verifyNoInteractions(roleService));
         }
 
         @Test
@@ -969,7 +972,8 @@ class UserServiceTest {
                     () -> "should return empty optional, but was: " + userActualOptional.get()),
                     () -> verify(userRepository, times(1)).findByUsername(notExistingUsername),
                     () -> verifyNoMoreInteractions(userRepository),
-                    () -> verifyNoInteractions(userMapper));
+                    () -> verifyNoInteractions(userMapper),
+                    () -> verifyNoInteractions(roleService));
         }
     }
 }

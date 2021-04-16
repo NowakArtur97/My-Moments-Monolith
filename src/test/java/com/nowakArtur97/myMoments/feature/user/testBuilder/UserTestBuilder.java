@@ -1,5 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user.testBuilder;
 
+import com.nowakArtur97.myMoments.feature.comment.CommentEntity;
 import com.nowakArtur97.myMoments.feature.post.PostEntity;
 import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationRequest;
 import com.nowakArtur97.myMoments.feature.user.entity.*;
@@ -25,6 +26,8 @@ public class UserTestBuilder {
     private UserProfile profile;
 
     private Set<PostEntity> posts = new HashSet<>();
+
+    private Set<CommentEntity> comments = new HashSet<>();
 
     private Set<RoleEntity> roles = new HashSet<>(Collections.singletonList(RoleTestBuilder.DEFAULT_ROLE_ENTITY));
 
@@ -70,6 +73,13 @@ public class UserTestBuilder {
         return this;
     }
 
+    public UserTestBuilder withComments(Set<CommentEntity> comments) {
+
+        this.comments = comments;
+
+        return this;
+    }
+
     public UserTestBuilder withProfile(UserProfile profile) {
 
         this.profile = profile;
@@ -97,7 +107,7 @@ public class UserTestBuilder {
 
             case ENTITY:
 
-                user = new UserEntity(username, email, password, (UserProfileEntity) profile, roles, posts);
+                user = new UserEntity(username, email, password, (UserProfileEntity) profile, roles, posts, comments);
 
                 break;
 
@@ -131,5 +141,7 @@ public class UserTestBuilder {
         roles = new HashSet<>();
 
         posts = new HashSet<>();
+
+        comments = new HashSet<>();
     }
 }

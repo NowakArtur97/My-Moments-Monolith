@@ -72,11 +72,11 @@ class PostServiceTest {
         @SneakyThrows
         void when_create_post_should_create_post() {
 
-            UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
             MockMultipartFile imageExpected = new MockMultipartFile("image", "image", "application/json",
                     "image.jpg".getBytes());
             PostDTO postDTOExpected = (PostDTO) postTestBuilder.withPhotosMultipart(List.of(imageExpected))
                     .build(ObjectType.CREATE_DTO);
+            UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
             PictureEntity pictureEntityExpected = new PictureEntity(imageExpected.getBytes());
             PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected)
                     .withPhotosEntity(Set.of(pictureEntityExpected)).build(ObjectType.ENTITY);
@@ -134,12 +134,12 @@ class PostServiceTest {
         void when_update_post_should_update_post() {
 
             Long postId = 1L;
-            UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
             MockMultipartFile imageExpected = new MockMultipartFile("image", "image", "application/json",
                     "image.jpg".getBytes());
             PostDTO postDTOExpected = (PostDTO) postTestBuilder.withPhotosMultipart(List.of(imageExpected))
                     .build(ObjectType.CREATE_DTO);
             PictureEntity pictureEntityExpectedBeforeUpdate = new PictureEntity("old image".getBytes());
+            UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
             PostEntity postExpectedBeforeUpdate = (PostEntity) postTestBuilder.withCaption("old caption").withAuthor(userExpected)
                     .withPhotosEntity(new HashSet<>(Set.of(pictureEntityExpectedBeforeUpdate))).build(ObjectType.ENTITY);
             userExpected.addPost(postExpectedBeforeUpdate);
@@ -331,6 +331,62 @@ class PostServiceTest {
                     () -> verifyNoMoreInteractions(userService),
                     () -> verify(postRepository, times(1)).findById(userId),
                     () -> verifyNoMoreInteractions(postRepository));
+        }
+    }
+
+    @Nested
+    class OtherPostTest {
+
+        @Test
+        void when_post_exists_and_find_by_id_should_return_user() {
+
+            Long expectedId = 1L;
+            PictureEntity pictureEntityExpected = new PictureEntity("image".getBytes());
+            UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
+            PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected)
+                    .withPhotosEntity(Set.of(pictureEntityExpected)).build(ObjectType.ENTITY);
+
+            when(postRepository.findById(expectedId)).thenReturn(Optional.of(postExpected));
+
+            Optional<PostEntity> postActualOptional = postService.findById(expectedId);
+
+            assertTrue(postActualOptional.isPresent(), () -> "shouldn't return empty optional");
+
+            PostEntity postActual = postActualOptional.get();
+
+            assertAll(() -> assertEquals(postExpected, postActual,
+                    () -> "should return post: " + postExpected + ", but was" + postActual),
+                    () -> assertEquals(postExpected.getId(), postActual.getId(),
+                            () -> "should return post with id: " + postExpected.getId() + ", but was"
+                                    + postActual.getId()),
+                    () -> assertEquals(postExpected.getCaption(), postActual.getCaption(),
+                            () -> "should return post with caption: " + postExpected.getCaption() + ", but was"
+                                    + postActual.getCaption()),
+                    () -> assertEquals(postExpected.getAuthor(), postActual.getAuthor(),
+                            () -> "should return post with author: " + postExpected.getAuthor() + ", but was"
+                                    + postActual.getAuthor()),
+                    () -> assertEquals(postExpected.getPhotos(), postActual.getPhotos(),
+                            () -> "should return post with photos: " + postExpected.getPhotos() + ", but was"
+                                    + postActual.getPhotos()),
+                    () -> verify(postRepository, times(1)).findById(expectedId),
+                    () -> verifyNoMoreInteractions(postRepository),
+                    () -> verifyNoInteractions(userService));
+        }
+
+        @Test
+        void when_post_not_exists_and_find_by_id_should_return_empty_optional() {
+
+            Long notExistingId = 1L;
+
+            when(postRepository.findById(notExistingId)).thenReturn(Optional.empty());
+
+            Optional<PostEntity> postActualOptional = postService.findById(notExistingId);
+
+            assertAll(() -> assertTrue(postActualOptional.isEmpty(),
+                    () -> "should return empty optional, but was: " + postActualOptional.get()),
+                    () -> verify(postRepository, times(1)).findById(notExistingId),
+                    () -> verifyNoMoreInteractions(postRepository),
+                    () -> verifyNoInteractions(userService));
         }
     }
 }

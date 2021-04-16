@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -90,7 +91,7 @@ class PostUpdateControllerTest {
         userProfileEntity.setUser(userEntity);
 
         PictureEntity pictureEntity = new PictureEntity("image".getBytes());
-        postEntity = new PostEntity("caption", userEntity, Set.of(pictureEntity));
+        postEntity = new PostEntity("caption", userEntity, Set.of(pictureEntity), new HashSet<>());
         pictureEntity.setRelatedPost(postEntity);
 
         userEntity.addPost(postEntity);
