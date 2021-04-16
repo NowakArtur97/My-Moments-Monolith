@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode
 @ApiModel(description = "Model responsible for Comment's validation")
 class CommentDTO implements Comment {
 
