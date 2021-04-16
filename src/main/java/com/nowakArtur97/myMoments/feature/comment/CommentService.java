@@ -1,5 +1,6 @@
 package com.nowakArtur97.myMoments.feature.comment;
 
+import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.feature.post.PostEntity;
 import com.nowakArtur97.myMoments.feature.post.PostService;
@@ -30,5 +31,28 @@ class CommentService {
         postEntity.addComment(commentEntity);
 
         return commentRepository.save(commentEntity);
+    }
+
+    CommentEntity updateComment(Long postId, Long commentId, String username, CommentDTO commentDTO) {
+
+        UserEntity userEntity = userService.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with name: '" + username + "' not found."));
+        PostEntity postEntity = postService.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", postId));
+        CommentEntity commentEntity = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment", commentId));
+
+        if (!postEntity.getComments().contains(commentEntity)) {
+            throw new ResourceNotFoundException("Post with id: '" + postId + "' with comment", commentId);
+        }
+
+        if (userService.isUserChangingOwnData(username) && commentEntity.getAuthor().equals(userEntity)) {
+
+            commentEntity.setContent(commentDTO.getContent());
+
+            return commentRepository.save(commentEntity);
+
+        } else {
+            throw new NotAuthorizedException("User can only change his own comments.");
+        }
     }
 }

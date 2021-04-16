@@ -73,12 +73,12 @@ class PostController {
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT) // Added to remove the default 200 status added by Swagger
-    @ApiOperation(value = "Delete an account", notes = "Delete an account")
+    @ApiOperation(value = "Delete a post", notes = "Delete a post")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Successfully deleted an account"),
-            @ApiResponse(code = 400, message = "Invalid User's id supplied"),
-            @ApiResponse(code = 404, message = "Could not find User with provided id", response = ErrorResponse.class)})
-    ResponseEntity<Void> deleteUser(
+            @ApiResponse(code = 204, message = "Successfully deleted a post"),
+            @ApiResponse(code = 400, message = "Invalid Post's id supplied"),
+            @ApiResponse(code = 404, message = "Could not find Post with provided id", response = ErrorResponse.class)})
+    ResponseEntity<Void> deletePost(
             @ApiParam(value = "Id of the Post being deleted", name = "id", type = "integer",
                     required = true, example = "1")
             @PathVariable("id") Long id,

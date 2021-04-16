@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("CommentController_Tests")
 class CommentCreateControllerTest {
 
-    private final String COMMENTS_BASE_PATH = "http://localhost:8080/api/v1/posts/{id}/comments";
+    private final String COMMENTS_BASE_PATH = "http://localhost:8080/api/v1/posts/{postId}/comments";
 
     private MockMvc mockMvc;
 
