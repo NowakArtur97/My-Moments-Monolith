@@ -21,9 +21,16 @@ public class CommentEntity extends AbstractEntity implements Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @ToString.Exclude
     private UserEntity author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
+    @ToString.Exclude
     private PostEntity relatedPost;
+
+    public CommentEntity(String content) {
+
+        this.content = content;
+    }
 }

@@ -5,7 +5,6 @@ import com.nowakArtur97.myMoments.common.util.JwtUtil;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +14,13 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
 @Api(tags = {CommentTag.RESOURCE})
-public class CommentController {
+class CommentController {
 
     private final CommentService commentService;
 
     private final JwtUtil jwtUtil;
 
-    @PostMapping(path = "{id}/comments", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(path = "{id}/comments")
     @ApiOperation(value = "Add a comment to the post", notes = "Add a comment to the post")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Successfully added comment", response = ResponseEntity.class),
