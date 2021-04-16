@@ -252,6 +252,37 @@ class CommentServiceTest {
         }
 
         @Test
+        void when_update_not_existing_comment_on_specific_post_should_throw_exception() {
+
+            Long postId = 2L;
+            Long notExistingCommentId = 3L;
+            String updatedContent = "new content";
+
+            CommentDTO commentDTOExpected = (CommentDTO) commentTestBuilder.withContent(updatedContent).build(ObjectType.CREATE_DTO);
+            UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
+            PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected).build(ObjectType.ENTITY);
+            postExpected.setId(postId);
+            userExpected.addPost(postExpected);
+            CommentEntity commentExpectedBeforeUpdate = (CommentEntity) commentTestBuilder.withAuthor(userExpected)
+                    .withRelatedPost(postExpected).build(ObjectType.ENTITY);
+            userExpected.addComment(commentExpectedBeforeUpdate);
+
+            when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
+            when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
+            when(commentRepository.findById(notExistingCommentId)).thenReturn(Optional.empty());
+
+            assertAll(() -> assertThrows(ResourceNotFoundException.class,
+                    () -> commentService.updateComment(postId, notExistingCommentId, userExpected.getUsername(), commentDTOExpected),
+                    "should throw ResourceNotFoundException but wasn't"),
+                    () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
+                    () -> verifyNoMoreInteractions(userService),
+                    () -> verify(postService, times(1)).findById(postId),
+                    () -> verifyNoMoreInteractions(postService),
+                    () -> verify(commentRepository, times(1)).findById(notExistingCommentId),
+                    () -> verifyNoMoreInteractions(commentRepository));
+        }
+
+        @Test
         void when_update_not_existing_comment_should_throw_exception() {
 
             Long postId = 2L;

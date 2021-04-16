@@ -42,7 +42,8 @@ class CommentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Comment", commentId));
 
         if (!postEntity.getComments().contains(commentEntity)) {
-            throw new ResourceNotFoundException("Comment with id '" + commentId + "' in the post with id:'" + postId + " not found.");
+            throw new ResourceNotFoundException("Comment with id: '" + commentId + "' in the post with id: '"
+                    + postId + "' not found.");
         }
 
         if (userService.isUserChangingOwnData(username) && commentEntity.getAuthor().equals(userEntity)) {

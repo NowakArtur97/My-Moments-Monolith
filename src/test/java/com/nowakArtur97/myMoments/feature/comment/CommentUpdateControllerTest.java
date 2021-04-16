@@ -26,15 +26,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(NameWithSpacesGenerator.class)
 @Tag("CommentController_Tests")
-class CommentCreateControllerTest {
+class CommentUpdateControllerTest {
 
-    private final String COMMENTS_BASE_PATH = "http://localhost:8080/api/v1/posts/{postId}/comments";
+    private final String COMMENTS_BASE_PATH = "http://localhost:8080/api/v1/posts/{postId}/comments/{id}";
 
     private MockMvc mockMvc;
 
@@ -72,26 +72,27 @@ class CommentCreateControllerTest {
     }
 
     @Test
-    void when_add_comment_should_return_comment() {
+    void when_update_comment_should_return_comment() {
 
         Long postId = 1L;
+        Long commentId = 2L;
         String username = "username";
         String header = "Bearer token";
 
         CommentDTO commentDTO = (CommentDTO) commentTestBuilder.build(ObjectType.CREATE_DTO);
-        CommentEntity commentEntity = (CommentEntity) commentTestBuilder.build(ObjectType.ENTITY);
-        CommentModel commentModel = (CommentModel) commentTestBuilder.build(ObjectType.MODEL);
+        CommentEntity commentEntity = (CommentEntity) commentTestBuilder.withId(commentId).build(ObjectType.ENTITY);
+        CommentModel commentModel = (CommentModel) commentTestBuilder.withId(commentId).build(ObjectType.MODEL);
 
         when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
-        when(commentService.addComment(postId, username, commentDTO)).thenReturn(commentEntity);
+        when(commentService.updateComment(postId, commentId, username, commentDTO)).thenReturn(commentEntity);
         when(modelMapper.map(commentEntity, CommentModel.class)).thenReturn(commentModel);
 
         assertAll(
-                () -> mockMvc.perform(post(COMMENTS_BASE_PATH, postId)
+                () -> mockMvc.perform(put(COMMENTS_BASE_PATH, postId, commentId)
                         .header("Authorization", header)
                         .content(ObjectTestMapper.asJsonString(commentDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
-                        .andExpect(status().isCreated())
+                        .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("id", is(commentModel.getId().intValue())))
                         .andExpect(jsonPath("content", is(commentModel.getContent())))
@@ -99,7 +100,7 @@ class CommentCreateControllerTest {
                         .andExpect(jsonPath("modifyDate", is(simpleDateFormat.format(commentModel.getCreateDate())))),
                 () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
                 () -> verifyNoMoreInteractions(jwtUtil),
-                () -> verify(commentService, times(1)).addComment(postId, username, commentDTO),
+                () -> verify(commentService, times(1)).updateComment(postId, commentId, username, commentDTO),
                 () -> verifyNoMoreInteractions(commentService),
                 () -> verify(modelMapper, times(1)).map(commentEntity, CommentModel.class),
                 () -> verifyNoMoreInteractions(modelMapper));
@@ -108,15 +109,16 @@ class CommentCreateControllerTest {
     @ParameterizedTest(name = "{index}: For Comment content: {0}")
     @EmptySource
     @ValueSource(strings = {" "})
-    void when_add_comment_without_content_should_return_error_response(String invalidContent) {
+    void when_update_comment_without_content_should_return_error_response(String invalidContent) {
 
         Long postId = 1L;
+        Long commentId = 2L;
         String header = "Bearer token";
 
         CommentDTO commentDTO = (CommentDTO) commentTestBuilder.withContent(invalidContent).build(ObjectType.CREATE_DTO);
 
         assertAll(
-                () -> mockMvc.perform(post(COMMENTS_BASE_PATH, postId)
+                () -> mockMvc.perform(put(COMMENTS_BASE_PATH, postId, commentId)
                         .header("Authorization", header)
                         .content(ObjectTestMapper.asJsonString(commentDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -132,9 +134,10 @@ class CommentCreateControllerTest {
     }
 
     @Test
-    void when_add_comment_by_not_existing_user_should_return_error_response() {
+    void when_update_comment_by_not_existing_user_should_return_error_response() {
 
         Long postId = 1L;
+        Long commentId = 2L;
         String username = "username";
         String header = "Bearer token";
 
@@ -142,10 +145,10 @@ class CommentCreateControllerTest {
 
         when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
         doThrow(new UsernameNotFoundException("User with name: '" + username + "' not found."))
-                .when(commentService).addComment(postId, username, commentDTO);
+                .when(commentService).updateComment(postId, commentId, username, commentDTO);
 
         assertAll(
-                () -> mockMvc.perform(post(COMMENTS_BASE_PATH, postId)
+                () -> mockMvc.perform(put(COMMENTS_BASE_PATH, postId, commentId)
                         .header("Authorization", header)
                         .content(ObjectTestMapper.asJsonString(commentDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -157,25 +160,27 @@ class CommentCreateControllerTest {
                         .andExpect(jsonPath("errors", hasSize(1))),
                 () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
                 () -> verifyNoMoreInteractions(jwtUtil),
-                () -> verify(commentService, times(1)).addComment(postId, username, commentDTO),
+                () -> verify(commentService, times(1)).updateComment(postId, commentId, username, commentDTO),
                 () -> verifyNoMoreInteractions(commentService),
                 () -> verifyNoInteractions(modelMapper));
     }
 
     @Test
-    void when_add_comment_to_not_existing_post_should_return_error_response() {
+    void when_update_comment_to_not_existing_post_should_return_error_response() {
 
         Long postId = 1L;
+        Long commentId = 2L;
         String username = "username";
         String header = "Bearer token";
 
         CommentDTO commentDTO = (CommentDTO) commentTestBuilder.build(ObjectType.CREATE_DTO);
 
         when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
-        doThrow(new ResourceNotFoundException("Post", postId)).when(commentService).addComment(postId, username, commentDTO);
+        doThrow(new ResourceNotFoundException("Post", postId)).when(commentService)
+                .updateComment(postId, commentId, username, commentDTO);
 
         assertAll(
-                () -> mockMvc.perform(post(COMMENTS_BASE_PATH, postId)
+                () -> mockMvc.perform(put(COMMENTS_BASE_PATH, postId, commentId)
                         .header("Authorization", header)
                         .content(ObjectTestMapper.asJsonString(commentDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -187,7 +192,74 @@ class CommentCreateControllerTest {
                         .andExpect(jsonPath("errors", hasSize(1))),
                 () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
                 () -> verifyNoMoreInteractions(jwtUtil),
-                () -> verify(commentService, times(1)).addComment(postId, username, commentDTO),
+                () -> verify(commentService, times(1)).updateComment(postId, commentId, username, commentDTO),
+                () -> verifyNoMoreInteractions(commentService),
+                () -> verifyNoInteractions(modelMapper));
+    }
+
+    @Test
+    void when_update_not_existing_comment_should_return_error_response() {
+
+        Long postId = 1L;
+        Long commentId = 2L;
+        String username = "username";
+        String header = "Bearer token";
+
+        CommentDTO commentDTO = (CommentDTO) commentTestBuilder.build(ObjectType.CREATE_DTO);
+
+        when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
+        doThrow(new ResourceNotFoundException("Comment", commentId)).when(commentService)
+                .updateComment(postId, commentId, username, commentDTO);
+
+        assertAll(
+                () -> mockMvc.perform(put(COMMENTS_BASE_PATH, postId, commentId)
+                        .header("Authorization", header)
+                        .content(ObjectTestMapper.asJsonString(commentDTO))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andExpect(status().isNotFound())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("timestamp").isNotEmpty())
+                        .andExpect(jsonPath("status", is(404)))
+                        .andExpect(jsonPath("errors[0]",
+                                is("Comment with id: '" + commentId + "' not found.")))
+                        .andExpect(jsonPath("errors", hasSize(1))),
+                () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
+                () -> verifyNoMoreInteractions(jwtUtil),
+                () -> verify(commentService, times(1)).updateComment(postId, commentId, username, commentDTO),
+                () -> verifyNoMoreInteractions(commentService),
+                () -> verifyNoInteractions(modelMapper));
+    }
+
+    @Test
+    void when_update_not_existing_comment_on_specific_post_should_return_error_response() {
+
+        Long postId = 1L;
+        Long commentId = 2L;
+        String username = "username";
+        String header = "Bearer token";
+
+        CommentDTO commentDTO = (CommentDTO) commentTestBuilder.build(ObjectType.CREATE_DTO);
+
+        when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
+        doThrow(new ResourceNotFoundException("Comment with id: '" + commentId + "' in the post with id: '" + postId
+                + "' not found.")).when(commentService)
+                .updateComment(postId, commentId, username, commentDTO);
+
+        assertAll(
+                () -> mockMvc.perform(put(COMMENTS_BASE_PATH, postId, commentId)
+                        .header("Authorization", header)
+                        .content(ObjectTestMapper.asJsonString(commentDTO))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andExpect(status().isNotFound())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("timestamp").isNotEmpty())
+                        .andExpect(jsonPath("status", is(404)))
+                        .andExpect(jsonPath("errors[0]",
+                                is("Comment with id: '" + commentId + "' in the post with id: '" + postId + "' not found.")))
+                        .andExpect(jsonPath("errors", hasSize(1))),
+                () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
+                () -> verifyNoMoreInteractions(jwtUtil),
+                () -> verify(commentService, times(1)).updateComment(postId, commentId, username, commentDTO),
                 () -> verifyNoMoreInteractions(commentService),
                 () -> verifyNoInteractions(modelMapper));
     }
