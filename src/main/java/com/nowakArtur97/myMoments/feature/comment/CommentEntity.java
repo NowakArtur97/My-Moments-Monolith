@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class CommentEntity extends AbstractEntity {
+public class CommentEntity extends AbstractEntity implements Comment {
 
     @Column
     private String content;
