@@ -1,7 +1,7 @@
 package com.nowakArtur97.myMoments.feature.user.entity;
 
 
-import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
+import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.feature.user.resource.UserProfileDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
@@ -632,9 +632,9 @@ class UserServiceTest {
             when(securityContext.getAuthentication()).thenReturn(authentication);
             when(authentication.getName()).thenReturn("some other user");
 
-            assertAll(() -> assertThrows(NotAuthorizedException.class,
+            assertAll(() -> assertThrows(ForbiddenException.class,
                     () -> userService.updateUser(userId, userUpdateDTOExpected, image),
-                    "should throw NotAuthorizedException but wasn't"),
+                    "should throw ForbiddenException but wasn't"),
                     () -> verify(userRepository, times(1)).findById(userId),
                     () -> verifyNoMoreInteractions(userRepository),
                     () -> verify(securityContext, times(1)).getAuthentication(),
@@ -731,8 +731,8 @@ class UserServiceTest {
             when(securityContext.getAuthentication()).thenReturn(authentication);
             when(authentication.getName()).thenReturn("some other user");
 
-            assertAll(() -> assertThrows(NotAuthorizedException.class,
-                    () -> userService.deleteUser(userId), "should throw NotAuthorizedException but wasn't"),
+            assertAll(() -> assertThrows(ForbiddenException.class,
+                    () -> userService.deleteUser(userId), "should throw ForbiddenException but wasn't"),
                     () -> verify(userRepository, times(1)).findById(userId),
                     () -> verifyNoMoreInteractions(userRepository),
                     () -> verify(securityContext, times(1)).getAuthentication(),

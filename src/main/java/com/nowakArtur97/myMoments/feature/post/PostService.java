@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.feature.post;
 
-import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
+import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserService;
@@ -53,7 +53,7 @@ public class PostService {
             postEntity.getPhotos().removeAll(postEntity.getPhotos());
             setPhotos(postDTO, postEntity);
         } else {
-            throw new NotAuthorizedException("User can only change his own posts.");
+            throw new ForbiddenException("User can only change his own posts.");
         }
 
         return postRepository.save(postEntity);
@@ -69,7 +69,7 @@ public class PostService {
             userEntity.removePost(postEntity);
             postRepository.delete(postEntity);
         } else {
-            throw new NotAuthorizedException("User can only delete his own posts.");
+            throw new ForbiddenException("User can only delete his own posts.");
         }
     }
 

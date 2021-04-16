@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.feature.comment;
 
-import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
+import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.feature.post.PostEntity;
 import com.nowakArtur97.myMoments.feature.post.PostService;
@@ -42,7 +42,7 @@ class CommentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Comment", commentId));
 
         if (!postEntity.getComments().contains(commentEntity)) {
-            throw new ResourceNotFoundException("Post with id: '" + postId + "' with comment", commentId);
+            throw new ResourceNotFoundException("Comment with id '" + commentId + "' in the post with id:'" + postId + " not found.");
         }
 
         if (userService.isUserChangingOwnData(username) && commentEntity.getAuthor().equals(userEntity)) {
@@ -52,7 +52,7 @@ class CommentService {
             return commentRepository.save(commentEntity);
 
         } else {
-            throw new NotAuthorizedException("User can only change his own comments.");
+            throw new ForbiddenException("User can only change his own comments.");
         }
     }
 }

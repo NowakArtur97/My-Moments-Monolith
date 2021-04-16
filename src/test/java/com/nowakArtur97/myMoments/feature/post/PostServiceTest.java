@@ -1,7 +1,7 @@
 package com.nowakArtur97.myMoments.feature.post;
 
 
-import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
+import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserService;
@@ -236,9 +236,9 @@ class PostServiceTest {
             when(postRepository.findById(postId)).thenReturn(Optional.of(postExpected));
             when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(false);
 
-            assertAll(() -> assertThrows(NotAuthorizedException.class,
+            assertAll(() -> assertThrows(ForbiddenException.class,
                     () -> postService.updatePost(postId, userExpected.getUsername(), postDTOExpected),
-                    "should throw NotAuthorizedException but wasn't"),
+                    "should throw ForbiddenException but wasn't"),
                     () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
                     () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userService),
@@ -323,9 +323,9 @@ class PostServiceTest {
             when(postRepository.findById(userId)).thenReturn(Optional.of(postExpected));
             when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(false);
 
-            assertAll(() -> assertThrows(NotAuthorizedException.class,
+            assertAll(() -> assertThrows(ForbiddenException.class,
                     () -> postService.deletePost(userId, userExpected.getUsername()),
-                    "should throw NotAuthorizedException but wasn't"),
+                    "should throw ForbiddenException but wasn't"),
                     () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
                     () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userService),

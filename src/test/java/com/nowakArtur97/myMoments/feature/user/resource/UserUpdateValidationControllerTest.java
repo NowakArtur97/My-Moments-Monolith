@@ -797,10 +797,10 @@ class UserUpdateValidationControllerTest {
                                 .file(userData)
                                 .header("Authorization", "Bearer " + token)
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isUnauthorized())
+                        .andExpect(status().isForbidden())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
-                        .andExpect(jsonPath("status", is(401)))
+                        .andExpect(jsonPath("status", is(403)))
                         .andExpect(jsonPath("errors[0]", is("User can only update his own account.")))
                         .andExpect(jsonPath("errors", hasSize(1))));
     }

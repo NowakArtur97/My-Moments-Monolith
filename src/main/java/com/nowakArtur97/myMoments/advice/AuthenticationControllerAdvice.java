@@ -1,7 +1,7 @@
 package com.nowakArtur97.myMoments.advice;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
-import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
+import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -33,12 +33,12 @@ public class AuthenticationControllerAdvice {
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler({NotAuthorizedException.class})
-    ResponseEntity<ErrorResponse> handleNotAuthorizedException(NotAuthorizedException exception) {
+    @ExceptionHandler({ForbiddenException.class})
+    ResponseEntity<ErrorResponse> handleForbiddenException(ForbiddenException exception) {
 
-        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.UNAUTHORIZED.value(),
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.FORBIDDEN.value(),
                 List.of(exception.getMessage()));
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 }

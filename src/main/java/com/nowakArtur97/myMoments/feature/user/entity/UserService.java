@@ -1,6 +1,6 @@
 package com.nowakArtur97.myMoments.feature.user.entity;
 
-import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
+import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
@@ -70,7 +70,7 @@ public class UserService {
         UserEntity userEntity = findById(id).orElseThrow(() -> new ResourceNotFoundException("User", id));
 
         if (!isUserChangingOwnData(userEntity.getUsername())) {
-            throw new NotAuthorizedException("User can only update his own account.");
+            throw new ForbiddenException("User can only update his own account.");
         }
 
         userUpdateDTO.setId(id);
@@ -87,7 +87,7 @@ public class UserService {
         if (isUserChangingOwnData(userEntity.getUsername())) {
             userRepository.delete(userEntity);
         } else {
-            throw new NotAuthorizedException("User can only delete his own account.");
+            throw new ForbiddenException("User can only delete his own account.");
         }
     }
 

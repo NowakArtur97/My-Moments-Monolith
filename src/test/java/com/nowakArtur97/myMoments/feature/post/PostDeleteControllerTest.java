@@ -2,7 +2,7 @@ package com.nowakArtur97.myMoments.feature.post;
 
 import com.nowakArtur97.myMoments.advice.AuthenticationControllerAdvice;
 import com.nowakArtur97.myMoments.advice.GlobalResponseEntityExceptionHandler;
-import com.nowakArtur97.myMoments.common.exception.NotAuthorizedException;
+import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
 import com.nowakArtur97.myMoments.testUtil.generator.NameWithSpacesGenerator;
@@ -145,15 +145,15 @@ class PostDeleteControllerTest {
         String header = "Bearer token";
 
         when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
-        doThrow(new NotAuthorizedException("User can only delete his own posts.")).when(postService).deletePost(postId, username);
+        doThrow(new ForbiddenException("User can only delete his own posts.")).when(postService).deletePost(postId, username);
 
         assertAll(
                 () -> mockMvc.perform(delete(POSTS_BASE_PATH, postId)
                         .header("Authorization", header))
-                        .andExpect(status().isUnauthorized())
+                        .andExpect(status().isForbidden())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp").isNotEmpty())
-                        .andExpect(jsonPath("status", is(401)))
+                        .andExpect(jsonPath("status", is(403)))
                         .andExpect(jsonPath("errors[0]", is("User can only delete his own posts.")))
                         .andExpect(jsonPath("errors", hasSize(1))),
                 () -> verify(postService, times(1)).deletePost(postId, username),
