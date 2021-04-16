@@ -1,5 +1,6 @@
 package com.nowakArtur97.myMoments.configuration.swagger;
 
+import com.nowakArtur97.myMoments.feature.comment.CommentTag;
 import com.nowakArtur97.myMoments.feature.post.PostTag;
 import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationTag;
 import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationTag;
@@ -38,7 +39,8 @@ class SwaggerConfiguration {
                         new Tag(UserRegistrationTag.RESOURCE, UserRegistrationTag.DESCRIPTION),
                         new Tag(AuthenticationTag.RESOURCE, AuthenticationTag.DESCRIPTION),
                         new Tag(UserTag.RESOURCE, UserTag.DESCRIPTION),
-                        new Tag(PostTag.RESOURCE, PostTag.DESCRIPTION)
+                        new Tag(PostTag.RESOURCE, PostTag.DESCRIPTION),
+                        new Tag(CommentTag.RESOURCE, CommentTag.DESCRIPTION)
                 )
                 .securityContexts(List.of(getSecurityContext(swaggerConfigurationProperties)))
                 .securitySchemes(List.of(getApiKey(swaggerConfigurationProperties)));

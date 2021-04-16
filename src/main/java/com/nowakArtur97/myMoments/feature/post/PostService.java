@@ -12,15 +12,22 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Validated
+public
 class PostService {
 
     private final PostRepository postRepository;
 
     private final UserService userService;
+
+    public Optional<PostEntity> findById(Long id) {
+
+        return postRepository.findById(id);
+    }
 
     PostEntity createPost(String username, @Valid PostDTO postDTO) {
 
