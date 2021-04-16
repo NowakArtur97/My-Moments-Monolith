@@ -1,6 +1,7 @@
 package com.nowakArtur97.myMoments.feature.post;
 
 import com.nowakArtur97.myMoments.common.entity.AbstractEntity;
+import com.nowakArtur97.myMoments.feature.comment.CommentEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,10 @@ public class PostEntity extends AbstractEntity implements Post {
     @ToString.Exclude
     private final Set<PictureEntity> photos;
 
+    @OneToMany(mappedBy = "relatedPost", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private final Set<CommentEntity> comments;
+
     public void addPhoto(PictureEntity photo) {
 
         this.getPhotos().add(photo);
@@ -40,9 +45,22 @@ public class PostEntity extends AbstractEntity implements Post {
         photo.setRelatedPost(null);
     }
 
+    public void addComment(CommentEntity comment) {
+
+        this.getComments().add(comment);
+        comment.setRelatedPost(this);
+    }
+
+    public void removeComment(CommentEntity comment) {
+
+        this.getComments().remove(comment);
+        comment.setRelatedPost(null);
+    }
+
     public PostEntity() {
 
         this.photos = new HashSet<>();
+        this.comments = new HashSet<>();
     }
 
     public PostEntity(String caption, UserEntity author) {
@@ -52,10 +70,11 @@ public class PostEntity extends AbstractEntity implements Post {
         this.author = author;
     }
 
-    public PostEntity(String caption, UserEntity author, Set<PictureEntity> photos) {
+    public PostEntity(String caption, UserEntity author, Set<PictureEntity> photos, Set<CommentEntity> comments) {
 
         this.caption = caption;
         this.author = author;
         this.photos = photos;
+        this.comments = comments;
     }
 }
