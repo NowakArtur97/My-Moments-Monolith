@@ -87,7 +87,7 @@ class PostServiceTest {
             PostEntity postActual = postService.createPost(userExpected.getUsername(), postDTOExpected);
 
             assertAll(() -> assertEquals(postExpected, postActual,
-                    () -> "should return post: " + userExpected + ", but was" + postActual),
+                    () -> "should return post: " + postExpected + ", but was" + postActual),
                     () -> assertEquals(postExpected.getId(), postActual.getId(),
                             () -> "should return post with id: " + postExpected.getId() + ", but was"
                                     + postActual.getId()),
@@ -109,18 +109,18 @@ class PostServiceTest {
         @Test
         void when_create_post_but_user_does_not_exists_should_throw_exception() {
 
-            UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
+            String notExistingUsername = "iAmNotExist";
             MockMultipartFile imageExpected = new MockMultipartFile("image", "image", "application/json",
                     "image.jpg".getBytes());
             PostDTO postDTOExpected = (PostDTO) postTestBuilder.withPhotosMultipart(List.of(imageExpected))
                     .build(ObjectType.CREATE_DTO);
 
-            when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.empty());
+            when(userService.findByUsername(notExistingUsername)).thenReturn(Optional.empty());
 
             assertAll(() -> assertThrows(UsernameNotFoundException.class,
-                    () -> postService.createPost(userExpected.getUsername(), postDTOExpected),
+                    () -> postService.createPost(notExistingUsername, postDTOExpected),
                     "should throw UsernameNotFoundException but wasn't"),
-                    () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
+                    () -> verify(userService, times(1)).findByUsername(notExistingUsername),
                     () -> verifyNoMoreInteractions(userService),
                     () -> verifyNoInteractions(postRepository));
         }
@@ -155,7 +155,7 @@ class PostServiceTest {
             PostEntity postActual = postService.updatePost(postId, userExpected.getUsername(), postDTOExpected);
 
             assertAll(() -> assertEquals(postExpected, postActual,
-                    () -> "should return post: " + userExpected + ", but was" + postActual),
+                    () -> "should return post: " + postExpected + ", but was" + postActual),
                     () -> assertEquals(postExpected.getId(), postActual.getId(),
                             () -> "should return post with id: " + postExpected.getId() + ", but was"
                                     + postActual.getId()),

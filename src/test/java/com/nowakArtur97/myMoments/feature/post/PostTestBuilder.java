@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-class PostTestBuilder {
+public class PostTestBuilder {
 
     private String caption;
 
@@ -20,42 +20,42 @@ class PostTestBuilder {
     private Set<CommentEntity> commentsEntity = new HashSet<>();
     private List<MultipartFile> photosMultipart = new ArrayList<>();
 
-    PostTestBuilder withCaption(String caption) {
+    public PostTestBuilder withCaption(String caption) {
 
         this.caption = caption;
 
         return this;
     }
 
-    PostTestBuilder withAuthor(UserEntity author) {
+    public PostTestBuilder withAuthor(UserEntity author) {
 
         this.author = author;
 
         return this;
     }
 
-    PostTestBuilder withPhotosEntity(Set<PictureEntity> photos) {
+    public PostTestBuilder withPhotosEntity(Set<PictureEntity> photos) {
 
         this.photosEntity = photos;
 
         return this;
     }
 
-    PostTestBuilder withCommentsEntity(Set<CommentEntity> comments) {
+    public PostTestBuilder withCommentsEntity(Set<CommentEntity> comments) {
 
         this.commentsEntity = comments;
 
         return this;
     }
 
-    PostTestBuilder withPhotosMultipart(List<MultipartFile> photos) {
+    public PostTestBuilder withPhotosMultipart(List<MultipartFile> photos) {
 
         this.photosMultipart = photos;
 
         return this;
     }
 
-    Post build(ObjectType type) {
+    public Post build(ObjectType type) {
 
         Post post;
 
