@@ -52,7 +52,7 @@ class UserDeleteControllerTest {
     private ModelMapper modelMapper;
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
 
         UserController userController
                 = new UserController(userService, customUserDetailsService, jwtUtil, userObjectMapper, modelMapper);

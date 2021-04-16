@@ -48,7 +48,7 @@ class PostDeleteControllerTest {
     private ModelMapper modelMapper;
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
 
         PostController postController = new PostController(postService, jwtUtil, postObjectMapper, modelMapper);
 

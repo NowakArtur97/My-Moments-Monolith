@@ -59,7 +59,7 @@ class CommentCreateControllerTest {
     }
 
     @BeforeEach
-    private void setUp() {
+     void setUp() {
 
         CommentController commentController = new CommentController(commentService, jwtUtil, modelMapper);
 

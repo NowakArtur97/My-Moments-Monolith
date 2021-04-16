@@ -2,6 +2,7 @@ package com.nowakArtur97.myMoments.feature.comment;
 
 import com.nowakArtur97.myMoments.advice.AuthenticationControllerAdvice;
 import com.nowakArtur97.myMoments.advice.GlobalResponseEntityExceptionHandler;
+import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
@@ -59,7 +60,7 @@ class CommentUpdateControllerTest {
     }
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
 
         CommentController commentController = new CommentController(commentService, jwtUtil, modelMapper);
 
@@ -256,6 +257,38 @@ class CommentUpdateControllerTest {
                         .andExpect(jsonPath("status", is(404)))
                         .andExpect(jsonPath("errors[0]",
                                 is("Comment with id: '" + commentId + "' in the post with id: '" + postId + "' not found.")))
+                        .andExpect(jsonPath("errors", hasSize(1))),
+                () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
+                () -> verifyNoMoreInteractions(jwtUtil),
+                () -> verify(commentService, times(1)).updateComment(postId, commentId, username, commentDTO),
+                () -> verifyNoMoreInteractions(commentService),
+                () -> verifyNoInteractions(modelMapper));
+    }
+
+    @Test
+    void when_update_some_other_user_comment_should_return_error_response() {
+
+        Long postId = 1L;
+        Long commentId = 2L;
+        String username = "username";
+        String header = "Bearer token";
+
+        CommentDTO commentDTO = (CommentDTO) commentTestBuilder.build(ObjectType.CREATE_DTO);
+
+        when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
+        doThrow(new ForbiddenException("User can only change his own comments.")).when(commentService)
+                .updateComment(postId, commentId, username, commentDTO);
+
+        assertAll(
+                () -> mockMvc.perform(put(COMMENTS_BASE_PATH, postId, commentId)
+                        .header("Authorization", header)
+                        .content(ObjectTestMapper.asJsonString(commentDTO))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andExpect(status().isForbidden())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("timestamp").isNotEmpty())
+                        .andExpect(jsonPath("status", is(403)))
+                        .andExpect(jsonPath("errors[0]", is("User can only change his own comments.")))
                         .andExpect(jsonPath("errors", hasSize(1))),
                 () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
                 () -> verifyNoMoreInteractions(jwtUtil),

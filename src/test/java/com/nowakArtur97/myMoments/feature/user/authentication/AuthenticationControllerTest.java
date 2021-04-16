@@ -55,13 +55,13 @@ class AuthenticationControllerTest {
     private static UserTestBuilder userTestBuilder;
 
     @BeforeAll
-    private static void setUpBuilders() {
+    static void setUpBuilders() {
 
         userTestBuilder = new UserTestBuilder();
     }
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
 
         AuthenticationController authenticationController
                 = new AuthenticationController(customUserDetailsService, authenticationManager, jwtUtil);

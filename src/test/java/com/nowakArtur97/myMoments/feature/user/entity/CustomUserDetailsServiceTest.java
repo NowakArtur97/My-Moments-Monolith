@@ -35,7 +35,7 @@ class CustomUserDetailsServiceTest {
     private static UserTestBuilder userTestBuilder;
 
     @BeforeAll
-    private static void setUpBuilders() {
+    static void setUpBuilders() {
 
         userProfileTestBuilder = new UserProfileTestBuilder();
         userTestBuilder = new UserTestBuilder();

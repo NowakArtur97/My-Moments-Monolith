@@ -35,13 +35,13 @@ class PostServiceTest {
     @Mock
     private PostRepository postRepository;
 
-    private static MockedStatic mocked;
+    private static MockedStatic<UUID> mocked;
 
     private static PostTestBuilder postTestBuilder;
     private static UserTestBuilder userTestBuilder;
 
     @BeforeAll
-    private static void setUpBuildersAndUUID() {
+    static void setUpBuildersAndUUID() {
 
         postTestBuilder = new PostTestBuilder();
         userTestBuilder = new UserTestBuilder();
@@ -52,7 +52,7 @@ class PostServiceTest {
     }
 
     @AfterAll
-    private static void cleanUp() {
+    static void cleanUp() {
 
         if (!mocked.isClosed()) {
             mocked.close();
@@ -60,7 +60,7 @@ class PostServiceTest {
     }
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
 
         postService = new PostService(postRepository, userService);
     }

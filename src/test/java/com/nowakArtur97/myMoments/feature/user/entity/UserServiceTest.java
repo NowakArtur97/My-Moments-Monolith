@@ -54,13 +54,13 @@ class UserServiceTest {
     @Mock
     private SecurityContext securityContext;
 
-    private static MockedStatic mocked;
+    private static MockedStatic<UUID> mocked;
 
     private static UserProfileTestBuilder userProfileTestBuilder;
     private static UserTestBuilder userTestBuilder;
 
     @BeforeAll
-    private static void setUpBuildersAndUUID() {
+     static void setUpBuildersAndUUID() {
 
         userProfileTestBuilder = new UserProfileTestBuilder();
         userTestBuilder = new UserTestBuilder();
@@ -71,7 +71,7 @@ class UserServiceTest {
     }
 
     @BeforeEach
-    private void setUp() {
+     void setUp() {
 
         userService = new UserService(userRepository, userMapper, roleService);
 
@@ -79,7 +79,7 @@ class UserServiceTest {
     }
 
     @AfterAll
-    private static void cleanUp() {
+     static void cleanUp() {
 
         if (!mocked.isClosed()) {
             mocked.close();
