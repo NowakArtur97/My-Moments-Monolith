@@ -11,3 +11,9 @@ spring:
     url: jdbc:mysql://192.168.99.100:3366/my-moments?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Warsaw
     username: my-moments-user
     password: my-moments-password123
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true

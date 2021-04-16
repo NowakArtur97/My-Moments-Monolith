@@ -4,6 +4,7 @@ import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,14 @@ class CommentController {
 
     private final JwtUtil jwtUtil;
 
+    private final ModelMapper modelMapper;
+
     @PostMapping(path = "{id}/comments")
     @ApiOperation(value = "Add a comment to the post", notes = "Add a comment to the post")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Successfully added comment", response = ResponseEntity.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
-    ResponseEntity<CommentEntity> addCommentToPost(
+    ResponseEntity<CommentModel> addCommentToPost(
             @ApiParam(value = "Id of the Post being commented", name = "id", type = "integer", required = true, example = "1")
             @PathVariable("id") Long id,
             @ApiParam(value = "Comment content", name = "comment", required = true) @RequestBody @Valid CommentDTO commentDTO,
@@ -36,6 +39,6 @@ class CommentController {
 
         CommentEntity commentEntity = commentService.addComment(id, username, commentDTO);
 
-        return new ResponseEntity<>(commentEntity, HttpStatus.CREATED);
+        return new ResponseEntity<>(modelMapper.map(commentEntity, CommentModel.class), HttpStatus.CREATED);
     }
 }
