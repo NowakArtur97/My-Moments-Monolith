@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/posts")
+@RequestMapping("/api/v1/posts/{postId}/")
 @RequiredArgsConstructor
 @Api(tags = {CommentTag.RESOURCE})
+@ApiResponses(value = {
+        @ApiResponse(code = 401, message = "Permission to the resource is prohibited"),
+        @ApiResponse(code = 403, message = "Access to the resource is prohibited")})
 class CommentController {
 
     private final CommentService commentService;
@@ -23,11 +26,12 @@ class CommentController {
 
     private final ModelMapper modelMapper;
 
-    @PostMapping(path = "{postId}/comments")
-    @ApiOperation(value = "Add a comment to the post", notes = "Add a comment to the post")
+    @PostMapping(path = "/comments")
+    @ApiOperation(value = "Add a comment to the post", notes = "Provide a Post's id")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Successfully added comment", response = ResponseEntity.class),
-            @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
+            @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = "Could not find Post with provided id", response = ErrorResponse.class)})
     ResponseEntity<CommentModel> addCommentToPost(
             @ApiParam(value = "Id of the Post being commented", name = "postId", type = "integer", required = true, example = "1")
             @PathVariable("postId") Long postId,
@@ -42,13 +46,14 @@ class CommentController {
         return new ResponseEntity<>(modelMapper.map(commentEntity, CommentModel.class), HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "{postId}/comments/{id}")
-    @ApiOperation(value = "Update a comment in the post", notes = "Update a comment in the post")
+    @PutMapping(path = "/comments/{id}")
+    @ApiOperation(value = "Update a comment in the post", notes = "Provide a Post's and Comment's ids")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully updated comment", response = ResponseEntity.class),
-            @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
+            @ApiResponse(code = 400, message = "Invalid Post's or Comment's id supplied or incorrectly entered data"),
+            @ApiResponse(code = 404, message = "Could not find Post or Comment with provided ids", response = ErrorResponse.class)})
     ResponseEntity<CommentModel> updateCommentInPost(
-            @ApiParam(value = "Id of the Post Comment being updated", name = "postId", type = "integer", required = true, example = "1")
+            @ApiParam(value = "Id of the Post Comment's being updated", name = "postId", type = "integer", required = true, example = "1")
             @PathVariable("postId") Long postId,
             @ApiParam(value = "Id of the Comment being updated", name = "id", type = "integer", required = true, example = "1")
             @PathVariable("id") Long id,
@@ -63,15 +68,15 @@ class CommentController {
         return new ResponseEntity<>(modelMapper.map(commentEntity, CommentModel.class), HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "{postId}/comments/{id}")
+    @DeleteMapping(path = "/comments/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT) // Added to remove the default 200 status added by Swagger
-    @ApiOperation(value = "Delete a comment", notes = "Delete a comment")
+    @ApiOperation(value = "Delete a comment", notes = "Provide a Post's and Comment's ids")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Successfully deleted a comment"),
             @ApiResponse(code = 400, message = "Invalid Post's or Comment's id supplied"),
-            @ApiResponse(code = 404, message = "Could not find Post or Comment with provided id", response = ErrorResponse.class)})
+            @ApiResponse(code = 404, message = "Could not find Post or Comment with provided ids", response = ErrorResponse.class)})
     ResponseEntity<Void> deleteCommentInPost(
-            @ApiParam(value = "Id of the Post Comment being deleted", name = "postId", type = "integer", required = true, example = "1")
+            @ApiParam(value = "Id of the Post Comment's being deleted", name = "postId", type = "integer", required = true, example = "1")
             @PathVariable("postId") Long postId,
             @ApiParam(value = "Id of the Comment being deleted", name = "id", type = "integer", required = true, example = "1")
             @PathVariable("id") Long id,

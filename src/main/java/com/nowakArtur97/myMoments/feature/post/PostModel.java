@@ -15,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @ApiModel(description = "Details about the Post")
-class PostModel implements Post {
+public class PostModel implements Post {
 
     @ApiModelProperty(notes = "The unique id of the Post")
     private Long id;
@@ -27,7 +27,7 @@ class PostModel implements Post {
     @ApiModelProperty(notes = "The post's photos")
     private final Set<PictureModel> photos;
 
-    public PostModel() {
+    PostModel() {
 
         photos = new HashSet<>();
     }

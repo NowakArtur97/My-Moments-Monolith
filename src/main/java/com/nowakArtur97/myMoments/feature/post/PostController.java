@@ -17,6 +17,9 @@ import java.util.List;
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
 @Api(tags = {PostTag.RESOURCE})
+@ApiResponses(value = {
+        @ApiResponse(code = 401, message = "Permission to the resource is prohibited"),
+        @ApiResponse(code = 403, message = "Access to the resource is prohibited")})
 class PostController {
 
     private final PostService postService;
@@ -28,9 +31,9 @@ class PostController {
     private final ModelMapper modelMapper;
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @ApiOperation(value = "Create a post", notes = "Create a post")
+    @ApiOperation("Create a post")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Successfully created post", response = ResponseEntity.class),
+            @ApiResponse(code = 201, message = "Successfully created post", response = PostModel.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
     ResponseEntity<PostModel> cretePost(
             @ApiParam(value = "The post's photos", name = "photos", required = true)
@@ -49,10 +52,11 @@ class PostController {
     }
 
     @PutMapping(path = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @ApiOperation(value = "Update a post", notes = "Update a post")
+    @ApiOperation(value = "Update a post", notes = "Provide an id")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Successfully updated post", response = ResponseEntity.class),
-            @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
+            @ApiResponse(code = 200, message = "Successfully updated post", response = PostModel.class),
+            @ApiResponse(code = 400, message = "Invalid Post's id supplied or incorrectly entered data"),
+            @ApiResponse(code = 404, message = "Could not find Post with provided id", response = ErrorResponse.class)})
     ResponseEntity<PostModel> updatePost(
             @ApiParam(value = "Id of the Post being updated", name = "id", type = "integer",
                     required = true, example = "1") @PathVariable("id") Long id,
@@ -73,7 +77,7 @@ class PostController {
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT) // Added to remove the default 200 status added by Swagger
-    @ApiOperation(value = "Delete a post", notes = "Delete a post")
+    @ApiOperation(value = "Delete a post", notes = "Provide an id")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Successfully deleted a post"),
             @ApiResponse(code = 400, message = "Invalid Post's id supplied"),

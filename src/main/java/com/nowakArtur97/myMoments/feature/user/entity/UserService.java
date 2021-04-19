@@ -2,6 +2,7 @@ package com.nowakArtur97.myMoments.feature.user.entity;
 
 import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
+import com.nowakArtur97.myMoments.feature.post.PostEntity;
 import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
 import com.nowakArtur97.myMoments.feature.user.validation.UserValidationGroupSequence;
@@ -18,6 +19,7 @@ import javax.persistence.Basic;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -100,5 +102,18 @@ public class UserService {
         String usernameInContext = auth != null ? auth.getName() : "";
 
         return username.equals(usernameInContext);
+    }
+
+    public Set<PostEntity> getUsersPosts(String username) {
+        return findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User with username: '" + username + "' not found."))
+                .getPosts();
+    }
+
+    public Set<PostEntity> getUsersPosts(Long id) {
+
+        return findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id: '" + id + "' not found."))
+                .getPosts();
     }
 }

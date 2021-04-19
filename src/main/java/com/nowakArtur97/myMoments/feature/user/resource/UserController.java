@@ -2,6 +2,8 @@ package com.nowakArtur97.myMoments.feature.user.resource;
 
 import com.nowakArtur97.myMoments.common.baseModel.ErrorResponse;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
+import com.nowakArtur97.myMoments.feature.post.PostEntity;
+import com.nowakArtur97.myMoments.feature.post.PostModel;
 import com.nowakArtur97.myMoments.feature.user.authentication.AuthenticationResponse;
 import com.nowakArtur97.myMoments.feature.user.entity.CustomUserDetailsService;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
@@ -19,11 +21,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Api(tags = {UserTag.RESOURCE})
+@ApiResponses(value = {
+        @ApiResponse(code = 401, message = "Permission to the resource is prohibited"),
+        @ApiResponse(code = 403, message = "Access to the resource is prohibited")})
 class UserController {
 
     @Value("${my-moments.jwt.validity:36000000}")
@@ -39,11 +46,48 @@ class UserController {
 
     private final ModelMapper modelMapper;
 
+    @GetMapping("/me")
+    @ApiOperation("Find User's Posts")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User's posts found", response = UsersPostsModel.class),
+            @ApiResponse(code = 404, message = "Could not find User with provided token", response = ErrorResponse.class)})
+    ResponseEntity<UsersPostsModel> getAuthenticatedUsersPosts(
+            @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader) {
+
+        String username = jwtUtil.extractUsernameFromHeader(authorizationHeader);
+
+        Set<PostEntity> usersPostsEntities = userService.getUsersPosts(username);
+
+        Set<PostModel> usersPostsModels = usersPostsEntities.stream().map(post -> modelMapper.map(post, PostModel.class))
+                .collect(Collectors.toSet());
+
+        return new ResponseEntity<>(new UsersPostsModel(usersPostsModels), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "Find User's Posts by id", notes = "Provide an id to look up specific User")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User's posts found", response = UsersPostsModel.class),
+            @ApiResponse(code = 400, message = "Invalid User's id supplied"),
+            @ApiResponse(code = 404, message = "Could not find User with provided id", response = ErrorResponse.class)})
+    ResponseEntity<UsersPostsModel> getUsersPosts(
+            @ApiParam(value = "Id of the User being looked up", name = "id", type = "integer", required = true, example = "1")
+            @PathVariable("id") Long id) {
+
+        Set<PostEntity> usersPostsEntities = userService.getUsersPosts(id);
+
+        Set<PostModel> usersPostsModels = usersPostsEntities.stream().map(post -> modelMapper.map(post, PostModel.class))
+                .collect(Collectors.toSet());
+
+        return new ResponseEntity<>(new UsersPostsModel(usersPostsModels), HttpStatus.OK);
+    }
+
     @PutMapping(path = "/me", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    @ApiOperation(value = "Update an account", notes = "Update an account")
+    @ApiOperation("Update an account")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully updated account", response = UserModel.class),
-            @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
+            @ApiResponse(code = 400, message = "Invalid User's token supplied or incorrectly entered data"),
+            @ApiResponse(code = 404, message = "Could not find User with provided token", response = ErrorResponse.class)})
     ResponseEntity<UserModel> updateUser(
             @ApiParam(value = "The user's data", name = "user", required = true)
             @RequestPart(value = "user", required = false) String user,
@@ -71,11 +115,11 @@ class UserController {
 
     @DeleteMapping(path = "/me")
     @ResponseStatus(HttpStatus.NO_CONTENT) // Added to remove the default 200 status added by Swagger
-    @ApiOperation(value = "Delete an account", notes = "Delete an account")
+    @ApiOperation("Delete an account")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Successfully deleted an account"),
-            @ApiResponse(code = 400, message = "Invalid User's id supplied"),
-            @ApiResponse(code = 404, message = "Could not find User with provided id", response = ErrorResponse.class)})
+            @ApiResponse(code = 400, message = "Invalid User's token supplied"),
+            @ApiResponse(code = 404, message = "Could not find User with provided token", response = ErrorResponse.class)})
     ResponseEntity<Void> deleteUser(
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader) {
 
