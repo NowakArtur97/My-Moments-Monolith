@@ -20,8 +20,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -41,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("UserController_Tests")
 class UserUpdateValidationControllerTest {
 
-    private final String USERS_BASE_PATH = "http://localhost:8080/api/v1/users/{id}";
+    private final String USER_BASE_PATH = "http://localhost:8080/api/v1/users/me";
 
     @Value("${my-moments.default-user-role:USER_ROLE}")
     private String defaultUserRole;
@@ -93,7 +96,7 @@ class UserUpdateValidationControllerTest {
         token = jwtUtil.generateToken(new User(userEntity.getUsername(), userEntity.getPassword(),
                 List.of(new SimpleGrantedAuthority(defaultUserRole))));
 
-        mockRequestBuilder = MockMvcRequestBuilders.multipart(USERS_BASE_PATH, userEntity.getId());
+        mockRequestBuilder = MockMvcRequestBuilders.multipart(USER_BASE_PATH);
         mockRequestBuilder.with(request -> {
             request.setMethod("PUT");
             return request;
@@ -142,8 +145,7 @@ class UserUpdateValidationControllerTest {
     @ValueSource(strings = {" "})
     void when_update_user_with_blank_username_should_return_error_response(String invalidUsername) {
 
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername(invalidUsername)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername(invalidUsername).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -168,8 +170,7 @@ class UserUpdateValidationControllerTest {
     @Test
     void when_update_user_with_too_short_username_should_return_error_response() {
 
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername("u")
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername("u").build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -193,8 +194,7 @@ class UserUpdateValidationControllerTest {
     @Test
     void when_update_user_with_too_long_username_should_return_error_response() {
 
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername("a".repeat(41))
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername("a".repeat(41)).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -455,8 +455,7 @@ class UserUpdateValidationControllerTest {
     @Test
     void when_update_user_with_blank_email_should_return_error_response() {
 
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withEmail("     ")
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withEmail("     ").build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -482,8 +481,7 @@ class UserUpdateValidationControllerTest {
     @ValueSource(strings = {"wrongformat", "wrong.format"})
     void when_update_user_with_an_incorrect_format_email_should_return_error_response(String invalidEmail) {
 
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withEmail(invalidEmail)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withEmail(invalidEmail).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -507,8 +505,7 @@ class UserUpdateValidationControllerTest {
     @Test
     void when_update_user_with_email_already_taken_should_return_error_response() {
 
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withEmail("user@email.com")
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withEmail("user@email.com").build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -535,8 +532,7 @@ class UserUpdateValidationControllerTest {
     @ValueSource(strings = {" "})
     void when_update_user_with_blank_password_should_return_error_response(String invalidPassword) {
 
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withPassword(invalidPassword)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withPassword(invalidPassword).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -615,8 +611,7 @@ class UserUpdateValidationControllerTest {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withGender("invalid gender")
                 .build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -643,8 +638,7 @@ class UserUpdateValidationControllerTest {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withAbout("a".repeat(251))
                 .build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -670,8 +664,7 @@ class UserUpdateValidationControllerTest {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withInterests("a".repeat(251))
                 .build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -697,8 +690,7 @@ class UserUpdateValidationControllerTest {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withLanguages("a".repeat(251))
                 .build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -724,8 +716,7 @@ class UserUpdateValidationControllerTest {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.withLocation("a".repeat(51))
                 .build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -750,8 +741,7 @@ class UserUpdateValidationControllerTest {
     void when_update_user_without_token_should_return_error_response() {
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
@@ -774,22 +764,19 @@ class UserUpdateValidationControllerTest {
     @Test
     void when_update_other_user_should_return_error_response() {
 
-        Long someOtherUserId = 2L;
-
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
                 MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
-        mockRequestBuilder = MockMvcRequestBuilders.multipart(USERS_BASE_PATH, someOtherUserId);
-        mockRequestBuilder.with(request -> {
-            request.setMethod("PUT");
-            return request;
-        });
+        UserDetails userDetails = new User("user", "user", List.of(new SimpleGrantedAuthority(defaultUserRole)));
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
         assertAll(
                 () -> mockMvc
@@ -806,47 +793,12 @@ class UserUpdateValidationControllerTest {
     }
 
     @Test
-    void when_update_user_with_not_existing_id_should_return_error_response() {
-
-        Long notExistingUserId = 10L;
-
-        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
-                .build(ObjectType.UPDATE_DTO);
-
-        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
-
-        MockMultipartFile userData = new MockMultipartFile("user", "request",
-                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
-
-        mockRequestBuilder = MockMvcRequestBuilders.multipart(USERS_BASE_PATH, notExistingUserId);
-        mockRequestBuilder.with(request -> {
-            request.setMethod("PUT");
-            return request;
-        });
-
-        assertAll(
-                () -> mockMvc
-                        .perform(mockRequestBuilder
-                                .file(userData)
-                                .header("Authorization", "Bearer " + token)
-                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isNotFound())
-                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("timestamp", is(notNullValue())))
-                        .andExpect(jsonPath("status", is(404)))
-                        .andExpect(jsonPath("errors[0]", is("User with id: '" + notExistingUserId + "' not found.")))
-                        .andExpect(jsonPath("errors", hasSize(1))));
-    }
-
-    @Test
     void when_update_user_with_not_existing_username_should_return_error_response() {
 
         String notExistingUsername = "iAmNotExist";
 
         UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO)
-                .build(ObjectType.UPDATE_DTO);
+        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.UPDATE_DTO);
 
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 

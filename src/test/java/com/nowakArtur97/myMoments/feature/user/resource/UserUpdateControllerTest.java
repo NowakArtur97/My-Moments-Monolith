@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("UserController_Tests")
 class UserUpdateControllerTest {
 
-    private final String USERS_BASE_PATH = "http://localhost:8080/api/v1/users/{id}";
+    private final String USER_BASE_PATH = "http://localhost:8080/api/v1/users/me";
 
     @Value("${my-moments.jwt.validity:36000000}")
     private Long validity;
@@ -94,7 +94,7 @@ class UserUpdateControllerTest {
         token = jwtUtil.generateToken(new User(userEntity.getUsername(), userEntity.getPassword(),
                 List.of(new SimpleGrantedAuthority(defaultUserRole))));
 
-        mockRequestBuilder = MockMvcRequestBuilders.multipart(USERS_BASE_PATH, userEntity.getId());
+        mockRequestBuilder = MockMvcRequestBuilders.multipart(USER_BASE_PATH, userEntity.getId());
         mockRequestBuilder.with(request -> {
             request.setMethod("PUT");
             return request;

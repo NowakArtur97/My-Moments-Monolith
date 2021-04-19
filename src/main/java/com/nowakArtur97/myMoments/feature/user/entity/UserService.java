@@ -64,16 +64,17 @@ public class UserService {
         return userRepository.save(newUserEntity);
     }
 
-    public UserEntity updateUser(Long id, @Valid UserUpdateDTO userUpdateDTO, MultipartFile image)
+    public UserEntity updateUser(String username, @Valid UserUpdateDTO userUpdateDTO, MultipartFile image)
             throws IOException {
 
-        UserEntity userEntity = findById(id).orElseThrow(() -> new ResourceNotFoundException("User", id));
+        UserEntity userEntity = findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User with username: '" + username + "' not found."));
 
         if (!isUserChangingOwnData(userEntity.getUsername())) {
             throw new ForbiddenException("User can only update his own account.");
         }
 
-        userUpdateDTO.setId(id);
+        userUpdateDTO.setId(userEntity.getId());
 
         userMapper.convertDTOToEntity(userEntity, userUpdateDTO, image);
 

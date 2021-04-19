@@ -39,23 +39,23 @@ class UserController {
 
     private final ModelMapper modelMapper;
 
-    @PutMapping(path = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PutMapping(path = "/me", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value = "Update an account", notes = "Update an account")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully updated account", response = UserModel.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
     ResponseEntity<UserModel> updateUser(
-            @ApiParam(value = "Id of the User being updated", name = "id", type = "integer",
-                    required = true, example = "1")
-            @PathVariable("id") Long id,
             @ApiParam(value = "The user's data", name = "user", required = true)
             @RequestPart("user") String user,
             @ApiParam(value = "The user's image", name = "image")
-            @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
+            @RequestPart(value = "image", required = false) MultipartFile image,
+            @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader) throws IOException {
 
         UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userObjectMapper.getUserDTOFromString(user, UserUpdateDTO.class);
 
-        UserEntity updatedUserEntity = userService.updateUser(id, userUpdateDTO, image);
+        String username = jwtUtil.extractUsernameFromHeader(authorizationHeader);
+
+        UserEntity updatedUserEntity = userService.updateUser(username, userUpdateDTO, image);
 
         UserModel userModel = modelMapper.map(updatedUserEntity, UserModel.class);
 
