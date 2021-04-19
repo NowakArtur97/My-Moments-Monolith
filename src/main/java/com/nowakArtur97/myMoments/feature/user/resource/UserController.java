@@ -69,7 +69,7 @@ class UserController {
         return new ResponseEntity<>(userModel, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/me")
     @ResponseStatus(HttpStatus.NO_CONTENT) // Added to remove the default 200 status added by Swagger
     @ApiOperation(value = "Delete an account", notes = "Delete an account")
     @ApiResponses({
@@ -77,11 +77,11 @@ class UserController {
             @ApiResponse(code = 400, message = "Invalid User's id supplied"),
             @ApiResponse(code = 404, message = "Could not find User with provided id", response = ErrorResponse.class)})
     ResponseEntity<Void> deleteUser(
-            @ApiParam(value = "Id of the User being deleted", name = "id", type = "integer",
-                    required = true, example = "1")
-            @PathVariable("id") Long id) {
+            @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader) {
 
-        userService.deleteUser(id);
+        String username = jwtUtil.extractUsernameFromHeader(authorizationHeader);
+
+        userService.deleteUser(username);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

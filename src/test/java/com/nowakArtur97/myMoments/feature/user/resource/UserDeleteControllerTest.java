@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("UserController_Tests")
 class UserDeleteControllerTest {
 
-    private final String USERS_BASE_PATH = "http://localhost:8080/api/v1/users/{id}";
+    private final String USERS_BASE_PATH = "http://localhost:8080/api/v1/users/me";
 
     private MockMvc mockMvc;
 
@@ -68,16 +68,21 @@ class UserDeleteControllerTest {
     @Test
     void when_delete_existing_user_should_not_return_content() {
 
-        Long userId = 1L;
+        String header = "Bearer token";
+        String username = "username";
+
+        when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
 
         assertAll(
-                () -> mockMvc.perform(delete(USERS_BASE_PATH, userId))
+                () -> mockMvc.perform(delete(USERS_BASE_PATH)
+                        .header("Authorization", header))
                         .andExpect(status().isNoContent())
                         .andExpect(jsonPath("$").doesNotExist()),
-                () -> verify(userService, times(1)).deleteUser(userId),
+                () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
+                () -> verifyNoMoreInteractions(jwtUtil),
+                () -> verify(userService, times(1)).deleteUser(username),
                 () -> verifyNoMoreInteractions(userService),
                 () -> verifyNoInteractions(customUserDetailsService),
-                () -> verifyNoInteractions(jwtUtil),
                 () -> verifyNoInteractions(userObjectMapper),
                 () -> verifyNoInteractions(modelMapper));
     }
@@ -85,22 +90,27 @@ class UserDeleteControllerTest {
     @Test
     void when_delete_not_existing_user_should_return_error_response() {
 
-        Long userId = 1L;
+        String header = "Bearer token";
+        String username = "username";
 
-        doThrow(new ResourceNotFoundException("User", userId)).when(userService).deleteUser(eq(userId));
+        when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
+        doThrow(new ResourceNotFoundException("User with username: '" + username + "' not found."))
+                .when(userService).deleteUser(username);
 
         assertAll(
-                () -> mockMvc.perform(delete(USERS_BASE_PATH, userId))
+                () -> mockMvc.perform(delete(USERS_BASE_PATH)
+                        .header("Authorization", header))
                         .andExpect(status().isNotFound())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp").isNotEmpty())
                         .andExpect(jsonPath("status", is(404)))
-                        .andExpect(jsonPath("errors[0]", is("User with id: '" + userId + "' not found.")))
+                        .andExpect(jsonPath("errors[0]", is("User with username: '" + username + "' not found.")))
                         .andExpect(jsonPath("errors", hasSize(1))),
-                () -> verify(userService, times(1)).deleteUser(userId),
+                () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
+                () -> verifyNoMoreInteractions(jwtUtil),
+                () -> verify(userService, times(1)).deleteUser(username),
                 () -> verifyNoMoreInteractions(userService),
                 () -> verifyNoInteractions(customUserDetailsService),
-                () -> verifyNoInteractions(jwtUtil),
                 () -> verifyNoInteractions(userObjectMapper),
                 () -> verifyNoInteractions(modelMapper));
     }
@@ -108,22 +118,26 @@ class UserDeleteControllerTest {
     @Test
     void when_delete_not_owned_account_should_return_error_response() {
 
-        Long userId = 1L;
+        String header = "Bearer token";
+        String username = "username";
 
-        doThrow(new ForbiddenException("User can only delete his own account.")).when(userService).deleteUser(eq(userId));
+        when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
+        doThrow(new ForbiddenException("User can only delete his own account.")).when(userService).deleteUser(username);
 
         assertAll(
-                () -> mockMvc.perform(delete(USERS_BASE_PATH, userId))
+                () -> mockMvc.perform(delete(USERS_BASE_PATH)
+                        .header("Authorization", header))
                         .andExpect(status().isForbidden())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("timestamp").isNotEmpty())
                         .andExpect(jsonPath("status", is(403)))
                         .andExpect(jsonPath("errors[0]", is("User can only delete his own account.")))
                         .andExpect(jsonPath("errors", hasSize(1))),
-                () -> verify(userService, times(1)).deleteUser(userId),
+                () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
+                () -> verifyNoMoreInteractions(jwtUtil),
+                () -> verify(userService, times(1)).deleteUser(username),
                 () -> verifyNoMoreInteractions(userService),
                 () -> verifyNoInteractions(customUserDetailsService),
-                () -> verifyNoInteractions(jwtUtil),
                 () -> verifyNoInteractions(userObjectMapper),
                 () -> verifyNoInteractions(modelMapper));
     }

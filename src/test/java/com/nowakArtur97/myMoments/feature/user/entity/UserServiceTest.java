@@ -60,7 +60,7 @@ class UserServiceTest {
     private static UserTestBuilder userTestBuilder;
 
     @BeforeAll
-     static void setUpBuildersAndUUID() {
+    static void setUpBuildersAndUUID() {
 
         userProfileTestBuilder = new UserProfileTestBuilder();
         userTestBuilder = new UserTestBuilder();
@@ -71,7 +71,7 @@ class UserServiceTest {
     }
 
     @BeforeEach
-     void setUp() {
+    void setUp() {
 
         userService = new UserService(userRepository, userMapper, roleService);
 
@@ -79,7 +79,7 @@ class UserServiceTest {
     }
 
     @AfterAll
-     static void cleanUp() {
+    static void cleanUp() {
 
         if (!mocked.isClosed()) {
             mocked.close();
@@ -686,7 +686,6 @@ class UserServiceTest {
         @SneakyThrows
         void when_delete_existing_user_should_delete_user() {
 
-            Long userId = 1L;
             MockMultipartFile image = new MockMultipartFile("image", "image", "application/json",
                     "image.jpg".getBytes());
             UserProfileEntity userProfileExpected = (UserProfileEntity) userProfileTestBuilder
@@ -697,13 +696,13 @@ class UserServiceTest {
 
             SecurityContextHolder.setContext(securityContext);
 
-            when(userRepository.findById(userId)).thenReturn(Optional.of(userExpected));
+            when(userRepository.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
             when(securityContext.getAuthentication()).thenReturn(authentication);
             when(authentication.getName()).thenReturn(userExpected.getUsername());
 
-            assertAll(() -> assertDoesNotThrow(() -> userService.deleteUser(userId),
+            assertAll(() -> assertDoesNotThrow(() -> userService.deleteUser(userExpected.getUsername()),
                     "should not throw ResourceNotFoundException or NotAuthorizedException but was"),
-                    () -> verify(userRepository, times(1)).findById(userId),
+                    () -> verify(userRepository, times(1)).findByUsername(userExpected.getUsername()),
                     () -> verify(userRepository, times(1)).delete(userExpected),
                     () -> verifyNoMoreInteractions(userRepository),
                     () -> verify(securityContext, times(1)).getAuthentication(),
@@ -718,7 +717,6 @@ class UserServiceTest {
         @SneakyThrows
         void when_delete_some_other_user_should_throw_exception() {
 
-            Long userId = 1L;
             MockMultipartFile image = new MockMultipartFile("image", "image", "application/json",
                     "image.jpg".getBytes());
             UserProfileEntity userProfileExpected = (UserProfileEntity) userProfileTestBuilder
@@ -729,13 +727,13 @@ class UserServiceTest {
 
             SecurityContextHolder.setContext(securityContext);
 
-            when(userRepository.findById(userId)).thenReturn(Optional.of(userExpected));
+            when(userRepository.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
             when(securityContext.getAuthentication()).thenReturn(authentication);
             when(authentication.getName()).thenReturn("some other user");
 
             assertAll(() -> assertThrows(ForbiddenException.class,
-                    () -> userService.deleteUser(userId), "should throw ForbiddenException but wasn't"),
-                    () -> verify(userRepository, times(1)).findById(userId),
+                    () -> userService.deleteUser(userExpected.getUsername()), "should throw ForbiddenException but wasn't"),
+                    () -> verify(userRepository, times(1)).findByUsername(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userRepository),
                     () -> verify(securityContext, times(1)).getAuthentication(),
                     () -> verifyNoMoreInteractions(securityContext),
@@ -748,14 +746,14 @@ class UserServiceTest {
         @Test
         void when_delete_not_existing_user_should_throw_exception() {
 
-            Long userId = 1L;
+            String notExistingUsername = "iAmNotExist";
 
-            when(userRepository.findById(userId)).thenReturn(Optional.empty());
+            when(userRepository.findByUsername(notExistingUsername)).thenReturn(Optional.empty());
 
             assertAll(() -> assertThrows(ResourceNotFoundException.class,
-                    () -> userService.deleteUser(userId),
+                    () -> userService.deleteUser(notExistingUsername),
                     "should throw ResourceNotFoundException but wasn't"),
-                    () -> verify(userRepository, times(1)).findById(userId),
+                    () -> verify(userRepository, times(1)).findByUsername(notExistingUsername),
                     () -> verifyNoMoreInteractions(userRepository),
                     () -> verifyNoInteractions(securityContext),
                     () -> verifyNoInteractions(authentication),

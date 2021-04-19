@@ -81,9 +81,10 @@ public class UserService {
         return userRepository.save(userEntity);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(String username) {
 
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", id));
+        UserEntity userEntity = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User with username: '" + username + "' not found."));
 
         if (isUserChangingOwnData(userEntity.getUsername())) {
             userRepository.delete(userEntity);
