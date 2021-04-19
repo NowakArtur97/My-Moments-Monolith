@@ -202,7 +202,7 @@ class CommentServiceExceptionsTest {
     }
 
     @Test
-    void when_update_some_other_user_got_from_jwt_should_throw_exception() {
+    void when_update_comment_of_some_other_user_got_from_jwt_should_throw_exception() {
 
         Long postId = 2L;
         Long commentId = 3L;
@@ -260,6 +260,170 @@ class CommentServiceExceptionsTest {
 
         assertAll(() -> assertThrows(ForbiddenException.class,
                 () -> commentService.updateComment(postId, commentId, someOtherUserExpected.getUsername(), commentDTOExpected),
+                "should throw ForbiddenException but wasn't"),
+                () -> verify(userService, times(1)).findByUsername(someOtherUserExpected.getUsername()),
+                () -> verify(userService, times(1))
+                        .isUserChangingOwnData(someOtherUserExpected.getUsername()),
+                () -> verifyNoMoreInteractions(userService),
+                () -> verify(postService, times(1)).findById(postId),
+                () -> verifyNoMoreInteractions(postService),
+                () -> verify(commentRepository, times(1)).findById(commentId),
+                () -> verifyNoMoreInteractions(commentRepository));
+    }
+
+    @Test
+    void when_delete_comment_by_not_existing_user_should_throw_exception() {
+
+        String notExistingUsername = "iAmNotExist";
+        Long postId = 2L;
+        Long commentId = 3L;
+
+        when(userService.findByUsername(notExistingUsername)).thenReturn(Optional.empty());
+
+        assertAll(() -> assertThrows(UsernameNotFoundException.class,
+                () -> commentService.deleteComment(postId, commentId, notExistingUsername),
+                "should throw UsernameNotFoundException but wasn't"),
+                () -> verify(userService, times(1)).findByUsername(notExistingUsername),
+                () -> verifyNoMoreInteractions(userService),
+                () -> verifyNoInteractions(postService),
+                () -> verifyNoInteractions(commentRepository));
+    }
+
+    @Test
+    void when_delete_comment_to_not_existing_post_should_throw_exception() {
+
+        Long notExistingPostId = 2L;
+        Long commentId = 3L;
+
+        UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
+
+        when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
+        when(postService.findById(notExistingPostId)).thenReturn(Optional.empty());
+
+        assertAll(() -> assertThrows(ResourceNotFoundException.class,
+                () -> commentService.deleteComment(notExistingPostId, commentId, userExpected.getUsername()),
+                "should throw ResourceNotFoundException but wasn't"),
+                () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
+                () -> verifyNoMoreInteractions(userService),
+                () -> verify(postService, times(1)).findById(notExistingPostId),
+                () -> verifyNoMoreInteractions(postService),
+                () -> verifyNoInteractions(commentRepository));
+    }
+
+    @Test
+    void when_delete_not_existing_comment_on_specific_post_should_throw_exception() {
+
+        Long postId = 2L;
+        Long notExistingCommentId = 3L;
+
+        UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
+        PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected).build(ObjectType.ENTITY);
+        postExpected.setId(postId);
+        userExpected.addPost(postExpected);
+        CommentEntity commentExpectedBeforeUpdate = (CommentEntity) commentTestBuilder.withAuthor(userExpected)
+                .withRelatedPost(postExpected).build(ObjectType.ENTITY);
+        userExpected.addComment(commentExpectedBeforeUpdate);
+
+        when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
+        when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
+        when(commentRepository.findById(notExistingCommentId)).thenReturn(Optional.empty());
+
+        assertAll(() -> assertThrows(ResourceNotFoundException.class,
+                () -> commentService.deleteComment(postId, notExistingCommentId, userExpected.getUsername()),
+                "should throw ResourceNotFoundException but wasn't"),
+                () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
+                () -> verifyNoMoreInteractions(userService),
+                () -> verify(postService, times(1)).findById(postId),
+                () -> verifyNoMoreInteractions(postService),
+                () -> verify(commentRepository, times(1)).findById(notExistingCommentId),
+                () -> verifyNoMoreInteractions(commentRepository));
+    }
+
+    @Test
+    void when_delete_not_existing_comment_should_throw_exception() {
+
+        Long postId = 2L;
+        Long notExistingCommentId = 3L;
+
+        UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
+        PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected).build(ObjectType.ENTITY);
+        postExpected.setId(postId);
+        userExpected.addPost(postExpected);
+        CommentEntity commentExpectedBeforeDelete = (CommentEntity) commentTestBuilder.withAuthor(userExpected)
+                .withRelatedPost(postExpected).build(ObjectType.ENTITY);
+        userExpected.addComment(commentExpectedBeforeDelete);
+        postExpected.addComment(commentExpectedBeforeDelete);
+
+        when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
+        when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
+        when(commentRepository.findById(notExistingCommentId)).thenReturn(Optional.empty());
+
+        assertAll(() -> assertThrows(ResourceNotFoundException.class,
+                () -> commentService.deleteComment(postId, notExistingCommentId, userExpected.getUsername()),
+                "should throw ResourceNotFoundException but wasn't"),
+                () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
+                () -> verifyNoMoreInteractions(userService),
+                () -> verify(postService, times(1)).findById(postId),
+                () -> verifyNoMoreInteractions(postService),
+                () -> verify(commentRepository, times(1)).findById(notExistingCommentId),
+                () -> verifyNoMoreInteractions(commentRepository));
+    }
+
+    @Test
+    void when_delete_comment_of_some_other_user_got_from_jwt_should_throw_exception() {
+
+        Long postId = 2L;
+        Long commentId = 3L;
+
+        UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
+        PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected).build(ObjectType.ENTITY);
+        postExpected.setId(postId);
+        userExpected.addPost(postExpected);
+        CommentEntity commentExpectedBeforeDelete = (CommentEntity) commentTestBuilder.withAuthor(userExpected)
+                .withRelatedPost(postExpected).build(ObjectType.ENTITY);
+        userExpected.addComment(commentExpectedBeforeDelete);
+        postExpected.addComment(commentExpectedBeforeDelete);
+
+        when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
+        when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(false);
+        when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
+        when(commentRepository.findById(commentId)).thenReturn(Optional.of(commentExpectedBeforeDelete));
+
+        assertAll(() -> assertThrows(ForbiddenException.class,
+                () -> commentService.deleteComment(postId, commentId, userExpected.getUsername()),
+                "should throw ForbiddenException but wasn't"),
+                () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
+                () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
+                () -> verifyNoMoreInteractions(userService),
+                () -> verify(postService, times(1)).findById(postId),
+                () -> verifyNoMoreInteractions(postService),
+                () -> verify(commentRepository, times(1)).findById(commentId),
+                () -> verifyNoMoreInteractions(commentRepository));
+    }
+
+    @Test
+    void when_delete_some_other_user_comment_should_throw_exception() {
+
+        Long postId = 2L;
+        Long commentId = 3L;
+
+        UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
+        UserEntity someOtherUserExpected = (UserEntity) userTestBuilder.withUsername("some-other-user").build(ObjectType.ENTITY);
+        PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected).build(ObjectType.ENTITY);
+        postExpected.setId(postId);
+        userExpected.addPost(postExpected);
+        CommentEntity commentExpectedBeforeDelete = (CommentEntity) commentTestBuilder.withAuthor(userExpected)
+                .withRelatedPost(postExpected).build(ObjectType.ENTITY);
+        userExpected.addComment(commentExpectedBeforeDelete);
+        postExpected.addComment(commentExpectedBeforeDelete);
+
+        when(userService.findByUsername(someOtherUserExpected.getUsername())).thenReturn(Optional.of(someOtherUserExpected));
+        when(userService.isUserChangingOwnData(someOtherUserExpected.getUsername())).thenReturn(true);
+        when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
+        when(commentRepository.findById(commentId)).thenReturn(Optional.of(commentExpectedBeforeDelete));
+
+        assertAll(() -> assertThrows(ForbiddenException.class,
+                () -> commentService.deleteComment(postId, commentId, someOtherUserExpected.getUsername()),
                 "should throw ForbiddenException but wasn't"),
                 () -> verify(userService, times(1)).findByUsername(someOtherUserExpected.getUsername()),
                 () -> verify(userService, times(1))

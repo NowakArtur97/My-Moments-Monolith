@@ -17,8 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -158,6 +157,38 @@ class CommentServiceTest {
                 () -> verifyNoMoreInteractions(postService),
                 () -> verify(commentRepository, times(1)).findById(commentId),
                 () -> verify(commentRepository, times(1)).save(commentExpected),
+                () -> verifyNoMoreInteractions(commentRepository));
+    }
+
+    @Test
+    void when_delete_comment_should_delete_comment() {
+
+        Long postId = 2L;
+        Long commentId = 3L;
+
+        UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
+        PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected).build(ObjectType.ENTITY);
+        postExpected.setId(postId);
+        userExpected.addPost(postExpected);
+        CommentEntity commentExpected = (CommentEntity) commentTestBuilder.withAuthor(userExpected).withRelatedPost(postExpected)
+                .build(ObjectType.ENTITY);
+        userExpected.addComment(commentExpected);
+        postExpected.addComment(commentExpected);
+
+        when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
+        when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(true);
+        when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
+        when(commentRepository.findById(commentId)).thenReturn(Optional.of(commentExpected));
+
+        assertAll(() -> assertDoesNotThrow(() -> commentService.deleteComment(postId, commentId, userExpected.getUsername()),
+                "should not throw any exception but was"),
+                () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
+                () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
+                () -> verifyNoMoreInteractions(userService),
+                () -> verify(postService, times(1)).findById(postId),
+                () -> verifyNoMoreInteractions(postService),
+                () -> verify(commentRepository, times(1)).findById(commentId),
+                () -> verify(commentRepository, times(1)).delete(commentExpected),
                 () -> verifyNoMoreInteractions(commentRepository));
     }
 }
