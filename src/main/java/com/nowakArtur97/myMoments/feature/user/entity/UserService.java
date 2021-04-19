@@ -105,6 +105,7 @@ public class UserService {
     }
 
     public Set<PostEntity> getUsersPosts(String username) {
+
         return findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User with username: '" + username + "' not found."))
                 .getPosts();

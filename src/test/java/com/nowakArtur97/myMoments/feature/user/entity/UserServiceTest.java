@@ -3,6 +3,9 @@ package com.nowakArtur97.myMoments.feature.user.entity;
 
 import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
+import com.nowakArtur97.myMoments.feature.comment.CommentEntity;
+import com.nowakArtur97.myMoments.feature.post.PostEntity;
+import com.nowakArtur97.myMoments.feature.post.PostTestBuilder;
 import com.nowakArtur97.myMoments.feature.user.resource.UserProfileDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
 import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
@@ -56,12 +59,14 @@ class UserServiceTest {
 
     private static MockedStatic<UUID> mocked;
 
+    private static PostTestBuilder postTestBuilder;
     private static UserProfileTestBuilder userProfileTestBuilder;
     private static UserTestBuilder userTestBuilder;
 
     @BeforeAll
     static void setUpBuildersAndUUID() {
 
+        postTestBuilder = new PostTestBuilder();
         userProfileTestBuilder = new UserProfileTestBuilder();
         userTestBuilder = new UserTestBuilder();
 
@@ -763,7 +768,7 @@ class UserServiceTest {
     }
 
     @Nested
-    class OtherUserTest {
+    class FindUserTest {
 
         @Test
         void when_user_does_exists_and_check_if_user_exists_by_username_should_return_true() {
@@ -833,9 +838,11 @@ class UserServiceTest {
         void when_user_exists_and_find_user_by_id_should_return_user() {
 
             Long expectedId = 1L;
+            CommentEntity commentExpected = new CommentEntity("comment");
+            PostEntity postExpected = (PostEntity) postTestBuilder.build(ObjectType.ENTITY);
             UserProfileEntity userProfileExpected = (UserProfileEntity) userProfileTestBuilder.build(ObjectType.ENTITY);
-            UserEntity userExpected = (UserEntity) userTestBuilder.withProfile(userProfileExpected)
-                    .build(ObjectType.ENTITY);
+            UserEntity userExpected = (UserEntity) userTestBuilder.withProfile(userProfileExpected).withPosts(Set.of(postExpected))
+                    .withComments(Set.of(commentExpected)).build(ObjectType.ENTITY);
 
             when(userRepository.findById(expectedId)).thenReturn(Optional.of(userExpected));
 
@@ -856,6 +863,12 @@ class UserServiceTest {
                     () -> assertEquals(userExpected.getEmail(), userActual.getEmail(),
                             () -> "should return user with user email: " + userExpected.getEmail() + ", but was"
                                     + userActual.getEmail()),
+                    () -> assertEquals(userExpected.getPosts(), userActual.getPosts(),
+                            () -> "should return user with user posts: " + userExpected.getPosts() + ", but was"
+                                    + userActual.getPosts()),
+                    () -> assertEquals(userExpected.getComments(), userActual.getComments(),
+                            () -> "should return user with user comments: " + userExpected.getComments() + ", but was"
+                                    + userActual.getComments()),
                     () -> assertEquals(userExpected.getRoles(), userActual.getRoles(),
                             () -> "should return user with user roles: " + userExpected.getRoles() + ", but was"
                                     + userActual.getRoles()),
@@ -906,9 +919,11 @@ class UserServiceTest {
         @Test
         void when_user_exists_and_find_user_by_username_should_return_user() {
 
+            CommentEntity commentExpected = new CommentEntity("comment");
+            PostEntity postExpected = (PostEntity) postTestBuilder.build(ObjectType.ENTITY);
             UserProfileEntity userProfileExpected = (UserProfileEntity) userProfileTestBuilder.build(ObjectType.ENTITY);
-            UserEntity userExpected = (UserEntity) userTestBuilder.withProfile(userProfileExpected)
-                    .build(ObjectType.ENTITY);
+            UserEntity userExpected = (UserEntity) userTestBuilder.withProfile(userProfileExpected).withPosts(Set.of(postExpected))
+                    .withComments(Set.of(commentExpected)).build(ObjectType.ENTITY);
 
             when(userRepository.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
 
@@ -929,6 +944,12 @@ class UserServiceTest {
                     () -> assertEquals(userExpected.getEmail(), userActual.getEmail(),
                             () -> "should return user with user email: " + userExpected.getEmail() + ", but was"
                                     + userActual.getEmail()),
+                    () -> assertEquals(userExpected.getPosts(), userActual.getPosts(),
+                            () -> "should return user with user posts: " + userExpected.getPosts() + ", but was"
+                                    + userActual.getPosts()),
+                    () -> assertEquals(userExpected.getComments(), userActual.getComments(),
+                            () -> "should return user with user comments: " + userExpected.getComments() + ", but was"
+                                    + userActual.getComments()),
                     () -> assertEquals(userExpected.getRoles(), userActual.getRoles(),
                             () -> "should return user with user roles: " + userExpected.getRoles() + ", but was"
                                     + userActual.getRoles()),
