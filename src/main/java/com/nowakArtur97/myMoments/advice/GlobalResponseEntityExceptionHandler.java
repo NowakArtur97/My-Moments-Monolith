@@ -54,7 +54,7 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException exception,
                                                                      HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(),status.value(),
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), status.value(),
                 List.of(exception.getMessage()));
 
         return new ResponseEntity<>(errorResponse, headers, status);

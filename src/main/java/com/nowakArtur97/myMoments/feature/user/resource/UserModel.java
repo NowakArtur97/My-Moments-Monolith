@@ -16,9 +16,6 @@ import java.util.List;
 @ApiModel(description = "Details about the User")
 public class UserModel implements User {
 
-    @ApiModelProperty(notes = "The unique id of the User")
-    private Long id;
-
     @ApiModelProperty(notes = "The user's name")
     private String username;
 

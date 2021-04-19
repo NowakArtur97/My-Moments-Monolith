@@ -113,6 +113,48 @@ class UserUpdateValidationControllerTest {
     }
 
     @Test
+    void when_update_user_with_without_data_should_return_error_response() {
+
+        assertAll(
+                () -> mockMvc
+                        .perform(mockRequestBuilder
+                                .header("Authorization", "Bearer " + token)
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("timestamp", is(notNullValue())))
+                        .andExpect(jsonPath("status", is(400)))
+                        .andExpect(jsonPath("errors", hasItem("Username cannot be empty.")))
+                        .andExpect(jsonPath("errors", hasItem("Password cannot be empty.")))
+                        .andExpect(jsonPath("errors", hasItem("Matching password cannot be empty.")))
+                        .andExpect(jsonPath("errors", hasItem("Email cannot be empty.")))
+                        .andExpect(jsonPath("errors", hasSize(4))));
+    }
+
+    @Test
+    void when_update_user_with_with_only_image_should_return_error_response() {
+
+        MockMultipartFile userData = new MockMultipartFile("file", "request",
+                MediaType.MULTIPART_FORM_DATA_VALUE, "image".getBytes(StandardCharsets.UTF_8));
+
+        assertAll(
+                () -> mockMvc
+                        .perform(mockRequestBuilder
+                                .file(userData)
+                                .header("Authorization", "Bearer " + token)
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("timestamp", is(notNullValue())))
+                        .andExpect(jsonPath("status", is(400)))
+                        .andExpect(jsonPath("errors", hasItem("Username cannot be empty.")))
+                        .andExpect(jsonPath("errors", hasItem("Password cannot be empty.")))
+                        .andExpect(jsonPath("errors", hasItem("Matching password cannot be empty.")))
+                        .andExpect(jsonPath("errors", hasItem("Email cannot be empty.")))
+                        .andExpect(jsonPath("errors", hasSize(4))));
+    }
+
+    @Test
     void when_update_user_with_null_fields_should_return_error_response() {
 
         UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withUsername(null)
@@ -224,8 +266,7 @@ class UserUpdateValidationControllerTest {
         String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
 
         MockMultipartFile userData = new MockMultipartFile("user", "request",
-                MediaType.MULTIPART_FORM_DATA_VALUE,
-                userAsString.getBytes(StandardCharsets.UTF_8));
+                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
 
         assertAll(
                 () -> mockMvc

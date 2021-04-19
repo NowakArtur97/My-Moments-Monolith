@@ -15,9 +15,6 @@ import lombok.ToString;
 @ApiModel(description = "Details about the User's Role")
 public class RoleModel implements Role {
 
-    @ApiModelProperty(notes = "The unique id of the Role")
-    private Long id;
-
     @ApiModelProperty(notes = "The role's name")
     private String name;
 }

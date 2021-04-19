@@ -13,9 +13,6 @@ import lombok.*;
 @ApiModel(description = "Details about the User's Profile")
 public class UserProfileModel implements UserProfile {
 
-    @ApiModelProperty(notes = "The unique id of the User's Profile")
-    private Long id;
-
     @ApiModelProperty(notes = "The user's information")
     private String about;
 
