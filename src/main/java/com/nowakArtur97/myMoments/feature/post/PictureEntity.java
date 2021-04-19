@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @ToString(callSuper = true)
-class PictureEntity extends AbstractEntity {
+public class PictureEntity extends AbstractEntity implements Picture {
 
     @Column
     @Type(type = "org.hibernate.type.BinaryType")

@@ -2,6 +2,8 @@ package com.nowakArtur97.myMoments.feature.user.entity;
 
 
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
+import com.nowakArtur97.myMoments.feature.post.PictureEntity;
+import com.nowakArtur97.myMoments.feature.post.PictureTestBuilder;
 import com.nowakArtur97.myMoments.feature.post.PostEntity;
 import com.nowakArtur97.myMoments.feature.post.PostTestBuilder;
 import com.nowakArtur97.myMoments.feature.user.testBuilder.UserProfileTestBuilder;
@@ -43,6 +45,7 @@ class UserServiceGetPostsTest {
     @Mock
     private SecurityContext securityContext;
 
+    private static PictureTestBuilder pictureTestBuilder;
     private static PostTestBuilder postTestBuilder;
     private static UserProfileTestBuilder userProfileTestBuilder;
     private static UserTestBuilder userTestBuilder;
@@ -50,6 +53,7 @@ class UserServiceGetPostsTest {
     @BeforeAll
     static void setUpBuilders() {
 
+        pictureTestBuilder = new PictureTestBuilder();
         postTestBuilder = new PostTestBuilder();
         userProfileTestBuilder = new UserProfileTestBuilder();
         userTestBuilder = new UserTestBuilder();
@@ -66,8 +70,12 @@ class UserServiceGetPostsTest {
 
         String expectedUsername = "username";
         UserProfileEntity userProfileExpected = (UserProfileEntity) userProfileTestBuilder.build(ObjectType.ENTITY);
-        PostEntity postExpected = (PostEntity) postTestBuilder.build(ObjectType.ENTITY);
-        PostEntity postExpected2 = (PostEntity) postTestBuilder.withCaption("second post").build(ObjectType.ENTITY);
+        PictureEntity pictureEntityExpected = (PictureEntity) pictureTestBuilder.build(ObjectType.ENTITY);
+        PostEntity postExpected = (PostEntity) postTestBuilder.withPhotosEntity(Set.of(pictureEntityExpected))
+                .build(ObjectType.ENTITY);
+        PictureEntity pictureEntityExpected2 = (PictureEntity) pictureTestBuilder.build(ObjectType.ENTITY);
+        PostEntity postExpected2 = (PostEntity) postTestBuilder.withCaption("second post")
+                .withPhotosEntity(Set.of(pictureEntityExpected2)).build(ObjectType.ENTITY);
         UserEntity userExpected = (UserEntity) userTestBuilder.withUsername(expectedUsername).withProfile(userProfileExpected)
                 .withPosts(Set.of(postExpected, postExpected2)).build(ObjectType.ENTITY);
 

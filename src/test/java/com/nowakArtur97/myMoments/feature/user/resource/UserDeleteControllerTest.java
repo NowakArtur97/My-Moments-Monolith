@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("UserController_Tests")
 class UserDeleteControllerTest {
 
-    private final String USERS_BASE_PATH = "http://localhost:8080/api/v1/users/me";
+    private final String USER_BASE_PATH = "http://localhost:8080/api/v1/users/me";
 
     private MockMvc mockMvc;
 
@@ -74,7 +74,7 @@ class UserDeleteControllerTest {
         when(jwtUtil.extractUsernameFromHeader(header)).thenReturn(username);
 
         assertAll(
-                () -> mockMvc.perform(delete(USERS_BASE_PATH)
+                () -> mockMvc.perform(delete(USER_BASE_PATH)
                         .header("Authorization", header))
                         .andExpect(status().isNoContent())
                         .andExpect(jsonPath("$").doesNotExist()),
@@ -98,7 +98,7 @@ class UserDeleteControllerTest {
                 .when(userService).deleteUser(username);
 
         assertAll(
-                () -> mockMvc.perform(delete(USERS_BASE_PATH)
+                () -> mockMvc.perform(delete(USER_BASE_PATH)
                         .header("Authorization", header))
                         .andExpect(status().isNotFound())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -125,7 +125,7 @@ class UserDeleteControllerTest {
         doThrow(new ForbiddenException("User can only delete his own account.")).when(userService).deleteUser(username);
 
         assertAll(
-                () -> mockMvc.perform(delete(USERS_BASE_PATH)
+                () -> mockMvc.perform(delete(USER_BASE_PATH)
                         .header("Authorization", header))
                         .andExpect(status().isForbidden())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

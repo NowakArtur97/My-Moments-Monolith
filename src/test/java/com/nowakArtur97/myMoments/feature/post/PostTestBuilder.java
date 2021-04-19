@@ -12,6 +12,8 @@ import java.util.Set;
 
 public class PostTestBuilder {
 
+    private Long id;
+
     private String caption;
 
     private UserEntity author;
@@ -19,6 +21,14 @@ public class PostTestBuilder {
     private Set<PictureEntity> photosEntity = new HashSet<>();
     private Set<CommentEntity> commentsEntity = new HashSet<>();
     private List<MultipartFile> photosMultipart = new ArrayList<>();
+    private Set<PictureModel> photosModels = new HashSet<>();
+
+    public PostTestBuilder withId(Long id) {
+
+        this.id = id;
+
+        return this;
+    }
 
     public PostTestBuilder withCaption(String caption) {
 
@@ -55,6 +65,13 @@ public class PostTestBuilder {
         return this;
     }
 
+    public PostTestBuilder withPhotosModel(Set<PictureModel> photosModels) {
+
+        this.photosModels = photosModels;
+
+        return this;
+    }
+
     public Post build(ObjectType type) {
 
         Post post;
@@ -73,6 +90,12 @@ public class PostTestBuilder {
 
                 break;
 
+            case MODEL:
+
+                post = new PostModel(id, caption, photosModels);
+
+                break;
+
             default:
                 throw new RuntimeException("The specified type does not exist");
         }
@@ -84,6 +107,8 @@ public class PostTestBuilder {
 
     private void resetProperties() {
 
+        id = 1L;
+
         caption = null;
 
         author = null;
@@ -91,5 +116,6 @@ public class PostTestBuilder {
         photosEntity = new HashSet<>();
         commentsEntity = new HashSet<>();
         photosMultipart = new ArrayList<>();
+        photosModels = new HashSet<>();
     }
 }

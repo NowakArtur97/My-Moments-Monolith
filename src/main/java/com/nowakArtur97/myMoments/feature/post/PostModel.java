@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -30,5 +31,21 @@ public class PostModel implements Post {
     PostModel() {
 
         photos = new HashSet<>();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (!(o instanceof PostModel)) return false;
+
+        PostModel postModel = (PostModel) o;
+
+        return Objects.equals(getId(), postModel.getId()) && Objects.equals(getCaption(), postModel.getCaption());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCaption());
     }
 }
