@@ -62,4 +62,25 @@ class CommentController {
 
         return new ResponseEntity<>(modelMapper.map(commentEntity, CommentModel.class), HttpStatus.OK);
     }
+
+    @DeleteMapping(path = "{postId}/comments/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // Added to remove the default 200 status added by Swagger
+    @ApiOperation(value = "Delete a comment", notes = "Delete a comment")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Successfully deleted a comment"),
+            @ApiResponse(code = 400, message = "Invalid Post's or Comment's id supplied"),
+            @ApiResponse(code = 404, message = "Could not find Post or Comment with provided id", response = ErrorResponse.class)})
+    ResponseEntity<Void> deleteCommentInPost(
+            @ApiParam(value = "Id of the Post Comment being deleted", name = "postId", type = "integer", required = true, example = "1")
+            @PathVariable("postId") Long postId,
+            @ApiParam(value = "Id of the Comment being deleted", name = "id", type = "integer", required = true, example = "1")
+            @PathVariable("id") Long id,
+            @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader) {
+
+        String username = jwtUtil.extractUsernameFromHeader(authorizationHeader);
+
+        commentService.deleteComment(postId, id, username);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

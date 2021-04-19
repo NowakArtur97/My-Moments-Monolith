@@ -56,4 +56,29 @@ class CommentService {
             throw new ForbiddenException("User can only change his own comments.");
         }
     }
+
+    public void deleteComment(Long postId, Long commentId, String username) {
+
+        UserEntity userEntity = userService.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with name: '" + username + "' not found."));
+        PostEntity postEntity = postService.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", postId));
+        CommentEntity commentEntity = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment", commentId));
+
+        if (!postEntity.getComments().contains(commentEntity)) {
+            throw new ResourceNotFoundException("Comment with id: '" + commentId + "' in the post with id: '"
+                    + postId + "' not found.");
+        }
+
+        if (userService.isUserChangingOwnData(username) && commentEntity.getAuthor().equals(userEntity)) {
+
+            userEntity.removeComment(commentEntity);
+            postEntity.removeComment(commentEntity);
+
+            commentRepository.delete(commentEntity);
+
+        } else {
+            throw new ForbiddenException("User can only delete his own comments.");
+        }
+    }
 }
