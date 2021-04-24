@@ -48,7 +48,7 @@ public class PostService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with name: '" + username + "' not found."));
         PostEntity postEntity = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", postId));
 
-        if (userService.isUserChangingOwnData(username) && userEntity.getPosts().contains(postEntity)) {
+        if (userEntity.getPosts().contains(postEntity)) {
             postEntity.setCaption(postDTO.getCaption());
             postEntity.getPhotos().removeAll(postEntity.getPhotos());
             setPhotos(postDTO, postEntity);
@@ -65,7 +65,7 @@ public class PostService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with name: '" + username + "' not found."));
         PostEntity postEntity = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", postId));
 
-        if (userService.isUserChangingOwnData(username) && userEntity.getPosts().contains(postEntity)) {
+        if (userEntity.getPosts().contains(postEntity)) {
             userEntity.removePost(postEntity);
             postRepository.delete(postEntity);
         } else {

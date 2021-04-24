@@ -1,6 +1,5 @@
 package com.nowakArtur97.myMoments.feature.user.entity;
 
-import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.feature.post.PostEntity;
 import com.nowakArtur97.myMoments.feature.user.resource.UserRegistrationDTO;
@@ -8,8 +7,6 @@ import com.nowakArtur97.myMoments.feature.user.resource.UserUpdateDTO;
 import com.nowakArtur97.myMoments.feature.user.validation.UserValidationGroupSequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
@@ -72,10 +69,6 @@ public class UserService {
         UserEntity userEntity = findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User with username: '" + username + "' not found."));
 
-        if (!isUserChangingOwnData(userEntity.getUsername())) {
-            throw new ForbiddenException("User can only update his own account.");
-        }
-
         userUpdateDTO.setId(userEntity.getId());
 
         userMapper.convertDTOToEntity(userEntity, userUpdateDTO, image);
@@ -88,20 +81,7 @@ public class UserService {
         UserEntity userEntity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User with username: '" + username + "' not found."));
 
-        if (isUserChangingOwnData(userEntity.getUsername())) {
-            userRepository.delete(userEntity);
-        } else {
-            throw new ForbiddenException("User can only delete his own account.");
-        }
-    }
-
-    public boolean isUserChangingOwnData(String username) {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        String usernameInContext = auth != null ? auth.getName() : "";
-
-        return username.equals(usernameInContext);
+        userRepository.delete(userEntity);
     }
 
     public Set<PostEntity> getUsersPosts(String username) {

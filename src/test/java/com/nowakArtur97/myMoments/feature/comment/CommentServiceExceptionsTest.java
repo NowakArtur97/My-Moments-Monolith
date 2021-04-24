@@ -202,40 +202,6 @@ class CommentServiceExceptionsTest {
     }
 
     @Test
-    void when_update_comment_of_some_other_user_got_from_jwt_should_throw_exception() {
-
-        Long postId = 2L;
-        Long commentId = 3L;
-        String updatedContent = "new content";
-
-        CommentDTO commentDTOExpected = (CommentDTO) commentTestBuilder.withContent(updatedContent).build(ObjectType.CREATE_DTO);
-        UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
-        PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected).build(ObjectType.ENTITY);
-        postExpected.setId(postId);
-        userExpected.addPost(postExpected);
-        CommentEntity commentExpectedBeforeUpdate = (CommentEntity) commentTestBuilder.withAuthor(userExpected)
-                .withRelatedPost(postExpected).build(ObjectType.ENTITY);
-        userExpected.addComment(commentExpectedBeforeUpdate);
-        postExpected.addComment(commentExpectedBeforeUpdate);
-
-        when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
-        when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(false);
-        when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
-        when(commentRepository.findById(commentId)).thenReturn(Optional.of(commentExpectedBeforeUpdate));
-
-        assertAll(() -> assertThrows(ForbiddenException.class,
-                () -> commentService.updateComment(postId, commentId, userExpected.getUsername(), commentDTOExpected),
-                "should throw ForbiddenException but wasn't"),
-                () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
-                () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
-                () -> verifyNoMoreInteractions(userService),
-                () -> verify(postService, times(1)).findById(postId),
-                () -> verifyNoMoreInteractions(postService),
-                () -> verify(commentRepository, times(1)).findById(commentId),
-                () -> verifyNoMoreInteractions(commentRepository));
-    }
-
-    @Test
     void when_update_some_other_user_comment_should_throw_exception() {
 
         Long postId = 2L;
@@ -254,7 +220,6 @@ class CommentServiceExceptionsTest {
         postExpected.addComment(commentExpectedBeforeUpdate);
 
         when(userService.findByUsername(someOtherUserExpected.getUsername())).thenReturn(Optional.of(someOtherUserExpected));
-        when(userService.isUserChangingOwnData(someOtherUserExpected.getUsername())).thenReturn(true);
         when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
         when(commentRepository.findById(commentId)).thenReturn(Optional.of(commentExpectedBeforeUpdate));
 
@@ -262,8 +227,6 @@ class CommentServiceExceptionsTest {
                 () -> commentService.updateComment(postId, commentId, someOtherUserExpected.getUsername(), commentDTOExpected),
                 "should throw ForbiddenException but wasn't"),
                 () -> verify(userService, times(1)).findByUsername(someOtherUserExpected.getUsername()),
-                () -> verify(userService, times(1))
-                        .isUserChangingOwnData(someOtherUserExpected.getUsername()),
                 () -> verifyNoMoreInteractions(userService),
                 () -> verify(postService, times(1)).findById(postId),
                 () -> verifyNoMoreInteractions(postService),
@@ -370,38 +333,6 @@ class CommentServiceExceptionsTest {
     }
 
     @Test
-    void when_delete_comment_of_some_other_user_got_from_jwt_should_throw_exception() {
-
-        Long postId = 2L;
-        Long commentId = 3L;
-
-        UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
-        PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected).build(ObjectType.ENTITY);
-        postExpected.setId(postId);
-        userExpected.addPost(postExpected);
-        CommentEntity commentExpectedBeforeDelete = (CommentEntity) commentTestBuilder.withAuthor(userExpected)
-                .withRelatedPost(postExpected).build(ObjectType.ENTITY);
-        userExpected.addComment(commentExpectedBeforeDelete);
-        postExpected.addComment(commentExpectedBeforeDelete);
-
-        when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
-        when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(false);
-        when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
-        when(commentRepository.findById(commentId)).thenReturn(Optional.of(commentExpectedBeforeDelete));
-
-        assertAll(() -> assertThrows(ForbiddenException.class,
-                () -> commentService.deleteComment(postId, commentId, userExpected.getUsername()),
-                "should throw ForbiddenException but wasn't"),
-                () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
-                () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
-                () -> verifyNoMoreInteractions(userService),
-                () -> verify(postService, times(1)).findById(postId),
-                () -> verifyNoMoreInteractions(postService),
-                () -> verify(commentRepository, times(1)).findById(commentId),
-                () -> verifyNoMoreInteractions(commentRepository));
-    }
-
-    @Test
     void when_delete_some_other_user_comment_should_throw_exception() {
 
         Long postId = 2L;
@@ -418,7 +349,6 @@ class CommentServiceExceptionsTest {
         postExpected.addComment(commentExpectedBeforeDelete);
 
         when(userService.findByUsername(someOtherUserExpected.getUsername())).thenReturn(Optional.of(someOtherUserExpected));
-        when(userService.isUserChangingOwnData(someOtherUserExpected.getUsername())).thenReturn(true);
         when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
         when(commentRepository.findById(commentId)).thenReturn(Optional.of(commentExpectedBeforeDelete));
 
@@ -426,8 +356,6 @@ class CommentServiceExceptionsTest {
                 () -> commentService.deleteComment(postId, commentId, someOtherUserExpected.getUsername()),
                 "should throw ForbiddenException but wasn't"),
                 () -> verify(userService, times(1)).findByUsername(someOtherUserExpected.getUsername()),
-                () -> verify(userService, times(1))
-                        .isUserChangingOwnData(someOtherUserExpected.getUsername()),
                 () -> verifyNoMoreInteractions(userService),
                 () -> verify(postService, times(1)).findById(postId),
                 () -> verifyNoMoreInteractions(postService),

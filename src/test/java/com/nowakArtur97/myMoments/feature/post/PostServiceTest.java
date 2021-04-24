@@ -1,6 +1,5 @@
 package com.nowakArtur97.myMoments.feature.post;
 
-
 import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
@@ -149,7 +148,6 @@ class PostServiceTest {
 
             when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
             when(postRepository.findById(postId)).thenReturn(Optional.of(postExpectedBeforeUpdate));
-            when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(true);
             when(postRepository.save(postExpected)).thenReturn(postExpected);
 
             PostEntity postActual = postService.updatePost(postId, userExpected.getUsername(), postDTOExpected);
@@ -169,7 +167,6 @@ class PostServiceTest {
                             () -> "should return post with photos: " + postExpected.getPhotos() + ", but was"
                                     + postActual.getPhotos()),
                     () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
-                    () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userService),
                     () -> verify(postRepository, times(1)).save(postExpected),
                     () -> verify(postRepository, times(1)).findById(postId),
@@ -234,13 +231,11 @@ class PostServiceTest {
 
             when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
             when(postRepository.findById(postId)).thenReturn(Optional.of(postExpected));
-            when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(false);
 
             assertAll(() -> assertThrows(ForbiddenException.class,
                     () -> postService.updatePost(postId, userExpected.getUsername(), postDTOExpected),
                     "should throw ForbiddenException but wasn't"),
                     () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
-                    () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userService),
                     () -> verify(postRepository, times(1)).findById(postId),
                     () -> verifyNoMoreInteractions(postRepository));
@@ -263,12 +258,10 @@ class PostServiceTest {
 
             when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
             when(postRepository.findById(userId)).thenReturn(Optional.of(postExpected));
-            when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(true);
 
             assertAll(() -> assertDoesNotThrow(() -> postService.deletePost(userId, userExpected.getUsername()),
                     "should not throw any exception but was"),
                     () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
-                    () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userService),
                     () -> verify(postRepository, times(1)).findById(userId),
                     () -> verify(postRepository, times(1)).delete(postExpected),
@@ -316,18 +309,17 @@ class PostServiceTest {
             PictureEntity pictureEntityExpected = new PictureEntity("image".getBytes());
             PostEntity postExpected = (PostEntity) postTestBuilder
                     .withPhotosEntity(Set.of(pictureEntityExpected)).build(ObjectType.ENTITY);
-            UserEntity userExpected = (UserEntity) userTestBuilder.withPosts(Set.of(postExpected)).build(ObjectType.ENTITY);
-            postExpected.setAuthor(userExpected);
+            UserEntity someOtherUserExpected = (UserEntity) userTestBuilder.withPosts(Set.of(postExpected)).build(ObjectType.ENTITY);
+            postExpected.setAuthor(someOtherUserExpected);
+            UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
 
             when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
             when(postRepository.findById(userId)).thenReturn(Optional.of(postExpected));
-            when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(false);
 
             assertAll(() -> assertThrows(ForbiddenException.class,
                     () -> postService.deletePost(userId, userExpected.getUsername()),
                     "should throw ForbiddenException but wasn't"),
                     () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
-                    () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userService),
                     () -> verify(postRepository, times(1)).findById(userId),
                     () -> verifyNoMoreInteractions(postRepository));

@@ -20,11 +20,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -799,37 +796,6 @@ class UserUpdateValidationControllerTest {
                         .andExpect(jsonPath("timestamp", is(notNullValue())))
                         .andExpect(jsonPath("status", is(401)))
                         .andExpect(jsonPath("errors[0]", is("JWT token is missing in request headers.")))
-                        .andExpect(jsonPath("errors", hasSize(1))));
-    }
-
-    @Test
-    void when_update_other_user_should_return_error_response() {
-
-        UserProfileDTO userProfileDTO = (UserProfileDTO) userProfileTestBuilder.build(ObjectType.UPDATE_DTO);
-        UserUpdateDTO userUpdateDTO = (UserUpdateDTO) userTestBuilder.withProfile(userProfileDTO).build(ObjectType.UPDATE_DTO);
-
-        String userAsString = ObjectTestMapper.asJsonString(userUpdateDTO);
-
-        MockMultipartFile userData = new MockMultipartFile("user", "request",
-                MediaType.MULTIPART_FORM_DATA_VALUE, userAsString.getBytes(StandardCharsets.UTF_8));
-
-        UserDetails userDetails = new User("user", "user", List.of(new SimpleGrantedAuthority(defaultUserRole)));
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-
-        assertAll(
-                () -> mockMvc
-                        .perform(mockRequestBuilder
-                                .file(userData)
-                                .header("Authorization", "Bearer " + token)
-                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE).accept(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isForbidden())
-                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("timestamp", is(notNullValue())))
-                        .andExpect(jsonPath("status", is(403)))
-                        .andExpect(jsonPath("errors[0]", is("User can only update his own account.")))
                         .andExpect(jsonPath("errors", hasSize(1))));
     }
 

@@ -128,7 +128,6 @@ class CommentServiceTest {
                 .withRelatedPost(postExpected).build(ObjectType.ENTITY);
 
         when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
-        when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(true);
         when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
         when(commentRepository.findById(commentId)).thenReturn(Optional.of(commentExpectedBeforeUpdate));
         when(commentRepository.save(commentExpected)).thenReturn(commentExpected);
@@ -151,7 +150,6 @@ class CommentServiceTest {
                         () -> "should return comment with related post: " + commentExpected.getRelatedPost() + ", but was"
                                 + commentActual.getRelatedPost()),
                 () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
-                () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
                 () -> verifyNoMoreInteractions(userService),
                 () -> verify(postService, times(1)).findById(postId),
                 () -> verifyNoMoreInteractions(postService),
@@ -176,14 +174,12 @@ class CommentServiceTest {
         postExpected.addComment(commentExpected);
 
         when(userService.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
-        when(userService.isUserChangingOwnData(userExpected.getUsername())).thenReturn(true);
         when(postService.findById(postId)).thenReturn(Optional.of(postExpected));
         when(commentRepository.findById(commentId)).thenReturn(Optional.of(commentExpected));
 
         assertAll(() -> assertDoesNotThrow(() -> commentService.deleteComment(postId, commentId, userExpected.getUsername()),
                 "should not throw any exception but was"),
                 () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
-                () -> verify(userService, times(1)).isUserChangingOwnData(userExpected.getUsername()),
                 () -> verifyNoMoreInteractions(userService),
                 () -> verify(postService, times(1)).findById(postId),
                 () -> verifyNoMoreInteractions(postService),

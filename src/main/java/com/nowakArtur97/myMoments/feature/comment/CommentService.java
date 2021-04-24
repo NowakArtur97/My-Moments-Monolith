@@ -46,7 +46,7 @@ class CommentService {
                     + postId + "' not found.");
         }
 
-        if (userService.isUserChangingOwnData(username) && commentEntity.getAuthor().equals(userEntity)) {
+        if (commentEntity.getAuthor().equals(userEntity)) {
 
             commentEntity.setContent(commentDTO.getContent());
 
@@ -70,7 +70,7 @@ class CommentService {
                     + postId + "' not found.");
         }
 
-        if (userService.isUserChangingOwnData(username) && commentEntity.getAuthor().equals(userEntity)) {
+        if (commentEntity.getAuthor().equals(userEntity)) {
 
             userEntity.removeComment(commentEntity);
             postEntity.removeComment(commentEntity);
