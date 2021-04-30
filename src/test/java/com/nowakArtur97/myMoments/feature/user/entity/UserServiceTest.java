@@ -116,40 +116,40 @@ class UserServiceTest {
             UserEntity userActual = userService.registerUser(userRegistrationDTOExpected, image);
 
             assertAll(() -> assertEquals(userExpected, userActual,
-                    () -> "should return user: " + userExpected + ", but was" + userActual),
+                    () -> "should return user: " + userExpected + ", but was: " + userActual),
                     () -> assertEquals(userExpected.getUsername(), userActual.getUsername(),
-                            () -> "should return user with username: " + userExpected.getUsername() + ", but was"
+                            () -> "should return user with username: " + userExpected.getUsername() + ", but was: "
                                     + userActual.getUsername()),
                     () -> assertEquals(userExpected.getPassword(), userActual.getPassword(),
-                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was"
+                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was: "
                                     + userActual.getPassword()),
                     () -> assertEquals(userExpected.getEmail(), userActual.getEmail(),
-                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was"
+                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was: "
                                     + userActual.getEmail()),
                     () -> assertEquals(userExpected.getRoles(), userActual.getRoles(),
-                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was"
+                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was: "
                                     + userActual.getRoles()),
                     () -> assertEquals(userExpected.getProfile(), userActual.getProfile(),
                             () -> "should return user with profile: " + userExpected.getProfile()
-                                    + ", but was" + userActual.getProfile()),
+                                    + ", but was: " + userActual.getProfile()),
                     () -> assertEquals(userExpected.getProfile().getAbout(), userActual.getProfile().getAbout(),
                             () -> "should return user with about section: " + userExpected.getProfile().getAbout()
-                                    + ", but was" + userActual.getProfile().getAbout()),
+                                    + ", but was: " + userActual.getProfile().getAbout()),
                     () -> assertEquals(userExpected.getProfile().getGender(), userActual.getProfile().getGender(),
                             () -> "should return user with gender: " + userExpected.getProfile().getGender()
-                                    + ", but was" + userActual.getProfile().getGender()),
+                                    + ", but was: " + userActual.getProfile().getGender()),
                     () -> assertEquals(userExpected.getProfile().getInterests(), userActual.getProfile().getInterests(),
                             () -> "should return user with interests section: " + userExpected.getProfile().getInterests()
-                                    + ", but was" + userActual.getProfile().getInterests()),
+                                    + ", but was: " + userActual.getProfile().getInterests()),
                     () -> assertEquals(userExpected.getProfile().getLanguages(), userActual.getProfile().getLanguages(),
                             () -> "should return user with languages section: " + userExpected.getProfile().getLanguages()
-                                    + ", but was" + userActual.getProfile().getLanguages()),
+                                    + ", but was: " + userActual.getProfile().getLanguages()),
                     () -> assertEquals(userExpected.getProfile().getLocation(), userActual.getProfile().getLocation(),
                             () -> "should return user with location: " + userExpected.getProfile().getLocation()
-                                    + ", but was" + userActual.getProfile().getLocation()),
+                                    + ", but was: " + userActual.getProfile().getLocation()),
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
-                                    + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                                    + ", but was: " + Arrays.toString(userActual.getProfile().getImage())),
                     () -> verify(userMapper, times(1))
                             .convertDTOToEntity(userRegistrationDTOExpected, image, roleExpected),
                     () -> verifyNoMoreInteractions(userMapper),
@@ -190,40 +190,40 @@ class UserServiceTest {
             UserEntity userActual = userService.registerUser(userRegistrationDTOExpected, image);
 
             assertAll(() -> assertEquals(userExpected, userActual,
-                    () -> "should return user: " + userExpected + ", but was" + userActual),
+                    () -> "should return user: " + userExpected + ", but was: " + userActual),
                     () -> assertEquals(userExpected.getUsername(), userActual.getUsername(),
-                            () -> "should return user with username: " + userExpected.getUsername() + ", but was"
+                            () -> "should return user with username: " + userExpected.getUsername() + ", but was: "
                                     + userActual.getUsername()),
                     () -> assertEquals(userExpected.getPassword(), userActual.getPassword(),
-                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was"
+                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was: "
                                     + userActual.getPassword()),
                     () -> assertEquals(userExpected.getEmail(), userActual.getEmail(),
-                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was"
+                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was: "
                                     + userActual.getEmail()),
                     () -> assertEquals(userExpected.getRoles(), userActual.getRoles(),
-                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was"
+                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was: "
                                     + userActual.getRoles()),
                     () -> assertEquals(userExpected.getProfile(), userActual.getProfile(),
                             () -> "should return user with profile: " + userExpected.getProfile()
-                                    + ", but was" + userActual.getProfile()),
+                                    + ", but was: " + userActual.getProfile()),
                     () -> assertEquals(userExpected.getProfile().getAbout(), userActual.getProfile().getAbout(),
                             () -> "should return user with about section: " + userExpected.getProfile().getAbout()
-                                    + ", but was" + userActual.getProfile().getAbout()),
+                                    + ", but was: " + userActual.getProfile().getAbout()),
                     () -> assertEquals(userExpected.getProfile().getGender(), userActual.getProfile().getGender(),
                             () -> "should return user with gender: " + userExpected.getProfile().getGender()
-                                    + ", but was" + userActual.getProfile().getGender()),
+                                    + ", but was: " + userActual.getProfile().getGender()),
                     () -> assertEquals(userExpected.getProfile().getInterests(), userActual.getProfile().getInterests(),
                             () -> "should return user with interests section: " + userExpected.getProfile().getInterests()
-                                    + ", but was" + userActual.getProfile().getInterests()),
+                                    + ", but was: " + userActual.getProfile().getInterests()),
                     () -> assertEquals(userExpected.getProfile().getLanguages(), userActual.getProfile().getLanguages(),
                             () -> "should return user with languages section: " + userExpected.getProfile().getLanguages()
-                                    + ", but was" + userActual.getProfile().getLanguages()),
+                                    + ", but was: " + userActual.getProfile().getLanguages()),
                     () -> assertEquals(userExpected.getProfile().getLocation(), userActual.getProfile().getLocation(),
                             () -> "should return user with location: " + userExpected.getProfile().getLocation()
-                                    + ", but was" + userActual.getProfile().getLocation()),
+                                    + ", but was: " + userActual.getProfile().getLocation()),
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
-                                    + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                                    + ", but was: " + Arrays.toString(userActual.getProfile().getImage())),
                     () -> verify(userMapper, times(1))
                             .convertDTOToEntity(userRegistrationDTOExpected, image, roleExpected),
                     () -> verifyNoMoreInteractions(userMapper),
@@ -263,40 +263,40 @@ class UserServiceTest {
             UserEntity userActual = userService.registerUser(userRegistrationDTOExpected, image);
 
             assertAll(() -> assertEquals(userExpected, userActual,
-                    () -> "should return user: " + userExpected + ", but was" + userActual),
+                    () -> "should return user: " + userExpected + ", but was: " + userActual),
                     () -> assertEquals(userExpected.getUsername(), userActual.getUsername(),
-                            () -> "should return user with username: " + userExpected.getUsername() + ", but was"
+                            () -> "should return user with username: " + userExpected.getUsername() + ", but was: "
                                     + userActual.getUsername()),
                     () -> assertEquals(userExpected.getPassword(), userActual.getPassword(),
-                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was"
+                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was: "
                                     + userActual.getPassword()),
                     () -> assertEquals(userExpected.getEmail(), userActual.getEmail(),
-                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was"
+                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was: "
                                     + userActual.getEmail()),
                     () -> assertEquals(userExpected.getRoles(), userActual.getRoles(),
-                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was"
+                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was: "
                                     + userActual.getRoles()),
                     () -> assertEquals(userExpected.getProfile(), userActual.getProfile(),
                             () -> "should return user with profile: " + userExpected.getProfile()
-                                    + ", but was" + userActual.getProfile()),
+                                    + ", but was: " + userActual.getProfile()),
                     () -> assertEquals(userExpected.getProfile().getAbout(), userActual.getProfile().getAbout(),
                             () -> "should return user with about section: " + userExpected.getProfile().getAbout()
-                                    + ", but was" + userActual.getProfile().getAbout()),
+                                    + ", but was: " + userActual.getProfile().getAbout()),
                     () -> assertEquals(userExpected.getProfile().getGender(), userActual.getProfile().getGender(),
                             () -> "should return user with gender: " + userExpected.getProfile().getGender()
-                                    + ", but was" + userActual.getProfile().getGender()),
+                                    + ", but was: " + userActual.getProfile().getGender()),
                     () -> assertEquals(userExpected.getProfile().getInterests(), userActual.getProfile().getInterests(),
                             () -> "should return user with interests section: " + userExpected.getProfile().getInterests()
-                                    + ", but was" + userActual.getProfile().getInterests()),
+                                    + ", but was: " + userActual.getProfile().getInterests()),
                     () -> assertEquals(userExpected.getProfile().getLanguages(), userActual.getProfile().getLanguages(),
                             () -> "should return user with languages section: " + userExpected.getProfile().getLanguages()
-                                    + ", but was" + userActual.getProfile().getLanguages()),
+                                    + ", but was: " + userActual.getProfile().getLanguages()),
                     () -> assertEquals(userExpected.getProfile().getLocation(), userActual.getProfile().getLocation(),
                             () -> "should return user with location: " + userExpected.getProfile().getLocation()
-                                    + ", but was" + userActual.getProfile().getLocation()),
+                                    + ", but was: " + userActual.getProfile().getLocation()),
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
-                                    + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                                    + ", but was: " + Arrays.toString(userActual.getProfile().getImage())),
                     () -> verify(userMapper, times(1))
                             .convertDTOToEntity(userRegistrationDTOExpected, image, roleExpected),
                     () -> verifyNoMoreInteractions(userMapper),
@@ -351,43 +351,43 @@ class UserServiceTest {
             UserEntity userActual = userService.updateUser(userExpectedBeforeUpdate.getUsername(), userUpdateDTOExpected, image);
 
             assertAll(() -> assertEquals(userExpected, userActual,
-                    () -> "should return user: " + userExpected + ", but was" + userActual),
+                    () -> "should return user: " + userExpected + ", but was: " + userActual),
                     () -> assertEquals(userExpected.getId(), userActual.getId(),
-                            () -> "should return user with id: " + userExpected.getId() + ", but was"
+                            () -> "should return user with id: " + userExpected.getId() + ", but was: "
                                     + userActual.getId()),
                     () -> assertEquals(userExpected.getUsername(), userActual.getUsername(),
-                            () -> "should return user with username: " + userExpected.getUsername() + ", but was"
+                            () -> "should return user with username: " + userExpected.getUsername() + ", but was: "
                                     + userActual.getUsername()),
                     () -> assertEquals(userExpected.getPassword(), userActual.getPassword(),
-                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was"
+                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was: "
                                     + userActual.getPassword()),
                     () -> assertEquals(userExpected.getEmail(), userActual.getEmail(),
-                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was"
+                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was: "
                                     + userActual.getEmail()),
                     () -> assertEquals(userExpected.getRoles(), userActual.getRoles(),
-                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was"
+                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was: "
                                     + userActual.getRoles()),
                     () -> assertEquals(userExpected.getProfile(), userActual.getProfile(),
                             () -> "should return user with profile: " + userExpected.getProfile()
-                                    + ", but was" + userActual.getProfile()),
+                                    + ", but was: " + userActual.getProfile()),
                     () -> assertEquals(userExpected.getProfile().getAbout(), userActual.getProfile().getAbout(),
                             () -> "should return user with about section: " + userExpected.getProfile().getAbout()
-                                    + ", but was" + userActual.getProfile().getAbout()),
+                                    + ", but was: " + userActual.getProfile().getAbout()),
                     () -> assertEquals(userExpected.getProfile().getGender(), userActual.getProfile().getGender(),
                             () -> "should return user with gender: " + userExpected.getProfile().getGender()
-                                    + ", but was" + userActual.getProfile().getGender()),
+                                    + ", but was: " + userActual.getProfile().getGender()),
                     () -> assertEquals(userExpected.getProfile().getInterests(), userActual.getProfile().getInterests(),
                             () -> "should return user with interests section: " + userExpected.getProfile().getInterests()
-                                    + ", but was" + userActual.getProfile().getInterests()),
+                                    + ", but was: " + userActual.getProfile().getInterests()),
                     () -> assertEquals(userExpected.getProfile().getLanguages(), userActual.getProfile().getLanguages(),
                             () -> "should return user with languages section: " + userExpected.getProfile().getLanguages()
-                                    + ", but was" + userActual.getProfile().getLanguages()),
+                                    + ", but was: " + userActual.getProfile().getLanguages()),
                     () -> assertEquals(userExpected.getProfile().getLocation(), userActual.getProfile().getLocation(),
                             () -> "should return user with location: " + userExpected.getProfile().getLocation()
-                                    + ", but was" + userActual.getProfile().getLocation()),
+                                    + ", but was: " + userActual.getProfile().getLocation()),
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
-                                    + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                                    + ", but was: " + Arrays.toString(userActual.getProfile().getImage())),
                     () -> verify(userRepository, times(1))
                             .findByUsername(userExpectedBeforeUpdate.getUsername()),
                     () -> verify(userRepository, times(1)).save(userExpectedAfterObjectMapping),
@@ -436,43 +436,43 @@ class UserServiceTest {
             UserEntity userActual = userService.updateUser(userExpectedBeforeUpdate.getUsername(), userUpdateDTOExpected, image);
 
             assertAll(() -> assertEquals(userExpected, userActual,
-                    () -> "should return user: " + userExpected + ", but was" + userActual),
+                    () -> "should return user: " + userExpected + ", but was: " + userActual),
                     () -> assertEquals(userExpected.getId(), userActual.getId(),
-                            () -> "should return user with id: " + userExpected.getId() + ", but was"
+                            () -> "should return user with id: " + userExpected.getId() + ", but was: "
                                     + userActual.getId()),
                     () -> assertEquals(userExpected.getUsername(), userActual.getUsername(),
-                            () -> "should return user with username: " + userExpected.getUsername() + ", but was"
+                            () -> "should return user with username: " + userExpected.getUsername() + ", but was: "
                                     + userActual.getUsername()),
                     () -> assertEquals(userExpected.getPassword(), userActual.getPassword(),
-                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was"
+                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was: "
                                     + userActual.getPassword()),
                     () -> assertEquals(userExpected.getEmail(), userActual.getEmail(),
-                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was"
+                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was: "
                                     + userActual.getEmail()),
                     () -> assertEquals(userExpected.getRoles(), userActual.getRoles(),
-                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was"
+                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was: "
                                     + userActual.getRoles()),
                     () -> assertEquals(userExpected.getProfile(), userActual.getProfile(),
                             () -> "should return user with profile: " + userExpected.getProfile()
-                                    + ", but was" + userActual.getProfile()),
+                                    + ", but was: " + userActual.getProfile()),
                     () -> assertEquals(userExpected.getProfile().getAbout(), userActual.getProfile().getAbout(),
                             () -> "should return user with about section: " + userExpected.getProfile().getAbout()
-                                    + ", but was" + userActual.getProfile().getAbout()),
+                                    + ", but was: " + userActual.getProfile().getAbout()),
                     () -> assertEquals(userExpected.getProfile().getGender(), userActual.getProfile().getGender(),
                             () -> "should return user with gender: " + userExpected.getProfile().getGender()
-                                    + ", but was" + userActual.getProfile().getGender()),
+                                    + ", but was: " + userActual.getProfile().getGender()),
                     () -> assertEquals(userExpected.getProfile().getInterests(), userActual.getProfile().getInterests(),
                             () -> "should return user with interests section: " + userExpected.getProfile().getInterests()
-                                    + ", but was" + userActual.getProfile().getInterests()),
+                                    + ", but was: " + userActual.getProfile().getInterests()),
                     () -> assertEquals(userExpected.getProfile().getLanguages(), userActual.getProfile().getLanguages(),
                             () -> "should return user with languages section: " + userExpected.getProfile().getLanguages()
-                                    + ", but was" + userActual.getProfile().getLanguages()),
+                                    + ", but was: " + userActual.getProfile().getLanguages()),
                     () -> assertEquals(userExpected.getProfile().getLocation(), userActual.getProfile().getLocation(),
                             () -> "should return user with location: " + userExpected.getProfile().getLocation()
-                                    + ", but was" + userActual.getProfile().getLocation()),
+                                    + ", but was: " + userActual.getProfile().getLocation()),
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
-                                    + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                                    + ", but was: " + Arrays.toString(userActual.getProfile().getImage())),
                     () -> verify(userRepository, times(1))
                             .findByUsername(userExpectedBeforeUpdate.getUsername()),
                     () -> verify(userRepository, times(1)).save(userExpectedAfterObjectMapping),
@@ -521,43 +521,43 @@ class UserServiceTest {
             UserEntity userActual = userService.updateUser(userExpectedBeforeUpdate.getUsername(), userUpdateDTOExpected, null);
 
             assertAll(() -> assertEquals(userExpected, userActual,
-                    () -> "should return user: " + userExpected + ", but was" + userActual),
+                    () -> "should return user: " + userExpected + ", but was: " + userActual),
                     () -> assertEquals(userExpected.getId(), userActual.getId(),
-                            () -> "should return user with id: " + userExpected.getId() + ", but was"
+                            () -> "should return user with id: " + userExpected.getId() + ", but was: "
                                     + userActual.getId()),
                     () -> assertEquals(userExpected.getUsername(), userActual.getUsername(),
-                            () -> "should return user with username: " + userExpected.getUsername() + ", but was"
+                            () -> "should return user with username: " + userExpected.getUsername() + ", but was: "
                                     + userActual.getUsername()),
                     () -> assertEquals(userExpected.getPassword(), userActual.getPassword(),
-                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was"
+                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was: "
                                     + userActual.getPassword()),
                     () -> assertEquals(userExpected.getEmail(), userActual.getEmail(),
-                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was"
+                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was: "
                                     + userActual.getEmail()),
                     () -> assertEquals(userExpected.getRoles(), userActual.getRoles(),
-                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was"
+                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was: "
                                     + userActual.getRoles()),
                     () -> assertEquals(userExpected.getProfile(), userActual.getProfile(),
                             () -> "should return user with profile: " + userExpected.getProfile()
-                                    + ", but was" + userActual.getProfile()),
+                                    + ", but was: " + userActual.getProfile()),
                     () -> assertEquals(userExpected.getProfile().getAbout(), userActual.getProfile().getAbout(),
                             () -> "should return user with about section: " + userExpected.getProfile().getAbout()
-                                    + ", but was" + userActual.getProfile().getAbout()),
+                                    + ", but was: " + userActual.getProfile().getAbout()),
                     () -> assertEquals(userExpected.getProfile().getGender(), userActual.getProfile().getGender(),
                             () -> "should return user with gender: " + userExpected.getProfile().getGender()
-                                    + ", but was" + userActual.getProfile().getGender()),
+                                    + ", but was: " + userActual.getProfile().getGender()),
                     () -> assertEquals(userExpected.getProfile().getInterests(), userActual.getProfile().getInterests(),
                             () -> "should return user with interests section: " + userExpected.getProfile().getInterests()
-                                    + ", but was" + userActual.getProfile().getInterests()),
+                                    + ", but was: " + userActual.getProfile().getInterests()),
                     () -> assertEquals(userExpected.getProfile().getLanguages(), userActual.getProfile().getLanguages(),
                             () -> "should return user with languages section: " + userExpected.getProfile().getLanguages()
-                                    + ", but was" + userActual.getProfile().getLanguages()),
+                                    + ", but was: " + userActual.getProfile().getLanguages()),
                     () -> assertEquals(userExpected.getProfile().getLocation(), userActual.getProfile().getLocation(),
                             () -> "should return user with location: " + userExpected.getProfile().getLocation()
-                                    + ", but was" + userActual.getProfile().getLocation()),
+                                    + ", but was: " + userActual.getProfile().getLocation()),
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
-                                    + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                                    + ", but was: " + Arrays.toString(userActual.getProfile().getImage())),
                     () -> verify(userRepository, times(1))
                             .findByUsername(userExpectedBeforeUpdate.getUsername()),
                     () -> verify(userRepository, times(1)).save(userExpectedAfterObjectMapping),
@@ -613,7 +613,7 @@ class UserServiceTest {
             when(userRepository.findByUsername(userExpected.getUsername())).thenReturn(Optional.of(userExpected));
 
             assertAll(() -> assertDoesNotThrow(() -> userService.deleteUser(userExpected.getUsername()),
-                    "should not throw ResourceNotFoundException or NotAuthorizedException but was"),
+                    "should not throw ResourceNotFoundException or NotAuthorizedException but was: "),
                     () -> verify(userRepository, times(1)).findByUsername(userExpected.getUsername()),
                     () -> verify(userRepository, times(1)).delete(userExpected),
                     () -> verifyNoMoreInteractions(userRepository),
@@ -724,46 +724,46 @@ class UserServiceTest {
             UserEntity userActual = userActualOptional.get();
 
             assertAll(() -> assertEquals(userExpected, userActual,
-                    () -> "should return user: " + userExpected + ", but was" + userActual),
+                    () -> "should return user: " + userExpected + ", but was: " + userActual),
                     () -> assertEquals(userExpected.getUsername(), userActual.getUsername(),
-                            () -> "should return user with username: " + userExpected.getUsername() + ", but was"
+                            () -> "should return user with username: " + userExpected.getUsername() + ", but was: "
                                     + userActual.getUsername()),
                     () -> assertEquals(userExpected.getPassword(), userActual.getPassword(),
-                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was"
+                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was: "
                                     + userActual.getPassword()),
                     () -> assertEquals(userExpected.getEmail(), userActual.getEmail(),
-                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was"
+                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was: "
                                     + userActual.getEmail()),
                     () -> assertEquals(userExpected.getPosts(), userActual.getPosts(),
-                            () -> "should return user with user posts: " + userExpected.getPosts() + ", but was"
+                            () -> "should return user with user posts: " + userExpected.getPosts() + ", but was: "
                                     + userActual.getPosts()),
                     () -> assertEquals(userExpected.getComments(), userActual.getComments(),
-                            () -> "should return user with user comments: " + userExpected.getComments() + ", but was"
+                            () -> "should return user with user comments: " + userExpected.getComments() + ", but was: "
                                     + userActual.getComments()),
                     () -> assertEquals(userExpected.getRoles(), userActual.getRoles(),
-                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was"
+                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was: "
                                     + userActual.getRoles()),
                     () -> assertEquals(userExpected.getProfile(), userActual.getProfile(),
                             () -> "should return user with profile: " + userExpected.getProfile()
-                                    + ", but was" + userActual.getProfile()),
+                                    + ", but was: " + userActual.getProfile()),
                     () -> assertEquals(userExpected.getProfile().getAbout(), userActual.getProfile().getAbout(),
                             () -> "should return user with about section: " + userExpected.getProfile().getAbout()
-                                    + ", but was" + userActual.getProfile().getAbout()),
+                                    + ", but was: " + userActual.getProfile().getAbout()),
                     () -> assertEquals(userExpected.getProfile().getGender(), userActual.getProfile().getGender(),
                             () -> "should return user with gender: " + userExpected.getProfile().getGender()
-                                    + ", but was" + userActual.getProfile().getGender()),
+                                    + ", but was: " + userActual.getProfile().getGender()),
                     () -> assertEquals(userExpected.getProfile().getInterests(), userActual.getProfile().getInterests(),
                             () -> "should return user with interests section: " + userExpected.getProfile().getInterests()
-                                    + ", but was" + userActual.getProfile().getInterests()),
+                                    + ", but was: " + userActual.getProfile().getInterests()),
                     () -> assertEquals(userExpected.getProfile().getLanguages(), userActual.getProfile().getLanguages(),
                             () -> "should return user with languages section: " + userExpected.getProfile().getLanguages()
-                                    + ", but was" + userActual.getProfile().getLanguages()),
+                                    + ", but was: " + userActual.getProfile().getLanguages()),
                     () -> assertEquals(userExpected.getProfile().getLocation(), userActual.getProfile().getLocation(),
                             () -> "should return user with location: " + userExpected.getProfile().getLocation()
-                                    + ", but was" + userActual.getProfile().getLocation()),
+                                    + ", but was: " + userActual.getProfile().getLocation()),
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
-                                    + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                                    + ", but was: " + Arrays.toString(userActual.getProfile().getImage())),
                     () -> verify(userRepository, times(1)).findById(expectedId),
                     () -> verifyNoMoreInteractions(userRepository),
                     () -> verifyNoInteractions(userMapper),
@@ -805,46 +805,46 @@ class UserServiceTest {
             UserEntity userActual = userActualOptional.get();
 
             assertAll(() -> assertEquals(userExpected, userActual,
-                    () -> "should return user: " + userExpected + ", but was" + userActual),
+                    () -> "should return user: " + userExpected + ", but was: " + userActual),
                     () -> assertEquals(userExpected.getUsername(), userActual.getUsername(),
-                            () -> "should return user with username: " + userExpected.getUsername() + ", but was"
+                            () -> "should return user with username: " + userExpected.getUsername() + ", but was: "
                                     + userActual.getUsername()),
                     () -> assertEquals(userExpected.getPassword(), userActual.getPassword(),
-                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was"
+                            () -> "should return user with user password: " + userExpected.getPassword() + ", but was: "
                                     + userActual.getPassword()),
                     () -> assertEquals(userExpected.getEmail(), userActual.getEmail(),
-                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was"
+                            () -> "should return user with user email: " + userExpected.getEmail() + ", but was: "
                                     + userActual.getEmail()),
                     () -> assertEquals(userExpected.getPosts(), userActual.getPosts(),
-                            () -> "should return user with user posts: " + userExpected.getPosts() + ", but was"
+                            () -> "should return user with user posts: " + userExpected.getPosts() + ", but was: "
                                     + userActual.getPosts()),
                     () -> assertEquals(userExpected.getComments(), userActual.getComments(),
-                            () -> "should return user with user comments: " + userExpected.getComments() + ", but was"
+                            () -> "should return user with user comments: " + userExpected.getComments() + ", but was: "
                                     + userActual.getComments()),
                     () -> assertEquals(userExpected.getRoles(), userActual.getRoles(),
-                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was"
+                            () -> "should return user with user roles: " + userExpected.getRoles() + ", but was: "
                                     + userActual.getRoles()),
                     () -> assertEquals(userExpected.getProfile(), userActual.getProfile(),
                             () -> "should return user with profile: " + userExpected.getProfile()
-                                    + ", but was" + userActual.getProfile()),
+                                    + ", but was: " + userActual.getProfile()),
                     () -> assertEquals(userExpected.getProfile().getAbout(), userActual.getProfile().getAbout(),
                             () -> "should return user with about section: " + userExpected.getProfile().getAbout()
-                                    + ", but was" + userActual.getProfile().getAbout()),
+                                    + ", but was: " + userActual.getProfile().getAbout()),
                     () -> assertEquals(userExpected.getProfile().getGender(), userActual.getProfile().getGender(),
                             () -> "should return user with gender: " + userExpected.getProfile().getGender()
-                                    + ", but was" + userActual.getProfile().getGender()),
+                                    + ", but was: " + userActual.getProfile().getGender()),
                     () -> assertEquals(userExpected.getProfile().getInterests(), userActual.getProfile().getInterests(),
                             () -> "should return user with interests section: " + userExpected.getProfile().getInterests()
-                                    + ", but was" + userActual.getProfile().getInterests()),
+                                    + ", but was: " + userActual.getProfile().getInterests()),
                     () -> assertEquals(userExpected.getProfile().getLanguages(), userActual.getProfile().getLanguages(),
                             () -> "should return user with languages section: " + userExpected.getProfile().getLanguages()
-                                    + ", but was" + userActual.getProfile().getLanguages()),
+                                    + ", but was: " + userActual.getProfile().getLanguages()),
                     () -> assertEquals(userExpected.getProfile().getLocation(), userActual.getProfile().getLocation(),
                             () -> "should return user with location: " + userExpected.getProfile().getLocation()
-                                    + ", but was" + userActual.getProfile().getLocation()),
+                                    + ", but was: " + userActual.getProfile().getLocation()),
                     () -> assertEquals(userExpected.getProfile().getImage(), userActual.getProfile().getImage(),
                             () -> "should return user with image: " + Arrays.toString(userExpected.getProfile().getImage())
-                                    + ", but was" + Arrays.toString(userActual.getProfile().getImage())),
+                                    + ", but was: " + Arrays.toString(userActual.getProfile().getImage())),
                     () -> verify(userRepository, times(1)).findByUsername(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userRepository),
                     () -> verifyNoInteractions(userMapper),

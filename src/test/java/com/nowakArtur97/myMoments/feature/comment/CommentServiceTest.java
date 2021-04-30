@@ -87,18 +87,18 @@ class CommentServiceTest {
         CommentEntity commentActual = commentService.addComment(postId, userExpected.getUsername(), commentDTOExpected);
 
         assertAll(() -> assertEquals(commentExpected, commentActual,
-                () -> "should return comment: " + commentExpected + ", but was" + commentActual),
+                () -> "should return comment: " + commentExpected + ", but was: " + commentActual),
                 () -> assertEquals(commentExpected.getId(), commentActual.getId(),
-                        () -> "should return comment with id: " + commentExpected.getId() + ", but was"
+                        () -> "should return comment with id: " + commentExpected.getId() + ", but was: "
                                 + commentActual.getId()),
                 () -> assertEquals(commentExpected.getContent(), commentActual.getContent(),
-                        () -> "should return comment with content: " + commentExpected.getContent() + ", but was"
+                        () -> "should return comment with content: " + commentExpected.getContent() + ", but was: "
                                 + commentActual.getContent()),
                 () -> assertEquals(commentExpected.getAuthor(), commentActual.getAuthor(),
-                        () -> "should return comment with author: " + commentExpected.getAuthor() + ", but was"
+                        () -> "should return comment with author: " + commentExpected.getAuthor() + ", but was: "
                                 + commentActual.getAuthor()),
                 () -> assertEquals(commentExpected.getRelatedPost(), commentActual.getRelatedPost(),
-                        () -> "should return comment with related post: " + commentExpected.getRelatedPost() + ", but was"
+                        () -> "should return comment with related post: " + commentExpected.getRelatedPost() + ", but was: "
                                 + commentActual.getRelatedPost()),
                 () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
                 () -> verifyNoMoreInteractions(userService),
@@ -136,18 +136,18 @@ class CommentServiceTest {
                 commentDTOExpected);
 
         assertAll(() -> assertEquals(commentExpected, commentActual,
-                () -> "should return comment: " + commentExpected + ", but was" + commentActual),
+                () -> "should return comment: " + commentExpected + ", but was: " + commentActual),
                 () -> assertEquals(commentExpected.getId(), commentActual.getId(),
-                        () -> "should return comment with id: " + commentExpected.getId() + ", but was"
+                        () -> "should return comment with id: " + commentExpected.getId() + ", but was: "
                                 + commentActual.getId()),
                 () -> assertEquals(commentExpected.getContent(), commentActual.getContent(),
-                        () -> "should return comment with content: " + commentExpected.getContent() + ", but was"
+                        () -> "should return comment with content: " + commentExpected.getContent() + ", but was: "
                                 + commentActual.getContent()),
                 () -> assertEquals(commentExpected.getAuthor(), commentActual.getAuthor(),
-                        () -> "should return comment with author: " + commentExpected.getAuthor() + ", but was"
+                        () -> "should return comment with author: " + commentExpected.getAuthor() + ", but was: "
                                 + commentActual.getAuthor()),
                 () -> assertEquals(commentExpected.getRelatedPost(), commentActual.getRelatedPost(),
-                        () -> "should return comment with related post: " + commentExpected.getRelatedPost() + ", but was"
+                        () -> "should return comment with related post: " + commentExpected.getRelatedPost() + ", but was: "
                                 + commentActual.getRelatedPost()),
                 () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
                 () -> verifyNoMoreInteractions(userService),
@@ -178,7 +178,7 @@ class CommentServiceTest {
         when(commentRepository.findById(commentId)).thenReturn(Optional.of(commentExpected));
 
         assertAll(() -> assertDoesNotThrow(() -> commentService.deleteComment(postId, commentId, userExpected.getUsername()),
-                "should not throw any exception but was"),
+                "should not throw any exception but was: "),
                 () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
                 () -> verifyNoMoreInteractions(userService),
                 () -> verify(postService, times(1)).findById(postId),

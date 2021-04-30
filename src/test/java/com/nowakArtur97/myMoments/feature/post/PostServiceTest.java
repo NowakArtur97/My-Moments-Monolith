@@ -86,18 +86,18 @@ class PostServiceTest {
             PostEntity postActual = postService.createPost(userExpected.getUsername(), postDTOExpected);
 
             assertAll(() -> assertEquals(postExpected, postActual,
-                    () -> "should return post: " + postExpected + ", but was" + postActual),
+                    () -> "should return post: " + postExpected + ", but was: " + postActual),
                     () -> assertEquals(postExpected.getId(), postActual.getId(),
-                            () -> "should return post with id: " + postExpected.getId() + ", but was"
+                            () -> "should return post with id: " + postExpected.getId() + ", but was: "
                                     + postActual.getId()),
                     () -> assertEquals(postExpected.getCaption(), postActual.getCaption(),
-                            () -> "should return post with caption: " + postExpected.getCaption() + ", but was"
+                            () -> "should return post with caption: " + postExpected.getCaption() + ", but was: "
                                     + postActual.getCaption()),
                     () -> assertEquals(postExpected.getAuthor(), postActual.getAuthor(),
-                            () -> "should return post with author: " + postExpected.getAuthor() + ", but was"
+                            () -> "should return post with author: " + postExpected.getAuthor() + ", but was: "
                                     + postActual.getAuthor()),
                     () -> assertEquals(postExpected.getPhotos(), postActual.getPhotos(),
-                            () -> "should return post with photos: " + postExpected.getPhotos() + ", but was"
+                            () -> "should return post with photos: " + postExpected.getPhotos() + ", but was: "
                                     + postActual.getPhotos()),
                     () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userService),
@@ -153,18 +153,18 @@ class PostServiceTest {
             PostEntity postActual = postService.updatePost(postId, userExpected.getUsername(), postDTOExpected);
 
             assertAll(() -> assertEquals(postExpected, postActual,
-                    () -> "should return post: " + postExpected + ", but was" + postActual),
+                    () -> "should return post: " + postExpected + ", but was: " + postActual),
                     () -> assertEquals(postExpected.getId(), postActual.getId(),
-                            () -> "should return post with id: " + postExpected.getId() + ", but was"
+                            () -> "should return post with id: " + postExpected.getId() + ", but was: "
                                     + postActual.getId()),
                     () -> assertEquals(postExpected.getCaption(), postActual.getCaption(),
-                            () -> "should return post with caption: " + postExpected.getCaption() + ", but was"
+                            () -> "should return post with caption: " + postExpected.getCaption() + ", but was: "
                                     + postActual.getCaption()),
                     () -> assertEquals(postExpected.getAuthor(), postActual.getAuthor(),
-                            () -> "should return post with author: " + postExpected.getAuthor() + ", but was"
+                            () -> "should return post with author: " + postExpected.getAuthor() + ", but was: "
                                     + postActual.getAuthor()),
                     () -> assertEquals(postExpected.getPhotos(), postActual.getPhotos(),
-                            () -> "should return post with photos: " + postExpected.getPhotos() + ", but was"
+                            () -> "should return post with photos: " + postExpected.getPhotos() + ", but was: "
                                     + postActual.getPhotos()),
                     () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userService),
@@ -260,7 +260,7 @@ class PostServiceTest {
             when(postRepository.findById(userId)).thenReturn(Optional.of(postExpected));
 
             assertAll(() -> assertDoesNotThrow(() -> postService.deletePost(userId, userExpected.getUsername()),
-                    "should not throw any exception but was"),
+                    "should not throw any exception but was: "),
                     () -> verify(userService, times(1)).findByUsername(userExpected.getUsername()),
                     () -> verifyNoMoreInteractions(userService),
                     () -> verify(postRepository, times(1)).findById(userId),
@@ -347,18 +347,18 @@ class PostServiceTest {
             PostEntity postActual = postActualOptional.get();
 
             assertAll(() -> assertEquals(postExpected, postActual,
-                    () -> "should return post: " + postExpected + ", but was" + postActual),
+                    () -> "should return post: " + postExpected + ", but was: " + postActual),
                     () -> assertEquals(postExpected.getId(), postActual.getId(),
-                            () -> "should return post with id: " + postExpected.getId() + ", but was"
+                            () -> "should return post with id: " + postExpected.getId() + ", but was: "
                                     + postActual.getId()),
                     () -> assertEquals(postExpected.getCaption(), postActual.getCaption(),
-                            () -> "should return post with caption: " + postExpected.getCaption() + ", but was"
+                            () -> "should return post with caption: " + postExpected.getCaption() + ", but was: "
                                     + postActual.getCaption()),
                     () -> assertEquals(postExpected.getAuthor(), postActual.getAuthor(),
-                            () -> "should return post with author: " + postExpected.getAuthor() + ", but was"
+                            () -> "should return post with author: " + postExpected.getAuthor() + ", but was: "
                                     + postActual.getAuthor()),
                     () -> assertEquals(postExpected.getPhotos(), postActual.getPhotos(),
-                            () -> "should return post with photos: " + postExpected.getPhotos() + ", but was"
+                            () -> "should return post with photos: " + postExpected.getPhotos() + ", but was: "
                                     + postActual.getPhotos()),
                     () -> verify(postRepository, times(1)).findById(expectedId),
                     () -> verifyNoMoreInteractions(postRepository),

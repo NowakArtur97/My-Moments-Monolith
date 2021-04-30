@@ -84,11 +84,11 @@ class UserServiceGetPostsTest {
         Set<PostEntity> postsActual = userService.getUsersPosts(expectedUsername);
 
         assertAll(() -> assertEquals(2, postsActual.size(),
-                () -> "should return two posts, but was" + postsActual.size()),
+                () -> "should return two posts, but was: " + postsActual.size()),
                 () -> assertTrue(postsActual.contains(postExpected),
-                        () -> "should contain: " + postExpected + ", but was" + postsActual),
+                        () -> "should contain: " + postExpected + ", but was: " + postsActual),
                 () -> assertTrue(postsActual.contains(postExpected2),
-                        () -> "should contain: " + postExpected2 + ", but was" + postsActual),
+                        () -> "should contain: " + postExpected2 + ", but was: " + postsActual),
                 () -> verify(userRepository, times(1)).findByUsername(expectedUsername),
                 () -> verifyNoMoreInteractions(userRepository),
                 () -> verifyNoInteractions(securityContext),
@@ -130,11 +130,11 @@ class UserServiceGetPostsTest {
         Set<PostEntity> postsActual = userService.getUsersPosts(expectedId);
 
         assertAll(() -> assertEquals(2, postsActual.size(),
-                () -> "should return two posts, but was" + postsActual.size()),
+                () -> "should return two posts, but was: " + postsActual.size()),
                 () -> assertTrue(postsActual.contains(postExpected),
-                        () -> "should contain: " + postExpected + ", but was" + postsActual),
+                        () -> "should contain: " + postExpected + ", but was: " + postsActual),
                 () -> assertTrue(postsActual.contains(postExpected2),
-                        () -> "should contain: " + postExpected2 + ", but was" + postsActual),
+                        () -> "should contain: " + postExpected2 + ", but was: " + postsActual),
                 () -> verify(userRepository, times(1)).findById(expectedId),
                 () -> verifyNoMoreInteractions(userRepository),
                 () -> verifyNoInteractions(securityContext),
