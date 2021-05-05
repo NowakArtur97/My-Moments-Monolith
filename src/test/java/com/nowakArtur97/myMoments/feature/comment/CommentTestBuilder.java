@@ -6,7 +6,7 @@ import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 
 import java.util.Date;
 
-class CommentTestBuilder {
+public class CommentTestBuilder {
 
     private Long id = 1L;
 
@@ -34,7 +34,7 @@ class CommentTestBuilder {
         return this;
     }
 
-    CommentTestBuilder withAuthor(UserEntity author) {
+    public CommentTestBuilder withAuthor(UserEntity author) {
 
         this.author = author;
 
@@ -48,7 +48,7 @@ class CommentTestBuilder {
         return this;
     }
 
-    Comment build(ObjectType type) {
+    public Comment build(ObjectType type) {
 
         Comment comment;
 

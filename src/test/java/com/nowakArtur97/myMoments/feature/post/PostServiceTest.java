@@ -2,6 +2,8 @@ package com.nowakArtur97.myMoments.feature.post;
 
 import com.nowakArtur97.myMoments.common.exception.ForbiddenException;
 import com.nowakArtur97.myMoments.common.exception.ResourceNotFoundException;
+import com.nowakArtur97.myMoments.feature.comment.CommentEntity;
+import com.nowakArtur97.myMoments.feature.comment.CommentTestBuilder;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
 import com.nowakArtur97.myMoments.feature.user.entity.UserService;
 import com.nowakArtur97.myMoments.feature.user.testBuilder.UserTestBuilder;
@@ -36,12 +38,14 @@ class PostServiceTest {
 
     private static MockedStatic<UUID> mocked;
 
+    private static CommentTestBuilder commentTestBuilder;
     private static PostTestBuilder postTestBuilder;
     private static UserTestBuilder userTestBuilder;
 
     @BeforeAll
     static void setUpBuildersAndUUID() {
 
+        commentTestBuilder = new CommentTestBuilder();
         postTestBuilder = new PostTestBuilder();
         userTestBuilder = new UserTestBuilder();
 
@@ -330,13 +334,15 @@ class PostServiceTest {
     class OtherPostTest {
 
         @Test
-        void when_post_exists_and_find_by_id_should_return_user() {
+        void when_post_exists_and_find_by_id_should_return_post() {
 
             Long expectedId = 1L;
             PictureEntity pictureEntityExpected = new PictureEntity("image".getBytes());
+            CommentEntity commentExpected = (CommentEntity) commentTestBuilder.build(ObjectType.ENTITY);
             UserEntity userExpected = (UserEntity) userTestBuilder.build(ObjectType.ENTITY);
             PostEntity postExpected = (PostEntity) postTestBuilder.withAuthor(userExpected)
-                    .withPhotosEntity(Set.of(pictureEntityExpected)).build(ObjectType.ENTITY);
+                    .withPhotosEntity(Set.of(pictureEntityExpected))
+                    .withCommentsEntity(Set.of(commentExpected)).build(ObjectType.ENTITY);
 
             when(postRepository.findById(expectedId)).thenReturn(Optional.of(postExpected));
 
@@ -360,6 +366,9 @@ class PostServiceTest {
                     () -> assertEquals(postExpected.getPhotos(), postActual.getPhotos(),
                             () -> "should return post with photos: " + postExpected.getPhotos() + ", but was: "
                                     + postActual.getPhotos()),
+                    () -> assertEquals(postExpected.getComments(), postActual.getComments(),
+                            () -> "should return post with comments: " + postExpected.getComments() + ", but was: "
+                                    + postActual.getComments()),
                     () -> verify(postRepository, times(1)).findById(expectedId),
                     () -> verifyNoMoreInteractions(postRepository),
                     () -> verifyNoInteractions(userService));

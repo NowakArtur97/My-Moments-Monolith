@@ -2,6 +2,8 @@ package com.nowakArtur97.myMoments.feature.post;
 
 import com.nowakArtur97.myMoments.common.exception.RoleNotFoundException;
 import com.nowakArtur97.myMoments.common.util.JwtUtil;
+import com.nowakArtur97.myMoments.feature.comment.CommentEntity;
+import com.nowakArtur97.myMoments.feature.comment.CommentTestBuilder;
 import com.nowakArtur97.myMoments.feature.user.entity.*;
 import com.nowakArtur97.myMoments.feature.user.testBuilder.UserProfileTestBuilder;
 import com.nowakArtur97.myMoments.feature.user.testBuilder.UserTestBuilder;
@@ -62,17 +64,20 @@ class PostUpdateControllerTest {
     @Autowired
     private JwtUtil jwtUtil;
 
+    private static CommentTestBuilder commentTestBuilder;
     private static PostTestBuilder postTestBuilder;
     private static UserProfileTestBuilder userProfileTestBuilder;
     private static UserTestBuilder userTestBuilder;
 
     private String token;
+    private CommentEntity commentEntity;
     private PostEntity postEntity;
     private UserEntity userEntity;
 
     @BeforeAll
     static void setUpBuilders() {
 
+        commentTestBuilder = new CommentTestBuilder();
         postTestBuilder = new PostTestBuilder();
         userProfileTestBuilder = new UserProfileTestBuilder();
         userTestBuilder = new UserTestBuilder();
@@ -90,10 +95,14 @@ class PostUpdateControllerTest {
                 .withRoles(Set.of(roleEntity)).build(ObjectType.ENTITY);
         userProfileEntity.setUser(userEntity);
 
+        commentEntity = (CommentEntity) commentTestBuilder.build(ObjectType.ENTITY);
+
         PictureEntity pictureEntity = new PictureEntity("image".getBytes());
         postEntity = new PostEntity("caption", userEntity, Set.of(pictureEntity), new HashSet<>());
         pictureEntity.setRelatedPost(postEntity);
 
+        postEntity.addComment(commentEntity);
+        userEntity.addComment(commentEntity);
         userEntity.addPost(postEntity);
         userRepository.save(userEntity);
 
@@ -146,7 +155,12 @@ class PostUpdateControllerTest {
                         .andExpect(jsonPath("photos[0].photo", is(notNullValue())))
                         .andExpect(jsonPath("photos[1].id", is(notNullValue())))
                         .andExpect(jsonPath("photos[1].photo", is(notNullValue())))
-                        .andExpect(jsonPath("photos", hasSize(2))));
+                        .andExpect(jsonPath("photos", hasSize(2)))
+                        .andExpect(jsonPath("comments[0].id", is(commentEntity.getId().intValue())))
+                        .andExpect(jsonPath("comments[0].content", is(commentEntity.getContent())))
+                        .andExpect(jsonPath("comments[0].createDate", is(notNullValue())))
+                        .andExpect(jsonPath("comments[0].modifyDate", is(notNullValue())))
+                        .andExpect(jsonPath("comments", hasSize(1))));
     }
 
     @Test
@@ -175,7 +189,12 @@ class PostUpdateControllerTest {
                         .andExpect(jsonPath("caption", is("")))
                         .andExpect(jsonPath("photos[0].id", is(notNullValue())))
                         .andExpect(jsonPath("photos[0].photo", is(notNullValue())))
-                        .andExpect(jsonPath("photos", hasSize(1))));
+                        .andExpect(jsonPath("photos", hasSize(1)))
+                        .andExpect(jsonPath("comments[0].id", is(commentEntity.getId().intValue())))
+                        .andExpect(jsonPath("comments[0].content", is(commentEntity.getContent())))
+                        .andExpect(jsonPath("comments[0].createDate", is(notNullValue())))
+                        .andExpect(jsonPath("comments[0].modifyDate", is(notNullValue())))
+                        .andExpect(jsonPath("comments", hasSize(1))));
     }
 
     @Test

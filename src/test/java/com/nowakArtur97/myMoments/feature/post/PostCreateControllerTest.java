@@ -126,7 +126,8 @@ class PostCreateControllerTest {
                         .andExpect(jsonPath("caption", is(caption)))
                         .andExpect(jsonPath("photos[0].id", is(notNullValue())))
                         .andExpect(jsonPath("photos[0].photo", is(notNullValue())))
-                        .andExpect(jsonPath("photos", hasSize(1))));
+                        .andExpect(jsonPath("photos", hasSize(1)))
+                        .andExpect(jsonPath("comments", hasSize(0))));
     }
 
     @Test
@@ -155,7 +156,8 @@ class PostCreateControllerTest {
                         .andExpect(jsonPath("caption", is("")))
                         .andExpect(jsonPath("photos[0].id", is(notNullValue())))
                         .andExpect(jsonPath("photos[0].photo", is(notNullValue())))
-                        .andExpect(jsonPath("photos", hasSize(1))));
+                        .andExpect(jsonPath("photos", hasSize(1)))
+                        .andExpect(jsonPath("comments", hasSize(0))));
     }
 
     @Test

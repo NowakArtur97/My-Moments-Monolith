@@ -1,6 +1,7 @@
 package com.nowakArtur97.myMoments.feature.post;
 
 import com.nowakArtur97.myMoments.feature.comment.CommentEntity;
+import com.nowakArtur97.myMoments.feature.comment.CommentModel;
 import com.nowakArtur97.myMoments.feature.user.entity.UserEntity;
 import com.nowakArtur97.myMoments.testUtil.enums.ObjectType;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ public class PostTestBuilder {
     private Set<CommentEntity> commentsEntity = new HashSet<>();
     private List<MultipartFile> photosMultipart = new ArrayList<>();
     private Set<PictureModel> photosModels = new HashSet<>();
+    private Set<CommentModel> commentsModels = new HashSet<>();
 
     public PostTestBuilder withId(Long id) {
 
@@ -54,6 +56,13 @@ public class PostTestBuilder {
     public PostTestBuilder withCommentsEntity(Set<CommentEntity> comments) {
 
         this.commentsEntity = comments;
+
+        return this;
+    }
+
+    public PostTestBuilder withCommentsModel(Set<CommentModel> comments) {
+
+        this.commentsModels = comments;
 
         return this;
     }
@@ -92,7 +101,7 @@ public class PostTestBuilder {
 
             case MODEL:
 
-                post = new PostModel(id, caption, photosModels);
+                post = new PostModel(id, caption, photosModels, commentsModels);
 
                 break;
 
@@ -117,5 +126,6 @@ public class PostTestBuilder {
         commentsEntity = new HashSet<>();
         photosMultipart = new ArrayList<>();
         photosModels = new HashSet<>();
+        commentsModels = new HashSet<>();
     }
 }
