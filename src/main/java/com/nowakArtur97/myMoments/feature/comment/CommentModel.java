@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @ApiModel(description = "Details about the Comment")
+public
 class CommentModel implements Comment {
 
     @ApiModelProperty(notes = "The unique id of the Comment")

@@ -1,5 +1,6 @@
 package com.nowakArtur97.myMoments.feature.post;
 
+import com.nowakArtur97.myMoments.feature.comment.CommentModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -28,9 +29,14 @@ public class PostModel implements Post {
     @ApiModelProperty(notes = "The post's photos")
     private final Set<PictureModel> photos;
 
+    @ToString.Exclude
+    @ApiModelProperty(notes = "The post's comments")
+    private final Set<CommentModel> comments;
+
     PostModel() {
 
         photos = new HashSet<>();
+        comments = new HashSet<>();
     }
 
     @Override
