@@ -132,6 +132,30 @@ class CommentCreateControllerTest {
     }
 
     @Test
+    void when_add_comment_with_too_long_content_should_return_error_response() {
+
+        Long postId = 1L;
+        String header = "Bearer token";
+
+        CommentDTO commentDTO = (CommentDTO) commentTestBuilder.withContent("content".repeat(34)).build(ObjectType.CREATE_DTO);
+
+        assertAll(
+                () -> mockMvc.perform(post(COMMENTS_BASE_PATH, postId)
+                        .header("Authorization", header)
+                        .content(ObjectTestMapper.asJsonString(commentDTO))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andExpect(status().isBadRequest())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("timestamp").isNotEmpty())
+                        .andExpect(jsonPath("status", is(400)))
+                        .andExpect(jsonPath("errors[0]", is("{comment.content.size}")))
+                        .andExpect(jsonPath("errors", hasSize(1))),
+                () -> verifyNoInteractions(jwtUtil),
+                () -> verifyNoInteractions(commentService),
+                () -> verifyNoInteractions(modelMapper));
+    }
+
+    @Test
     void when_add_comment_by_not_existing_user_should_return_error_response() {
 
         Long postId = 1L;

@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(NameWithSpacesGenerator.class)
 @Tag("PostController_Tests")
-public class PostGetControllerTest {
+class PostGetControllerTest {
 
     private final String POSTS_BASE_PATH = "http://localhost:8080/api/v1/posts/{id}";
 
@@ -55,7 +55,7 @@ public class PostGetControllerTest {
     private static PostTestBuilder postTestBuilder;
 
     @BeforeAll
-    static void setUpBuildersAndUUID() {
+    static void setUpBuilders() {
 
         commentTestBuilder = new CommentTestBuilder();
         postTestBuilder = new PostTestBuilder();

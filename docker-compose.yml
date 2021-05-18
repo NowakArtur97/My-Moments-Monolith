@@ -1,0 +1,36 @@
+version: '3.7'
+
+networks:
+  my-moments:
+    driver: bridge
+    name: my-moments
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    networks:
+      - my-moments
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=my-moments
+      - MYSQL_USER=my-moments-user
+      - MYSQL_PASSWORD=my-moments-password123
+    ports:
+      - 3306:3306
+    container_name: mysql
+
+  my-moments:
+    restart: on-failure
+    build: .
+    networks:
+      - my-moments
+    container_name: my-moments
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    volumes:
+      - /my-moments/dir:/app
+    depends_on:
+      - mysql
