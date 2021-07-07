@@ -46,7 +46,7 @@ class UserController {
 
     private final ModelMapper modelMapper;
 
-    @GetMapping("/me")
+    @GetMapping("/me/posts")
     @ApiOperation("Find User's Posts")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User's posts found", response = UsersPostsModel.class),
@@ -64,7 +64,7 @@ class UserController {
         return new ResponseEntity<>(new UsersPostsModel(usersPostsModels), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/posts")
     @ApiOperation(value = "Find User's Posts by id", notes = "Provide an id to look up specific User")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User's posts found", response = UsersPostsModel.class),

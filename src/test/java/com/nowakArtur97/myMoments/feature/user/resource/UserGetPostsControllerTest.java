@@ -33,8 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("UserController_Tests")
 class UserGetPostsControllerTest {
 
-    private final String USER_BASE_PATH = "http://localhost:8080/api/v1/users/me";
-    private final String USER_BASE_PATH_WITH_ID = "http://localhost:8080/api/v1/users/{id}";
+    private final String USER_BASE_PATH = "http://localhost:8080/api/v1/users/me/posts";
+    private final String USER_BASE_PATH_WITH_ID = "http://localhost:8080/api/v1/users/{id}/posts";
 
     private MockMvc mockMvc;
 
