@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=my-moments
+      - MYSQL_USER=my-moments-user
+      - MYSQL_PASSWORD=my-moments-password123
+    ports:
+      - 3366:3306
+
+  jenkins:
+    image: jenkins/jenkins:2.289.3-lts-slim
+    privileged: true
+    user: root
+    ports:
+      - 8083:8080
+      - 50003:50000
+    container_name: jenkins
+    volumes:
+      - ~/jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock

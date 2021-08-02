@@ -8,7 +8,7 @@ server:
 #
 spring:
   profiles:
-    active: ${SPRING_ACTIVE_PROFILE:dev}
+    active: ${SPRING_ACTIVE_PROFILE:test}
   #
   # Flyway
   #
