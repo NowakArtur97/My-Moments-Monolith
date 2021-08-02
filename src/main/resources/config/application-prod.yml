@@ -1,0 +1,13 @@
+spring:
+  #
+  # JDBC properties
+  #
+  datasource:
+    pool:
+      initial-size: 100
+      max-idle-time: 30m
+      max-size: 500
+      validation-query: SELECT 1
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
