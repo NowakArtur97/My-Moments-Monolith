@@ -1,9 +1,16 @@
 version: '3.7'
 
+networks:
+  my-moments:
+    driver: bridge
+    name: my-moments
+
 services:
 
   mysql:
     image: mysql:8.0
+    networks:
+      - my-moments
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=my-moments
@@ -14,12 +21,14 @@ services:
 
   jenkins:
     image: jenkins/jenkins:2.289.3-lts-slim
+    networks:
+      - my-moments
     privileged: true
     user: root
     ports:
       - 8083:8080
       - 50003:50000
-    container_name: jenkins
     volumes:
       - ~/jenkins_data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+    container_name: jenkins
