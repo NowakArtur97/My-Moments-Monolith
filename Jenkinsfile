@@ -2,6 +2,7 @@ pipeline {
     agent any
     tools {
         gradle "GRADLE"
+        jdk 'openjdk-11'
     }
     triggers {
         pollSCM '* * * * *'
