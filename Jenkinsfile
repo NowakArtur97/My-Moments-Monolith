@@ -4,9 +4,9 @@ pipeline {
         gradle "GRADLE"
         jdk 'openjdk-11'
     }
-    environment {
-        JAVA11_HOME = "${tool 'openjdk-11'}"
-    }
+    env.JAVA_HOME="${tool 'openjdk-11'}"
+    env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+
     triggers {
         pollSCM '* * * * *'
     }
