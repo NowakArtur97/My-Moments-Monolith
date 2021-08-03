@@ -20,7 +20,7 @@ services:
       - 3366:3306
 
   jenkins:
-    image: jenkins/jenkins:2.289.3-lts-slim
+    image: jenkins/jenkins:2.305-jdk11
     networks:
       - my-moments
     privileged: true
