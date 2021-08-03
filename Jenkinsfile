@@ -14,7 +14,7 @@ pipeline {
         stage('Checks') {
             steps {
                 sh 'ls'
-                sh 'java --version'
+                sh 'java -version'
                 sh 'gradle --version'
             }
         }
