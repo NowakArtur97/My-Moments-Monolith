@@ -6,13 +6,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'chmod=+x gradlew'
-                sh './gradlew assemble'
+                sh 'ls'
+                sh 'gradle assemble'
             }
         }
         stage('Test') {
             steps {
-                sh './gradlew test'
+                sh 'gradle test'
             }
         }
     }
