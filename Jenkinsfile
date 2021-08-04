@@ -25,12 +25,9 @@ pipeline {
             }
         }
         stage('Deploy') {
-            environment {
-                HEROKU_API_KEY = credentials('HEROKU_API_KEY')
-            }
             steps {
                 unstash 'myMoments'
-                sh './gradlew deployHeroku'
+                sh 'git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git master'
             }
         }
     }
