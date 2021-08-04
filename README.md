@@ -80,9 +80,10 @@ Then use the token as a Bearer Token using e.g. Postman or Swagger on /swagger-u
 - Model Mapper - 2.4.0
 - JSON Web Token Support For The JVM (jjwt) - 0.9.1
 - Passay - 1.6.0
-- Gradle
+- Gradle - 6.8
 - Docker
 - MySQL
+- Jenkins 
 
 ## Features
 

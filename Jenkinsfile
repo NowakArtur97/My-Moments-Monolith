@@ -8,21 +8,14 @@ pipeline {
         pollSCM '* * * * *'
     }
     stages {
-        stage('Checks') {
-            steps {
-                sh 'ls'
-                sh 'java -version'
-                sh 'gradle --version'
-            }
-        }
         stage('Build') {
             steps {
-                sh 'gradle assemble'
+                sh './gradlew assemble'
             }
         }
         stage('Test') {
             steps {
-                sh 'gradle test'
+                sh './gradlew test'
             }
         }
     }
