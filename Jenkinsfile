@@ -6,7 +6,6 @@ pipeline {
     stages {
         stage('Give permission to Gradle wrapper') {
             steps {
-                sh 'ls'
                 sh 'chmod +x gradlew'
             }
         }
@@ -30,9 +29,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'ls'
                 unstash 'myMoments'
-                sh 'git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git main'
+                sh 'git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git HEAD:master'
             }
         }
     }
