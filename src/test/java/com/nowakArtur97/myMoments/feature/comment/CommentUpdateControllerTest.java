@@ -22,10 +22,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.text.SimpleDateFormat;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -53,9 +52,6 @@ class CommentUpdateControllerTest {
     private ModelMapper modelMapper;
 
     private static CommentTestBuilder commentTestBuilder;
-
-    private final String pattern = "yyyy-MM-dd HH:mm:ss";
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
     @BeforeAll
     static void setUpBuilders() {
@@ -101,8 +97,8 @@ class CommentUpdateControllerTest {
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("id", is(commentModel.getId().intValue())))
                         .andExpect(jsonPath("content", is(commentModel.getContent())))
-                        .andExpect(jsonPath("createDate", is(simpleDateFormat.format(commentModel.getCreateDate()))))
-                        .andExpect(jsonPath("modifyDate", is(simpleDateFormat.format(commentModel.getCreateDate())))),
+                        .andExpect(jsonPath("createDate", is(notNullValue())))
+                        .andExpect(jsonPath("modifyDate", is(notNullValue()))),
                 () -> verify(jwtUtil, times(1)).extractUsernameFromHeader(header),
                 () -> verifyNoMoreInteractions(jwtUtil),
                 () -> verify(commentService, times(1)).updateComment(postId, commentId, username, commentDTO),
