@@ -21,7 +21,7 @@ To start the application, in the folder, enter the following commands in command
 
 - `gradle build -x test -Dspring.profiles.active=dev`
 - `docker-compose up -d`
-  Go to: `http://YOUR_DOCKER_IP_OR_LOCALHOST:8080/swagger-ui.html`,
+  Go to: `http://YOUR_DOCKER_IP_OR_LOCALHOST:8088/swagger-ui.html`,
   where YOUR_DOCKER_IP is your docker machine IP address (or localhost).
   To shut down the containers enter:
 - `docker-compose down`

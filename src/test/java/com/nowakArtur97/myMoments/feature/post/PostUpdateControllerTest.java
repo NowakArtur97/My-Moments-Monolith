@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,7 +43,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("PostController_Tests")
 class PostUpdateControllerTest {
 
-    private final String POSTS_BASE_PATH = "http://localhost:8080/api/v1/posts/{id}";
+    @LocalServerPort
+    private int port;
+
+    private final String POSTS_BASE_PATH = "http://localhost:" + port + "/api/v1/posts/{id}";
 
     @Value("${my-moments.default-user-role:USER_ROLE}")
     private String defaultUserRole;

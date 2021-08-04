@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -33,8 +34,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("UserController_Tests")
 class UserGetPostsControllerTest {
 
-    private final String USER_BASE_PATH = "http://localhost:8080/api/v1/users/me/posts";
-    private final String USER_BASE_PATH_WITH_ID = "http://localhost:8080/api/v1/users/{id}/posts";
+    @LocalServerPort
+    private int port;
+
+    private final String USER_BASE_PATH = "http://localhost:" + port + "/api/v1/users/me/posts";
+    private final String USER_BASE_PATH_WITH_ID = "http://localhost:" + port + "/api/v1/users/{id}/posts";
 
     private MockMvc mockMvc;
 

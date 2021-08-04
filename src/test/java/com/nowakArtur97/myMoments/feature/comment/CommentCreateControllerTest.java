@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,7 +35,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("CommentController_Tests")
 class CommentCreateControllerTest {
 
-    private final String COMMENTS_BASE_PATH = "http://localhost:8080/api/v1/posts/{postId}/comments";
+    @LocalServerPort
+    private int port;
+
+    private final String COMMENTS_BASE_PATH = "http://localhost:" + port + "/api/v1/posts/{postId}/comments";
 
     private MockMvc mockMvc;
 

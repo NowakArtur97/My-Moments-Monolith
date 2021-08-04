@@ -13,6 +13,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -38,8 +40,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("AuthenticationController_Tests")
 class AuthenticationControllerTest {
 
-    private final String AUTHENTICATION_BASE_PATH = "http://localhost:8080/api/v1/authentication";
-    private final int EXPIRATION_TIME_IN_MILLISECONDS = 36000000;
+    @Value("${my-moments.jwt.validity:36000000}")
+    private long validity;
+
+    @LocalServerPort
+    private int port;
+
+    private final String AUTHENTICATION_BASE_PATH = "http://localhost:" + port + "/api/v1/authentication";
 
     private MockMvc mockMvc;
 
@@ -73,7 +80,7 @@ class AuthenticationControllerTest {
                 .setControllerAdvice(new AuthenticationControllerAdvice())
                 .build();
 
-        ReflectionTestUtils.setField(authenticationController, "validity", EXPIRATION_TIME_IN_MILLISECONDS);
+        ReflectionTestUtils.setField(authenticationController, "validity", validity);
     }
 
     @Test
@@ -99,7 +106,7 @@ class AuthenticationControllerTest {
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("token", is(token)))
-                        .andExpect(jsonPath("expirationTimeInMilliseconds", is(EXPIRATION_TIME_IN_MILLISECONDS))),
+                        .andExpect(jsonPath("expirationTimeInMilliseconds", is((int) validity))),
                 () -> verify(customUserDetailsService, times(1)).loadUserByUsername(userName),
                 () -> verifyNoMoreInteractions(customUserDetailsService),
                 () -> verify(authenticationManager, times(1))
