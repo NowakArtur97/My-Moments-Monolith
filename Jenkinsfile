@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    triggers {
+        pollSCM '* * * * *'
+    }
     stages {
         stage('Give permission to Gradle wrapper') {
             steps {
@@ -14,6 +17,7 @@ pipeline {
         }
         stage('Test') {
             steps {
+                sh 'ls'
                 sh './gradlew test'
             }
         }
@@ -26,6 +30,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
+                sh 'ls'
                 unstash 'myMoments'
                 sh 'git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git master'
             }
