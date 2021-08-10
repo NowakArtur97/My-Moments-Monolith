@@ -12,3 +12,17 @@ spring:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
     driverClassName: org.postgresql.Driver
+  #
+  # JPA
+  #
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  #
+  # Flyway
+  #
+  flyway:
+    locations: classpath:db/migration/postgres
