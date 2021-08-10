@@ -1,7 +1,7 @@
 CREATE TABLE my_moments.user_profile (
     "id" SERIAL PRIMARY KEY,
     "about" TEXT DEFAULT '',
-    "gender" SMALLINT,
+    "gender" TEXT NOT NULL,
     "interests" TEXT DEFAULT '',
     "languages" TEXT DEFAULT '',
     "location" TEXT DEFAULT '',
