@@ -8,6 +8,7 @@ spring:
       max-idle-time: 30m
       max-size: 500
       validation-query: SELECT 1
-    url: jdbc:mysql://192.168.99.100:3366/my-moments?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Warsaw
+    url: jdbc:postgresql://192.168.99.100:5432/my-moments
     username: my-moments-user
-    password: my-moments-password123
+    password: my-moments-password
+    driverClassName: org.postgresql.Driver

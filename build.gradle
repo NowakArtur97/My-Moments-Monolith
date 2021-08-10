@@ -36,6 +36,9 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	implementation 'org.flywaydb:flyway-core'
 
+	// https://mvnrepository.com/artifact/org.postgresql/postgresql
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23'
+
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
 	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2

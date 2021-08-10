@@ -20,7 +20,7 @@ spring:
     schemas: my_moments_schemas
     validate-on-migrate: true
     table: my_moments_schema_version
-    locations: classpath:db/mysql/migration
+    locations: classpath:db/mysql/migration,classpath:db/postgres/migration
   #
   # JPA / HIBERNATE
   #
