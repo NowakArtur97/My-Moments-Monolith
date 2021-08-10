@@ -1,0 +1,11 @@
+CREATE TABLE my_moments.post (
+    "id" SERIAL PRIMARY KEY,
+    "user_id" INT NOT NULL,
+    "uuid" VARCHAR(36) NOT NULL,
+    "caption" TEXT DEFAULT '',
+    "create_date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "modify_date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "version" INT DEFAULT 0 NOT NULL,
+
+    CONSTRAINT "FK_USER_POST" FOREIGN KEY ("user_id") REFERENCES my_moments.user ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
