@@ -7,17 +7,18 @@ networks:
 
 services:
 
-  mysql:
-    image: mysql:8.0
+  postgres:
+    restart: always
+    image: postgres:13.3-alpine3.14
     networks:
       - my-moments
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=my-moments
-      - MYSQL_USER=my-moments-user
-      - MYSQL_PASSWORD=my-moments-password123
     ports:
-      - 3366:3306
+      - 5432:5432
+    environment:
+      POSTGRES_DB: my-moments
+      POSTGRES_USER: my-moments-user
+      POSTGRES_PASSWORD: my-moments-password
+    container_name: postgres
 
   jenkins:
     image: jenkins/jenkins:2.305-jdk11
