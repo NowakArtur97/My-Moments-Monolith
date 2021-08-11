@@ -1,4 +1,4 @@
-CREATE SCHEMA "my_moments";
+CREATE SCHEMA IF NOT EXISTS "my_moments";
 
 CREATE TABLE my_moments.user (
 	"id" SERIAL PRIMARY KEY,
