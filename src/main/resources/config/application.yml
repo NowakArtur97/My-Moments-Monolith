@@ -10,6 +10,13 @@ spring:
   profiles:
     active: ${SPRING_ACTIVE_PROFILE:ci}
   #
+  # Servlet / Multipart
+  #
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 200MB
+  #
   # Flyway
   #
   flyway:

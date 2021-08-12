@@ -15,7 +15,7 @@ import java.util.List;
 @RestControllerAdvice(basePackages = "com.nowakArtur97.myMoments.feature")
 public class AuthenticationControllerAdvice {
 
-    @ExceptionHandler({BadCredentialsException.class})
+    @ExceptionHandler(BadCredentialsException.class)
     ResponseEntity<ErrorResponse> handleBadCredentialsException(BadCredentialsException exception) {
 
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.UNAUTHORIZED.value(),
@@ -24,7 +24,7 @@ public class AuthenticationControllerAdvice {
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler({UsernameNotFoundException.class})
+    @ExceptionHandler(UsernameNotFoundException.class)
     ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException exception) {
 
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.UNAUTHORIZED.value(),
@@ -33,7 +33,7 @@ public class AuthenticationControllerAdvice {
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler({ForbiddenException.class})
+    @ExceptionHandler(ForbiddenException.class)
     ResponseEntity<ErrorResponse> handleForbiddenException(ForbiddenException exception) {
 
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.FORBIDDEN.value(),
