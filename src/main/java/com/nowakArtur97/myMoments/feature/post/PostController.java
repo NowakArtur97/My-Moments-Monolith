@@ -49,13 +49,16 @@ class PostController {
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(dataType = "__file", value = "The post's photos", name = "photos",
+                    required = true, paramType = "form")
+    })
     @ApiOperation("Create a post")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Successfully created post", response = PostModel.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
     ResponseEntity<PostModel> cretePost(
-            @ApiParam(value = "The post's photos", name = "photos", required = true)
-            @RequestPart(value = "photos", required = false) List<MultipartFile> photos,
+            @RequestPart(value = "photos") List<MultipartFile> photos,
             @ApiParam(value = "The post's data", name = "post") @RequestPart(value = "post", required = false) String post,
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader
     ) {
@@ -78,7 +81,6 @@ class PostController {
     ResponseEntity<PostModel> updatePost(
             @ApiParam(value = "Id of the Post being updated", name = "id", type = "integer",
                     required = true, example = "1") @PathVariable("id") Long id,
-            @ApiParam(value = "The post's photos", name = "photos", required = true)
             @RequestPart(value = "photos", required = false) List<MultipartFile> photos,
             @ApiParam(value = "The post's data", name = "post") @RequestPart(value = "post", required = false) String post,
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader
