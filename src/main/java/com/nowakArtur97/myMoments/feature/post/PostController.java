@@ -49,14 +49,14 @@ class PostController {
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(dataType = "__file", value = "The post's photos", name = "photos",
-                    required = true, paramType = "form")
-    })
     @ApiOperation("Create a post")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Successfully created post", response = PostModel.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(dataType = "__file", value = "The post's photos", name = "photos",
+                    required = true, paramType = "form")
+    })
     ResponseEntity<PostModel> cretePost(
             @RequestPart(value = "photos") List<MultipartFile> photos,
             @ApiParam(value = "The post's data", name = "post") @RequestPart(value = "post", required = false) String post,
@@ -78,10 +78,14 @@ class PostController {
             @ApiResponse(code = 200, message = "Successfully updated post", response = PostModel.class),
             @ApiResponse(code = 400, message = "Invalid Post's id supplied or incorrectly entered data"),
             @ApiResponse(code = 404, message = "Could not find Post with provided id", response = ErrorResponse.class)})
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(dataType = "__file", value = "The post's photos", name = "photos",
+                    required = true, paramType = "form")
+    })
     ResponseEntity<PostModel> updatePost(
             @ApiParam(value = "Id of the Post being updated", name = "id", type = "integer",
                     required = true, example = "1") @PathVariable("id") Long id,
-            @RequestPart(value = "photos", required = false) List<MultipartFile> photos,
+            @RequestPart(value = "photos") List<MultipartFile> photos,
             @ApiParam(value = "The post's data", name = "post") @RequestPart(value = "post", required = false) String post,
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader
     ) {

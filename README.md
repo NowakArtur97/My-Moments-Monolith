@@ -61,23 +61,23 @@ Use the login details provided above to generate the token:
 ```
 
 or create new account by sending the appropriate request (the profile object and image are optional):
-
+{
+"username":"newUser",
+"password":"Password1!",
+"matchingPassword":"Password1!",
+"email":"email@something.com",
+"profile":{
+"about":"profile description",
+"gender":"UNSPECIFIED",
+"interests":"user interests",
+"languages":"user languages",
+"location":"user's location"
+}
+}
 ```json
 # POST /api/v1/registration
 # Content-Type: application/json
-{
-  "username":"newUser",
-  "password":"Password1!",
-  "matchingPassword":"Password1!",
-  "email":"email@something.com",
-  "profile":{
-    "about":"profile description",
-    "gender":"user's gender (MALE, FEMALE or UNSPECIFIED)",
-    "interests":"user interests",
-    "languages":"user languages",
-    "location":"user's location"
-  }
-}
+
 ```
 
 The password must meet the following requirements:
@@ -118,9 +118,9 @@ Then use the token as a Bearer Token using e.g. Postman or Swagger on /swagger-u
 - JSON Web Token Support For The JVM (jjwt) - 0.9.1
 - Passay - 1.6.0
 - Gradle - 6.8
-- Docker
 - MySQL
 - Jenkins
+- Docker
 - Heroku
 
 ## Features
@@ -132,12 +132,13 @@ Then use the token as a Bearer Token using e.g. Postman or Swagger on /swagger-u
 - Comments endpoint (POST, PUT, DELETE)
 - Documentation created using Swagger 2
 - Custom password validation
-- Database Migrations with Flyway
+- Database migrations with Flyway
+- Continuous deployment with Jenkins
 - Deployment on Heroku
 
 ## To Do
 
-- More endpoints
+- Automatic job building with Jenkins
 
 ## Endpoints List:
 
@@ -158,6 +159,8 @@ Then use the token as a Bearer Token using e.g. Postman or Swagger on /swagger-u
 | `DELETE`     | `/api/v1/users/me`        | `Delete user`                                      |
 
 ### Posts
+
+Note: adding multiple photos to a Post is only possible with tools like Postman, because Swagger doesn't support adding multiple files at once in multipart/form-data format!
 
 | Method    | URI                          | Action                                                               |
 | --------- | ---------------------------- | -------------------------------------------------------------------- |

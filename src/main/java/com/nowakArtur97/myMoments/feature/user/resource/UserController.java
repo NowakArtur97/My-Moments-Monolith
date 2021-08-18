@@ -90,7 +90,7 @@ class UserController {
             @ApiResponse(code = 404, message = "Could not find User with provided token", response = ErrorResponse.class)})
     ResponseEntity<UserModel> updateUser(
             @ApiParam(value = "The user's data", name = "user", required = true)
-            @RequestPart(value = "user", required = false) String user,
+            @RequestPart(value = "user") String user,
             @ApiParam(value = "The user's image", name = "image")
             @RequestPart(value = "image", required = false) MultipartFile image,
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader) throws IOException {
