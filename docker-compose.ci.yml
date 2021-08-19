@@ -21,11 +21,9 @@ services:
     container_name: postgres
 
   jenkins:
-    image: jenkins/jenkins:2.305-jdk11
+    build: ./Jenkins
     networks:
       - my-moments
-    privileged: true
-    user: root
     ports:
       - 8083:8080
       - 50003:50000
