@@ -58,7 +58,9 @@ class PostController {
                     required = true, paramType = "form")
     })
     ResponseEntity<PostModel> cretePost(
-            @RequestPart(value = "photos") List<MultipartFile> photos,
+            @RequestPart(value = "photos", required = false) List<MultipartFile> photos,
+            // required = false - Not required to bypass the exception with a missing request part
+            // and return a validation failed message
             @ApiParam(value = "The post's data", name = "post") @RequestPart(value = "post", required = false) String post,
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader
     ) {
@@ -85,7 +87,9 @@ class PostController {
     ResponseEntity<PostModel> updatePost(
             @ApiParam(value = "Id of the Post being updated", name = "id", type = "integer",
                     required = true, example = "1") @PathVariable("id") Long id,
-            @RequestPart(value = "photos") List<MultipartFile> photos,
+            @RequestPart(value = "photos", required = false) List<MultipartFile> photos,
+            // required = false - Not required to bypass the exception with a missing request part
+            // and return a validation failed message
             @ApiParam(value = "The post's data", name = "post") @RequestPart(value = "post", required = false) String post,
             @ApiParam(hidden = true) @RequestHeader("Authorization") String authorizationHeader
     ) {

@@ -45,7 +45,9 @@ class UserRegistrationController {
             @ApiResponse(code = 200, message = "Successfully created a new account", response = AuthenticationResponse.class),
             @ApiResponse(code = 400, message = "Incorrectly entered data", response = ErrorResponse.class)})
     ResponseEntity<AuthenticationResponse> registerUser(@ApiParam(value = "The user's data", name = "user", required = true)
-                                                        @RequestPart(value = "user") String user,
+                                                        @RequestPart(value = "user", required = false) String user,
+                                                        // required = false - Not required to bypass the exception with a missing
+                                                        // request part and return a validation failed message
                                                         @ApiParam(value = "The user's image", name = "image")
                                                         @RequestPart(value = "image", required = false) MultipartFile image)
             throws RoleNotFoundException, IOException {
