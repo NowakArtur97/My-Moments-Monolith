@@ -15,8 +15,6 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo "HEROKU_APP_NAME = ${env.HEROKU_APP_NAME}"
-                echo 'HEROKU_APP_NAME = ${env.HEROKU_APP_NAME}'
                 sh './gradlew assemble -Dspring.profiles.active=prod'
                 stash includes: '**/build/libs/*.jar', name: 'myMoments'
             }
@@ -36,7 +34,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 unstash 'myMoments'
-                sh 'git push https://heroku:${env.HEROKU_API_KEY}@git.heroku.com/${env.HEROKU_APP_NAME}.git HEAD:refs/heads/master'
+                sh "git push https://heroku:${env.HEROKU_API_KEY}@git.heroku.com/${env.HEROKU_APP_NAME}.git HEAD:refs/heads/master"
             }
         }
     }
