@@ -34,7 +34,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 unstash 'myMoments'
-                sh "git push https://heroku:${env.HEROKU_API_KEY}@git.heroku.com/${env.HEROKU_APP_NAME}.git HEAD:refs/heads/master"
+                sh '''git push https://heroku:${env.HEROKU_API_KEY}@git.heroku.com/${env.HEROKU_APP_NAME}.git HEAD:refs/heads/master'''
             }
         }
     }
