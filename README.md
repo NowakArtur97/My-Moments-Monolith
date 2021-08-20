@@ -36,6 +36,7 @@ To access the endpoints you must have an account. You can use the previously pre
 
 ## Setup
 
+### REST API
 To start the application, in the folder, enter the following commands in command line:
 
 - `gradle build -x test -Dspring.profiles.active=dev`
@@ -105,6 +106,13 @@ Then generate JWT. The token can be generated using a username or email address.
 
 Then use the token as a Bearer Token using e.g. Postman or Swagger on /swagger-ui.html endpoint.
 
+
+### Jenkins
+In order to deploy on Heroku, you need to add two environment variables: HEROKU_API_KEY and HEROKU_APP_NAME. The first one is the API key that can be found in the account settings. The second is the name of the app created on Heroku. The setting of variables is shown in the screenshot below.
+![Environment variables](./screenshots/global_properties.png)
+
+A PostgreSQL instance is also required to test the application. To run Jenkins and PostgreSQL, use the docker-compose.ci.yml file with command: `docker-compose -f docker-compose.ci.yml up`.
+
 ## Built With
 
 - Java 11
@@ -134,11 +142,12 @@ Then use the token as a Bearer Token using e.g. Postman or Swagger on /swagger-u
 - Custom password validation
 - Database migrations with Flyway
 - Continuous deployment with Jenkins
+- Automatic plugins installation and job building with Jenkins
 - Deployment on Heroku
 
 ## To Do
 
-- Automatic job building with Jenkins
+- Automatic creation of user and environment variables in Jenkins
 
 ## Endpoints List:
 
@@ -186,3 +195,7 @@ Project is: in progress
 ![Documentation using Swagger 2](./screenshots/documentation.png)
 
 Documentation using Swagger 2
+
+![Continuous deployment using Jenkins](./screenshots/jenkins.png)
+
+Continuous deployment using Jenkins
