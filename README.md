@@ -127,6 +127,7 @@ A PostgreSQL instance is also required to test the application. To run Jenkins a
 - Passay - 1.6.0
 - Gradle - 6.8
 - MySQL
+- PostgreSQL
 - Jenkins
 - Docker
 - Heroku
@@ -142,12 +143,12 @@ A PostgreSQL instance is also required to test the application. To run Jenkins a
 - Custom password validation
 - Database migrations with Flyway
 - Continuous deployment with Jenkins
-- Automatic plugins installation and job building with Jenkins
+- Automatic plugins installation, job building and user creation with Jenkins
 - Deployment on Heroku
 
 ## To Do
 
-- Automatic creation of user and environment variables in Jenkins
+- Automatic environment variables in Jenkins
 
 ## Endpoints List:
 
