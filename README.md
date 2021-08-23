@@ -7,16 +7,13 @@
 - [Setup](#setup)
 - [Built With](#built-with)
 - [Features](#features)
-- [To Do](#to-do)
 - [Endpoints List](#endpoints-list)
 - [Status](#status)
 - [Screenshots](#screenshots)
 
 ## General info
 
-REST API created while writing the thesis entitled: "Functionality problems of monolitical architecture and
-microservices in web applications". Version in microservices
-architecture: https://github.com/NowakArtur97/My-Moments-Microservices.
+REST API created while writing the thesis entitled: "Functionality problems of monolitical architecture and microservices in web applications". Version in microservices architecture: https://github.com/NowakArtur97/My-Moments-Microservices.
 
 ## Demo
 
@@ -29,19 +26,20 @@ To access the endpoints you must have an account. You can use the previously pre
 # POST /api/v1/authentication
 # Content-Type: application/json
 {
-  "username": "user",
-  "password": "user"
+"username": "user",
+"password": "user"
 }
 ```
 
 ## Setup
 
 ### REST API
+
 To start the application, in the folder, enter the following commands in command line:
 
 - `gradle build -x test -Dspring.profiles.active=dev`
 - `docker-compose up -d`
-  Go to: `http://YOUR_DOCKER_IP_OR_LOCALHOST:8088/swagger-ui.html`, where YOUR_DOCKER_IP is your docker machine IP
+  Go to: `http://YOUR_DOCKER_IP_OR_LOCALHOST:8088/swagger-ui.html`, where `YOUR_DOCKER_IP` is your docker machine IP
   address (or localhost). To shut down the containers enter:
 - `docker-compose down`
 
@@ -56,29 +54,29 @@ Use the login details provided above to generate the token:
 # POST /api/v1/authentication
 # Content-Type: application/json
 {
-  "username": "user",
-  "password": "user"
+"username": "user",
+"password": "user"
 }
 ```
 
 or create new account by sending the appropriate request (the profile object and image are optional):
-{
-"username":"newUser",
-"password":"Password1!",
-"matchingPassword":"Password1!",
-"email":"email@something.com",
-"profile":{
-"about":"profile description",
-"gender":"UNSPECIFIED",
-"interests":"user interests",
-"languages":"user languages",
-"location":"user's location"
-}
-}
+
 ```json
 # POST /api/v1/registration
 # Content-Type: application/json
-
+{
+"username": "newUser",
+"password": "Password1!",
+"matchingPassword": "Password1!",
+"email": "email@something.com",
+"profile": {
+"about": "profile description",
+"gender": "UNSPECIFIED",
+"interests": "user interests",
+"languages":"user languages",
+"location": "user's location"
+  }
+}
 ```
 
 The password must meet the following requirements:
@@ -104,14 +102,15 @@ Then generate JWT. The token can be generated using a username or email address.
 }
 ```
 
-Then use the token as a Bearer Token using e.g. Postman or Swagger on /swagger-ui.html endpoint.
-
+Then use the token as a Bearer Token using e.g. Postman or Swagger on `/swagger-ui.html` endpoint.
 
 ### Jenkins
-In order to deploy on Heroku, you need to add two environment variables: HEROKU_API_KEY and HEROKU_APP_NAME. The first one is the API key that can be found in the account settings. The second is the name of the app created on Heroku. The setting of variables is shown in the screenshot below.
-![Environment variables](./screenshots/global_properties.png)
 
-A PostgreSQL instance is also required to test the application. To run Jenkins and PostgreSQL, use the docker-compose.ci.yml file with command: `docker-compose -f docker-compose.ci.yml up`.
+In order to deploy on Heroku, you need to add two environment variables: `HEROKU_API_KEY` and `HEROKU_APP_NAME`. The first one is the API key that can be found in the account settings. The second is the name of the app created on Heroku.
+
+Then, in the `./Jenkins/Dockerfile` file, replace the variables: `YOUR_HEROKU_API_KEY` and `YOUR_HEROKU_APP_NAME` with the appropriate data.
+
+A PostgreSQL instance is also required to test the application. To run Jenkins and PostgreSQL, use the `docker-compose.ci.yml` file with command: `docker-compose -f docker-compose.ci.yml up`.
 
 ## Built With
 
@@ -143,12 +142,8 @@ A PostgreSQL instance is also required to test the application. To run Jenkins a
 - Custom password validation
 - Database migrations with Flyway
 - Continuous deployment with Jenkins
-- Automatic plugins installation, job building and user creation with Jenkins
+- Automatic plugins installation, job building, user and environment variables creation with Jenkins
 - Deployment on Heroku
-
-## To Do
-
-- Automatic environment variables in Jenkins
 
 ## Endpoints List:
 
@@ -189,7 +184,7 @@ Note: adding multiple photos to a Post is only possible with tools like Postman,
 
 ## Status
 
-Project is: in progress
+Project is: finished
 
 ## Screenshots
 
