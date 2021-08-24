@@ -26,8 +26,8 @@ To access the endpoints you must have an account. You can use the previously pre
 # POST /api/v1/authentication
 # Content-Type: application/json
 {
-"username": "user",
-"password": "user"
+  "username": "user",
+  "password": "user"
 }
 ```
 
@@ -54,8 +54,8 @@ Use the login details provided above to generate the token:
 # POST /api/v1/authentication
 # Content-Type: application/json
 {
-"username": "user",
-"password": "user"
+  "username": "user",
+  "password": "user"
 }
 ```
 
@@ -65,17 +65,17 @@ or create new account by sending the appropriate request (the profile object and
 # POST /api/v1/registration
 # Content-Type: application/json
 {
-"username": "newUser",
-"password": "Password1!",
-"matchingPassword": "Password1!",
-"email": "email@something.com",
-"profile": {
-"about": "profile description",
-"gender": "UNSPECIFIED",
-"interests": "user interests",
-"languages":"user languages",
-"location": "user's location"
-  }
+  "username": "newUser",
+  "password": "Password1!",
+  "matchingPassword": "Password1!",
+  "email": "email@something.com",
+  "profile": {
+    "about": "profile description",
+    "gender": "UNSPECIFIED",
+    "interests": "user interests",
+    "languages": "user languages",
+    "location": "user's location"
+    }
 }
 ```
 
@@ -97,8 +97,8 @@ Then generate JWT. The token can be generated using a username or email address.
 # POST /api/v1/authentication
 # Content-Type: application/json
 {
-"username": "newUser",
-"password": "Password1!"
+  "username": "newUser",
+  "password": "Password1!"
 }
 ```
 
